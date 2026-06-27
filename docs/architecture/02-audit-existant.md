@@ -310,7 +310,7 @@ satisfaits**, surtout sur UK/CA/US et perfectibles sur le socle historique ; la 
 inégale**, tirée vers le bas par la **livraison** ; **trois critères structurants** (maintenabilité,
 évolutivité, sécurité) **ne sont pas satisfaits**.
 
-#### 2.5.2 Forces, faiblesses et contraintes
+#### 2.5.2 Forces, faiblesses, risques et contraintes
 
 **Forces.**
 
@@ -333,6 +333,18 @@ inégale**, tirée vers le bas par la **livraison** ; **trois critères structur
   et **données fragmentées** (`AUD-03`) — qui renchérit chaque évolution ; s'y ajoutent des
   **monolithes cloisonnés, non unifiés et peu réplicables** (`AUD-06`) et une **redondance absente sur
   le socle historique** (`AUD-15`).
+
+**Risques techniques.**
+
+- **Interruption de service** : sans redondance sur le socle historique (`AUD-15`), la panne d'une
+  instance interrompt le service (point de défaillance unique).
+- **Perte de données** : restauration **non éprouvée** hors US (`AUD-09`) — un incident peut révéler
+  une sauvegarde non restaurable.
+- **Compromission** : SHA-1 (`AUD-10`), TLS 1.0 (`AUD-11`), secrets en fichiers / sans rotation
+  (`AUD-12`), jusqu'à 41 % de dépendances vulnérables (`AUD-13`) élèvent la surface d'attaque du socle
+  historique.
+- **Régressions inter-pays** : duplication et divergence du code (`AUD-02`) — une correction non
+  répercutée laisse des écarts entre pays.
 
 **Contraintes** (à porter par la suite, sans préjuger de la solution).
 
