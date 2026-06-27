@@ -330,3 +330,33 @@ la PoC, **ADR-006**), si bien que le flux *client-credentials* est un **ajout in
 sous-système neuf. Le chapitre d'intégration des composants tiers décrit le parcours `client_id` /
 `secret` → token → appel API avec scopes ; `NFR-SEC-06` est alimenté (journalisation par `client_id`).
 Le plan d'autorisation machine est modélisé au déploiement, **distinct du RBAC humain** (ADR-002).
+
+## ADR-019 — Stack technologique de la cible
+**Contexte.** Le v0 ne prescrit **aucune technologie**. L'audit fournit la matière du choix : il faut
+une cible **unifiée** (corrige `AUD-01` / `AUD-02` / `AUD-03`) **sans proliférer** une pile **absente
+du parc**, qui reproduirait `AUD-01`. Principe directeur : **consolider sur le socle moderne déjà
+éprouvé** (application US) et sur la **compétence la plus large** existante ; la **modernisation**
+règle les fautes du socle historique (`AUD-10` / `AUD-11` / `AUD-07`) **indépendamment du runtime**.
+**Décision.** Une pile **mono-runtime, modulithe** (ADR-003) :
+
+| Couche | Choix | Ancrage | Alternatives écartées |
+|---|---|---|---|
+| **Runtime** | **Node.js** | Meilleures métriques du parc sur l'app US (`AUD-04/05/07/08/14`) ; runtime **le plus répandu** du parc (cœur FR/DE/ES/IT **et** US) → leverage la **plus large compétence** existante (contrainte « équipes habituées aux piles hétérogènes », §2.5.2) | **PHP/Laravel** (UK) et **Java/Spring** (CA) : piles présentes, métriques moindres, ré-éparpilleraient ; **runtime absent du parc** : prolifération (`AUD-01`) |
+| **Langage** | **TypeScript** (front + back) | **Durcissement** : typage statique contre la **divergence** du code (`AUD-01` / `AUD-02`) ; **un seul langage typé** full-stack | **JavaScript nu** : cohérent Node mais n'outille pas contre la divergence |
+| **Framework backend** | **NestJS** | Son **système de modules** traduit le **modulithe modulaire** (ADR-003) — le module temps réel séparable devient un **module de première classe** ; **injection de dépendances + TS natif** = contrats explicites (`AUD-01` / `AUD-02`). L'audit ne mesure aucun framework : pas d'`AUD-NN` forcé | **Express nu** : pas de structure modulaire de première classe ; framework d'un **autre runtime** : prolifération |
+| **Frontend** | **React** | Front de l'app US **éprouvée** ; **un seul écosystème JS/TS** avec le back (réduit `AUD-01`). Justifié par l'écosystème, **non** par le débit (350 req/s = `AUD-04`, mesure **backend**) | **Angular** (CA) : pile distincte ; **EJS** (FR) : rendu serveur legacy |
+| **Style d'API** | **REST sur HTTPS** | **Tiers hétérogènes** (C.1.7) + **CRUD par domaine** (ADR-001) : friction d'intégration minimale, outillage ubiquitaire. Pas d'`AUD-NN` forcé | **GraphQL** : pour client riche, pas du CRUD inter-organisations ; **gRPC** : hostile aux intégrateurs tiers hétérogènes / navigateurs |
+| **Base de données** | **Relationnel — PostgreSQL** | Deux justifications **distinctes** : **unifier** une base (vs fragmentation `AUD-03`, **agnostique au moteur**) **et** **relationnel = domaine** — intégrité Ville–Agence–Offre (ADR-012), **ACID** de la machine à états (ADR-011 / ADR-014), séparation perso/transactionnel RGPD (ADR-010). L'audit ne nomme **aucun SGBD** existant | **NoSQL document** : relâche l'intégrité référentielle et les garanties transactionnelles requises |
+| **Temps réel** | **WebSocket via `ws` in-process** | WebSocket décidé (ADR-003) ; passerelle = **module in-process** du modulithe (même runtime, frontière de **module**) ; la volumétrie ne révèle **aucune charge** (`AUD-04`) | **Broker (Redis/Kafka)** : sur-ingénierie non justifiée par la charge ; **socket.io** : couche d'abstraction / *fallbacks* superflus |
+| **Identité / autorisation** | **OAuth2 / OIDC + argon2id** | Deux flux (ADR-002 / ADR-018) : **OIDC** (ID token) pour le flux **humain**, **client-credentials OAuth2 pur** (sans utilisateur ni ID token) pour le flux **machine** ; **argon2id** déjà éprouvé (CA, `AUD-10`) | **IdP lourd déployé** : la PoC devrait le contourner (stubé, ADR-006) |
+
+**Alternatives écartées (transverses).** Pile **polyglotte** (plusieurs runtimes / langages) →
+reproduirait `AUD-01`. *Greenfield* sur technologies **absentes du parc** → barre injustifiée par
+l'audit.
+**Conséquences.** Fixe la stack cible **et celle de la PoC** (Stade 4), qui en implémente un
+**sous-ensemble** : serveur **WebSocket Node / `ws` brut** (**pas de Nest dans la PoC**), **stockage
+relationnel** pour `conversation` / `message` / `participant` (**structure documentée dans le
+README**), **helper de token stubé** (ADR-006), **hygiène des secrets** de base (clé de signature en
+**variable d'environnement**, `.env.example`). La PoC **donne à voir la séparabilité** du module temps
+réel par sa structure. Le **paiement** (prestataire) est tranché séparément en **ADR-020** (Checkpoint
+B).
