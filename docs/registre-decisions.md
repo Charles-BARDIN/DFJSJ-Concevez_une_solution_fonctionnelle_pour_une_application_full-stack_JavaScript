@@ -358,5 +358,25 @@ l'audit.
 relationnel** pour `conversation` / `message` / `participant` (**structure documentée dans le
 README**), **helper de token stubé** (ADR-006), **hygiène des secrets** de base (clé de signature en
 **variable d'environnement**, `.env.example`). La PoC **donne à voir la séparabilité** du module temps
-réel par sa structure. Le **paiement** (prestataire) est tranché séparément en **ADR-020** (Checkpoint
-B).
+réel par sa structure. Le **paiement** (prestataire) est tranché séparément au **Checkpoint B** (son
+numéro d'ADR lui est attribué à son commit).
+
+## ADR-020 — Résidence régionale des données de la plateforme unifiée
+**Contexte.** Le produit est **déployé à l'international** (« tous les clients », v0) et `NFR-RGPD-05`
+exige que les **transferts UE ↔ Amérique du Nord** soient **encadrés**. La cible retient une **base
+unifiée** (ADR-019). **Tension** : unifier le socle **sans violer la résidence** des données
+personnelles imposée par le RGPD.
+**Décision.** **Déploiement régional de la plateforme unifiée** : **un déployable par région** (UE,
+Amérique du Nord), **même schéma, même code, même contrat d'API**, mais **données résidentes par
+région**. Le **modèle logique est unique** ; seule la **résidence physique** est régionale.
+**Distinction load-bearing — ce n'est PAS la fragmentation d'`AUD-03`.** `AUD-03` = **schémas
+divergents** + **codebases par pays** + **échanges manuels** : une divergence **subie**. Ici : **un
+schéma, un code, un contrat** ; les données sont **partitionnées par région pour une raison légale**,
+**pas** par divergence technique. **Même modèle logique, résidence physique régionale** — l'inverse de
+la fragmentation.
+**Alternatives écartées.** **Région unique + clauses contractuelles types / décision d'adéquation** →
+**patch juridique faible** pour un produit mondial ; **concentre** toutes les données dans une seule
+juridiction. **Fragmentation par pays** → c'est exactement `AUD-03`, rejeté.
+**Conséquences.** Le chapitre de déploiement (ch.05) dessine une **architecture identique par région**
+(répartiteur + N instances + base régionale) ; le **schéma** et le **contrat d'API** restent **uniques**.
+Sert `NFR-RGPD-05`. **Ancrage** : `NFR-RGPD-05` / ADR-019 / `AUD-03`.
