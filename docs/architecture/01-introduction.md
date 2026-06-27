@@ -70,7 +70,9 @@ La proposition d'architecture s'organise en chapitres continus :
 1. **Introduction** *(chapitre courant)* — objet, frontière audit / solution, démarche, conventions.
 2. **Audit de l'existant** — diagnostic technique : architectures (par pays et globale), état des
    lieux (fiabilité, sécurité, disponibilité), validation des critères de qualité.
-3. **Spécifications techniques et exigences non fonctionnelles** *(à venir)*.
+3. **Spécifications techniques et exigences non fonctionnelles** — spécifications de cadrage
+   (agnostiques en technologie) et NFR cible (dont fiabilité / disponibilité et authentification
+   machine de l'API).
 4. **Choix technologiques et alternatives** *(à venir)* — sélection et justification de la stack.
 5. **Architecture cible** *(à venir)* — vues de composants et de déploiement.
 6. **Modèle de données et de classes** *(à venir)*.
