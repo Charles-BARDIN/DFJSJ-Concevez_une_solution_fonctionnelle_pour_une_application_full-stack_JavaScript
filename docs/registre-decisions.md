@@ -299,3 +299,34 @@ au regard de la volumétrie (`AUD-04`) et de la criticité du service ; contrair
 (disponibilité, MTTR, fiabilité de livraison, taux d'erreur, capacité) et **orientent** le déploiement
 (redondance) et les bonnes pratiques (CI/CD, restauration éprouvée). Ils **ferment côté cible** le grief
 de fiabilité de l'audit (`AUD-07` / `AUD-08` / `AUD-09`).
+
+## ADR-018 — Authentification machine-to-machine de l'API exposée aux applications d'agence **[HYP]**
+**Contexte.** Le cahier des charges pose (§3) que l'accès des **applications d'agence tierces** à l'API
+est **authentifié séparément, dans la proposition d'architecture** : l'**existence** d'une
+authentification distincte est décidée, mais **aucun ADR n'en choisit le mécanisme**. Il faut le faire
+ici, et le **distinguer du RBAC humain** (ADR-002) : ce sont **deux plans d'autorisation** — un
+**humain** (client / agent de support, session utilisateur) et un **machine** (applications d'agence
+tierces, sans utilisateur interactif). Deux exigences contraignent le choix : la **journalisation des
+accès API agences** (`NFR-SEC-06`) et la volonté de **ne pas reproduire** les secrets statiques non
+tournés du socle historique (`AUD-12`). L'intégration doit rester **sobre** pour des tiers hétérogènes.
+**Options envisagées.** **Clés d'API** — secret statique par application : trivial à intégrer mais
+**sans expiration ni rotation native** (reproduit l'esprit d'`AUD-12`). **OAuth2 *client-credentials*
+(retenu)** — chaque application d'agence est un **client confidentiel** échangeant `client_id` /
+`secret` contre un **access token court**, avec **scopes par domaine**. **mTLS** — certificat client par
+application : authentification forte mais **PKI lourde** pour des tiers hétérogènes (sur-ingénierie
+d'intégration).
+**Décision : OAuth2 *client-credentials***, avec **scopes par domaine** (utilisateur / réservation /
+offre / agence) formant un **RBAC machine** parallèle et **distinct** du RBAC humain (ADR-002).
+Justification : **tokens courts + secret révocable / rotable** corrigent l'esprit d'`AUD-12` au lieu de
+le reproduire ; chaque appel porte un **`client_id` journalisable** (`NFR-SEC-06`) ; **flux standard
+outillé**, plus simple à câbler côté tiers qu'une PKI mTLS ; **séparation nette** des plans humain /
+machine. **mTLS** reste un **durcissement optionnel** pour les intégrations les plus sensibles
+(évolution).
+**Alternatives écartées.** **Clés d'API** — secret statique, rotation manuelle : **reconduit `AUD-12`**.
+**mTLS seul** — **PKI surdimensionnée** pour des tiers hétérogènes au regard du cadrage.
+**Conséquences.** La stack d'identité (chapitre choix techno) prévoit un **serveur d'autorisation**
+servant les **deux flux** ; le côté **humain est déjà *token-based*** (émission / refresh **stubés** dans
+la PoC, **ADR-006**), si bien que le flux *client-credentials* est un **ajout incrémental** et non un
+sous-système neuf. Le chapitre d'intégration des composants tiers décrit le parcours `client_id` /
+`secret` → token → appel API avec scopes ; `NFR-SEC-06` est alimenté (journalisation par `client_id`).
+Le plan d'autorisation machine est modélisé au déploiement, **distinct du RBAC humain** (ADR-002).
