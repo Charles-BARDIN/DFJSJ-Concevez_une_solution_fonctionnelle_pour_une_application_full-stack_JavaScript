@@ -9,7 +9,7 @@ du personnel se résument à deux points.
 
 Le système expose une **API CRUD par domaine** (utilisateur, réservation, offre, agence…) consommée
 par des **applications d'agence tierces** (exigence du v0). Ces applications sont des **composants
-tiers à intégrer**, **conçus et modélisés au Stade 3** (intégration des composants tiers, **C.1.7**) :
+tiers à intégrer**, **conçus et modélisés dans la proposition d'architecture** (intégration des composants tiers, **C.1.7**) :
 **aucun écran ni user story** n'est spécifié ici.
 
 - Les opérations d'**administration** (créer / modifier des offres et des agences, gérer les
@@ -17,7 +17,7 @@ tiers à intégrer**, **conçus et modélisés au Stade 3** (intégration des co
   de notre application.
 - La **clôture d'une réservation** (transition *confirmée → terminée*) est déclenchée par une
   application d'agence via l'API, **au retour du véhicule** ; la **machine à états** (incluant
-  *terminée* et *no-show*) est formalisée au **Stade 3** — voir **ADR-014** (registre des décisions).
+  *terminée* et *no-show*) est formalisée dans la **proposition d'architecture** — voir **ADR-014** (registre des décisions).
 
 ### 5.2 Agent de support (pendant du client dans le tchat)
 

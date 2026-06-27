@@ -11,7 +11,7 @@ Le support en temps réel répond à un besoin d'**assistance immédiate** (rés
 modification). Il est **justifié par l'accessibilité** : la persona **P4 (cliente sourde, §2.2)** est
 **exclue du support téléphonique** ; un **canal texte en temps réel** est le **canal inclusif** qui
 lui permet d'être assistée. Le tchat valide en outre la **brique temps réel** de l'architecture
-cible (**module séparable**, ADR-003) et fait l'objet de la **preuve de concept** (Stade 4).
+cible (**module séparable**, ADR-003) et fait l'objet de la **preuve de concept**.
 
 Le support a **deux côtés** : le **Customer** (client) et l'**Agent** de support (persona P6).
 L'agent **accède aux conversations en attente et en prend une en charge** dans le cadre du tchat
@@ -38,8 +38,7 @@ L'agent **accède aux conversations en attente et en prend une en charge** dans 
 - Le **rôle Agent** est **dérivé du jeton** (liaison identité/rôle).
 - **Accessibilité** : `A11Y-STRUCTURE`, `A11Y-CLAVIER`, `A11Y-NOM-ROLE`, `A11Y-ALTERNATIVES`.
 
-### 6.3 Critères validés par la preuve de concept (Stade 4)
-
+### 6.3 Critères validés par la preuve de concept
 La PoC démontre **exactement** les critères de sécurité et de temps réel ci-dessus (cohérence
 exigée par l'indicateur C.1.5) :
 
@@ -53,9 +52,9 @@ exigée par l'indicateur C.1.5) :
 > La **stack d'identité** (hachage argon2id, émission/refresh des jetons, vérification e-mail,
 > gestion des secrets, **wss/TLS**) est **spécifiée à l'architecture (§7)** et **stubée** dans la PoC
 > (jeton de test forgé par un helper étiqueté). Le **transport WebSocket sur client web**, la
-> **dégradation gracieuse** et la **reconnexion** sont assumés et précisés au **Stade 3**.
+> **dégradation gracieuse** et la **reconnexion** sont assumés et précisés dans la **proposition d'architecture**.
 
 ### 6.4 Liens transverses
 - **Architecture** : module temps réel **séparable** (gateway extractible, ADR-003) ; transport WebSocket, **persistance des messages** (historique), sécurité du handshake (§7).
-- **Preuve de concept (Stade 4)** : périmètre strict — **Customer + Agent**, handshake authentifié, échange, isolation ; **harness HTML nu** pour la démonstration ; **aucune** stack d'identité réimplémentée.
+- **Preuve de concept** : périmètre strict — **Customer + Agent**, handshake authentifié, échange, isolation ; **harness HTML nu** pour la démonstration ; **aucune** stack d'identité réimplémentée.
 - **Accessibilité** : le canal **texte** sert P4 ; l'interface de tchat respecte les étiquettes a11y (messages **annoncés**, **opérable au clavier**).

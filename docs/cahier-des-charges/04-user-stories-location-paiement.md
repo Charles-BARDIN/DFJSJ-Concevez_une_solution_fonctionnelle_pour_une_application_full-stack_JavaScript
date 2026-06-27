@@ -5,7 +5,7 @@ Cette section couvre le **parcours de location** : consultation et recherche (ou
 les décisions tracées : **catégories ACRISS** (ADR-008), **relation agence/ville/offre** (ADR-012),
 **politique modification/annulation/remboursement** (ADR-011) et **champs de réservation** (ADR-013).
 Le **paiement est externalisé** (v0) ; le choix du prestataire et l'intégration (webhooks, PCI-DSS,
-TLS) relèvent du Stade 3 et du §7.
+TLS) relèvent de la proposition d'architecture et du §7.
 
 *Convention (rappel §1.4) : priorité MoSCoW, critères « Étant donné / Quand / Alors », **étiquettes
 d'accessibilité** (§2.3), source.*
@@ -90,5 +90,5 @@ d'accessibilité** (§2.3), source.*
 - **Catégories de véhicule** : norme **ACRISS** (ADR-008) ; les offres et réservations sont au **niveau catégorie** (pas de gestion du parc à l'unité).
 - **Modèle agence / ville / offre** : ADR-012 — la recherche par ville se résout vers les **agences** de ces villes, qui portent les offres (retrait/retour en agence ; aller simple possible).
 - **Informations de réservation** : ADR-013 ; le **numéro de permis** relève de la **minimisation et de la conservation RGPD** (ADR-010, §7).
-- **Paiement et remboursements** : **externalisés** (v0) ; intégration prestataire (webhooks de confirmation, PCI-DSS, TLS, **aucune donnée de carte stockée**) précisée au **Stade 3** et en **§7**.
-- **États de réservation** (en attente de paiement → confirmée → modifiée / annulée / terminée / no-show) : la **machine à états** est formalisée au **Stade 3** (modèle de données et diagrammes).
+- **Paiement et remboursements** : **externalisés** (v0) ; intégration prestataire (webhooks de confirmation, PCI-DSS, TLS, **aucune donnée de carte stockée**) précisée dans la **proposition d'architecture** et en **§7**.
+- **États de réservation** (en attente de paiement → confirmée → modifiée / annulée / terminée / no-show) : la **machine à états** est formalisée dans la **proposition d'architecture** (modèle de données et diagrammes).

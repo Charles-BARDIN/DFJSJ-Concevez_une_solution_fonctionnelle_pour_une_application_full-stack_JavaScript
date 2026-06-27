@@ -76,7 +76,7 @@ il correspond au **parcours pré-authentification du Client** (mêmes personnes,
 
 > **Administration = applications d'agence tierces.** Les opérations de gestion (offres, agences,
 > réservations) sont réalisées par des **opérateurs d'applications d'agence tierces** — **hors
-> périmètre**, servis par l'API (composants tiers, §5 et Stade 3). Ils ne font pas l'objet d'un
+> périmètre**, servis par l'API (composants tiers, §5 et dans la proposition d'architecture). Ils ne font pas l'objet d'un
 > persona de notre système.
 
 ### 2.3 Référentiel d'accessibilité opérationnel
