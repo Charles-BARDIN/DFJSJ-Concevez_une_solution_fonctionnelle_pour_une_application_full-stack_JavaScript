@@ -10,8 +10,6 @@ applications actuelles, puis d'une **proposition d'architecture cible** (chapitr
 en **déduit la solution** ; leur articulation est cadrée au **chapitre 1**. Le diagnostic et le choix
 de la solution sont **deux parties distinctes**.
 
-Les chapitres non encore rédigés sont signalés « à venir ».
-
 | Ch. | Chapitre | Source |
 |---|---|---|
 | 1 | Introduction — objet, frontière audit / solution, démarche, conventions | [01-introduction.md](01-introduction.md) |
@@ -23,7 +21,7 @@ Les chapitres non encore rédigés sont signalés « à venir ».
 | 7 | Vues dynamiques (séquences) | [07-vues-dynamiques-sequences.md](07-vues-dynamiques-sequences.md) |
 | 8 | Intégration des composants tiers | [08-integration-composants-tiers.md](08-integration-composants-tiers.md) |
 | 9 | Bonnes pratiques — sécurité, accessibilité, écoconception | [09-bonnes-pratiques.md](09-bonnes-pratiques.md) |
-| 10 | Synthèse et couverture | à venir |
+| 10 | Synthèse et couverture | [10-synthese-couverture.md](10-synthese-couverture.md) |
 
 > Les **décisions structurantes** (fonctionnelles et techniques) sont consignées dans le
 > [registre des décisions](../registre-decisions.md), commun au cahier des charges et à la

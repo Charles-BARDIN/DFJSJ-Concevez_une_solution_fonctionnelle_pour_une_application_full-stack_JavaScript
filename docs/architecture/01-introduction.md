@@ -85,7 +85,7 @@ La proposition d'architecture s'organise en chapitres continus :
    protocoles, interopérabilité, compatibilité et sécurité des intégrations.
 9. **Bonnes pratiques** — sécurité (remédiation des constats d'audit), accessibilité (RGAA / WCAG 2.1
    AA), écoconception.
-10. **Synthèse et couverture** *(à venir)*.
+10. **Synthèse et couverture** — récapitulatif de la cible et carte de couverture des indicateurs.
 
 Le **sommaire navigable** (liens vers les fichiers sources) figure dans [`README.md`](README.md) ; le
 découpage des chapitres 3 à 10 pourra être affiné.
