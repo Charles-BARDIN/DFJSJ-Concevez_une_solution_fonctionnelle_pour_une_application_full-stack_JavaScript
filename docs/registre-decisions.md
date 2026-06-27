@@ -380,3 +380,47 @@ juridiction. **Fragmentation par pays** → c'est exactement `AUD-03`, rejeté.
 **Conséquences.** Le chapitre de déploiement (ch.05) dessine une **architecture identique par région**
 (répartiteur + N instances + base régionale) ; le **schéma** et le **contrat d'API** restent **uniques**.
 Sert `NFR-RGPD-05`. **Ancrage** : `NFR-RGPD-05` / ADR-019 / `AUD-03`.
+
+## ADR-021 — Prestataire de paiement **[HYP]**
+**Contexte.** Le v0 cite « **Stripe (par exemple)** » sans l'imposer. Le modèle de données (chapitre 6)
+est **déjà agnostique** au prestataire : l'entité `Payment` ne porte qu'une **référence de transaction
+opaque**, un **statut**, une **direction** (`charge` / `refund`) et un **montant / devise** — **aucune
+donnée de carte** (`NFR-SEC-05`) ; l'état `confirmed` de la réservation est déclenché par **webhook**.
+La décision porte donc **d'abord sur le mécanisme** de paiement ; le prestataire n'en est que
+l'**instance**, **réversible** par construction.
+**Décision.** Adopter un **mécanisme de paiement externalisé**, et retenir **Stripe** comme **instance**
+de ce mécanisme.
+
+*Le mécanisme* (indépendant du prestataire) :
+- **Collecte hébergée** par le prestataire (page / SDK) : la **carte ne transite jamais** par notre
+  *backend* → **PCI-DSS délégué** (`NFR-SEC-05`). C'est aussi la page hébergée qui **porte
+  l'authentification forte** (**3-D Secure / DSP2**), **hors de notre système** : nous ne manipulons ni
+  carte ni *challenge* d'authentification.
+- **Confirmation par webhook** : la transition vers l'état **`confirmed`** (machine à états, §6.3)
+  n'est appliquée **qu'après vérification de l'authenticité** de l'appel (**signature du prestataire
+  vérifiée**). Un webhook entrant qui modifie un état est une **surface de sécurité** : sans cette
+  vérification, un `confirmed` serait **forgeable**. Le **principe** est posé ici ; le détail
+  (vérification de signature, traitement) relève du chapitre 7 et des exigences de sécurité.
+- **Idempotence** : la **référence de transaction opaque** (chapitre 6) sert de **clé d'idempotence**
+  pour absorber les **re-livraisons** de webhook (relances du prestataire) — **sans** double transition
+  d'état ni double `Payment`.
+- **Remboursement / complément** via l'**API du prestataire**, matérialisé par un `Payment` **`charge`**
+  (hausse) ou **`refund`** (baisse) sur la **même** réservation (§6.4, matrice ADR-011).
+
+*L'instance* (Stripe) est justifiée par les **besoins**, non par l'exemple du v0 seul : **webhooks
+matures** (déclencheur d'état fiable) ; **multi-devise** (`NFR-I18N-02`) ; **collecte hébergée**
+(PCI-DSS délégué, `NFR-SEC-05`) ; **couverture UE + Amérique du Nord** avec **SCA / 3-D Secure**,
+cohérente avec le **déploiement régional** (ADR-020) ; **intégration sobre** au regard du cadrage.
+S'aligner sur l'exemple du donneur d'ordre est un **argument de cohérence supplémentaire**, **étayé**
+par ces critères.
+**Alternatives écartées.** **Adyen** (ou prestataire *mainstream* comparable) → couvre les mêmes
+critères ; **non disqualifié**, mais Stripe est préféré pour la **sobriété d'intégration** au stade
+cadrage — sa recevabilité **confirme l'agnosticité** du modèle. **Intégration bas niveau / collecte
+côté *backend*** → ferait **transiter la carte** par notre système et nous chargerait du PCI-DSS
+(`NFR-SEC-05`), rejetée. **Stocker un moyen de paiement chez nous** → rejeté (`NFR-SEC-05`).
+**Conséquences.** Le **mécanisme** étant **réversible**, changer de prestataire **ne modifie ni
+`Booking` ni `Payment`** : seul le **détail d'intégration** (chapitre 7) en dépend. Alimente le
+**chapitre 7** (séquence réservation → page hébergée → webhook authentifié → transition d'état ;
+modification → `charge` / `refund`) et le **chapitre 8** (le prestataire est un **composant tiers**, au
+même titre que les applications d'agence). **Confirme l'agnosticité** posée au chapitre 6, qui **n'est
+pas rouvert**.
