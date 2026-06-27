@@ -84,3 +84,84 @@ mobilisés** — afin d'ancrer chaque constat dans un fait et d'éviter les doub
 
 La **conclusion de l'audit** (§2.5) reprendra ces six critères un à un pour statuer, métriques à
 l'appui, sur leur **validation** par l'existant.
+
+### 2.3 Architecture de l'existant
+
+Your Car Your Way exploite aujourd'hui **quatre applications web distinctes**, issues de contextes
+historiques différents, **développées indépendamment**, avec des **technologies hétérogènes** et
+**sans stratégie d'unification technique**. L'architecture repose principalement sur des **monolithes
+web** déployés dans des environnements variés. Cette section **décrit** cet existant ; son **analyse**
+au regard des critères (§2.2) intervient en §2.4 et §2.5.
+
+#### 2.3.1 Architectures par pays
+
+| Famille | Contexte | Technologies | Hébergement / déploiement | Particularités (selon la description) |
+|---|---|---|---|---|
+| **France** (+ Allemagne, Espagne, Italie) | Première version du produit, base technique la plus ancienne ; DE / ES / IT en sont des déclinaisons | Backend **Node.js** ; frontend **CommonJS + EJS** ; **monolithe complet** (authentification, catalogue, réservation, paiement) | Serveurs **OVH** ; **déploiements manuels** | Base fonctionnelle riche mais **vieillissante** ; DE / ES / IT reposent sur les mêmes fondations, **code dérivé du cœur FR** souvent copié-adapté → **divergence progressive** ; fonctionnalités parfois différentes selon le pays (règles métier locales) |
+| **Royaume-Uni** | **Rachat** d'un produit existant | **PHP Laravel** | **AWS**, instances **EC2** classiques | Application plus récente mais **isolée** ; **différences fortes** sur le modèle de données et les règles de réservation |
+| **Canada** | Nouveau développement visant à **moderniser la stack** ; d'après la description, le résultat **n'a pas été à la hauteur** des attentes | Frontend **Angular** ; backend **Spring Boot** | **AWS**, architecture plus moderne | **Meilleure expérience utilisateur** ; première tentative d'unification visuelle, **restée locale** |
+| **États-Unis** | Mise à l'essai d'une **nouvelle stack** à l'occasion de ce projet | Frontend **React** ; backend **Node.js** | **Azure** (App Services / conteneurs) | **Seule application conteneurisée** ; projet plus ambitieux mais **jamais généralisé** aux autres pays |
+
+#### 2.3.2 Architecture globale
+
+Au-delà des quatre familles, la description relève quatre traits transverses :
+
+- **Style dominant** : **100 % monolithes web** — **aucun microservice**.
+- **API** : **limitées, hétérogènes, non unifiées**.
+- **Données** : **chaque pays possède sa propre base**, aux **schémas divergents**.
+- **Partage d'information** : **inexistant**, ou réalisé par des **échanges manuels**.
+
+#### 2.3.3 Cartographie de l'existant
+
+La figure ci-dessous synthétise le paysage : quatre piles applicatives indépendantes, chacune avec sa
+propre base, sans socle commun.
+
+```mermaid
+graph TB
+  Clients["Clients — selon le pays"]
+
+  subgraph S_FR["France + Allemagne / Espagne / Italie — OVH"]
+    FRapp["Monolithe web<br/>Node.js · CommonJS + EJS"]
+    FRdb[("Bases par pays<br/>schémas divergents")]
+    FRapp --> FRdb
+  end
+
+  subgraph S_UK["Royaume-Uni — AWS (EC2)"]
+    UKapp["Monolithe web<br/>PHP Laravel"]
+    UKdb[("Base UK")]
+    UKapp --> UKdb
+  end
+
+  subgraph S_CA["Canada — AWS"]
+    CAapp["Monolithe web<br/>Angular · Spring Boot"]
+    CAdb[("Base CA")]
+    CAapp --> CAdb
+  end
+
+  subgraph S_US["États-Unis — Azure (conteneurs)"]
+    USapp["Monolithe web conteneurisé<br/>React · Node.js"]
+    USdb[("Base US")]
+    USapp --> USdb
+  end
+
+  Clients --> FRapp
+  Clients --> UKapp
+  Clients --> CAapp
+  Clients --> USapp
+```
+
+**Figure 1 — Cartographie de l'existant.**
+
+**Alternative textuelle (Figure 1).** Le schéma représente **quatre applications web indépendantes**,
+une par marché national, **sans composant partagé** entre elles :
+
+- **France + Allemagne / Espagne / Italie** — un monolithe web **Node.js** (frontend CommonJS + EJS),
+  hébergé chez **OVH**, avec une **base par pays** aux schémas divergents ;
+- **Royaume-Uni** — un monolithe web **PHP Laravel**, hébergé sur **AWS (EC2)**, avec sa propre base ;
+- **Canada** — un monolithe web **Angular + Spring Boot**, hébergé sur **AWS**, avec sa propre base ;
+- **États-Unis** — un monolithe web **conteneurisé React + Node.js**, hébergé sur **Azure**, avec sa
+  propre base.
+
+Chaque application sert les clients de son pays et dispose de sa **propre base**. Il n'existe **aucune
+API unifiée** ni **socle commun** entre les applications ; le **partage d'information** est
+**inexistant** ou réalisé par des **échanges manuels**.
