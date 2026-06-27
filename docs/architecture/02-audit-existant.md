@@ -165,3 +165,121 @@ une par marché national, **sans composant partagé** entre elles :
 Chaque application sert les clients de son pays et dispose de sa **propre base**. Il n'existe **aucune
 API unifiée** ni **socle commun** entre les applications ; le **partage d'information** est
 **inexistant** ou réalisé par des **échanges manuels**.
+
+### 2.4 État des lieux technique
+
+Cette section **synthétise les métriques** de la description technique, **critère par critère** : elle
+établit les **faits** et **ce qu'ils signifient** techniquement. Elle ne **statue pas** encore sur la
+validation des critères — ce **verdict** relève de la conclusion (§2.5). Chaque constat est
+**identifié `AUD-NN`** et **renvoie à un chiffre** de la description.
+
+Les métriques font apparaître un **clivage récurrent** entre un **socle historique** — FR / DE / ES /
+IT, hébergé chez OVH — et des **applications plus récentes** — UK, CA, US, sur AWS / Azure ;
+l'application **US**, seule conteneurisée, présente le plus souvent les **meilleures métriques**. Ce
+clivage structure la lecture ci-dessous. Conformément à la **convention de rattachement** (§2.2), la
+*charge*, le *taux d'erreur* et le *taux de disponibilité* sont analysés une fois sous leur critère
+principal, puis **rappelés** sans être recomptés.
+
+#### 2.4.1 Maintenabilité
+
+- **`AUD-01` — Hétérogénéité technologique du parc.** Quatre piles distinctes coexistent : Node.js +
+  CommonJS/EJS (FR/DE/ES/IT), PHP Laravel (UK), Angular + Spring Boot (CA), React + Node.js (US),
+  **sans socle commun**. Autant de chaînes d'outils, de compétences et de cycles de mise à jour à
+  entretenir en parallèle.
+- **`AUD-02` — Duplication et divergence du code.** Les déclinaisons **DE, ES, IT** sont un **code
+  dérivé du cœur FR**, « copié / adapté », d'où une **divergence progressive** et des **règles métier
+  différentes selon le pays** : une même correction doit être reportée à la main sur plusieurs bases
+  de code.
+- **`AUD-03` — Fragmentation des données et des API.** **Une base par pays**, aux **schémas
+  divergents** ; des API « **limitées, hétérogènes, non unifiées** » ; un **partage d'information
+  inexistant ou manuel**. Aucune source de vérité commune entre les pays.
+
+> *Effet mesuré en aval* : l'absence d'automatisation de la livraison sur le socle historique
+> (déploiements **manuels**, OVH) se lit dans les métriques de fiabilité — réussite des déploiements
+> et délai de stabilisation (`AUD-07`).
+
+#### 2.4.2 Performance
+
+- **`AUD-04` — Charge maximale soutenable hétérogène.** Sans dégradation : **≈ 150 req/s**
+  (FR/DE/ES/IT), **≈ 250** (UK), **≈ 300** (CA), **≈ 350** (US). Le socle historique plafonne à
+  **moins de la moitié** de la capacité de l'application US, pour une même nature de service.
+- **`AUD-05` — Taux d'erreur en pic saisonnier.** Lors des pics (vacances) : **jusqu'à 4 %**
+  (FR/DE/ES/IT), **1,5 %** (UK/CA), **0,8 %** (US). L'écart de robustesse sous charge suit le clivage
+  historique / récent.
+
+#### 2.4.3 Évolutivité
+
+- **`AUD-06` — Aptitude à la mise à l'échelle contrainte par l'architecture.** Le parc est à **100 %
+  monolithique** (aucun microservice) ; **une seule application est conteneurisée** (US) ; la
+  **réplication** est **nulle** (FR/DE/ES/IT) ou **partielle** (UK/CA). Absorber une montée en charge
+  ou un nouveau pays dépend donc de la mise à l'échelle verticale de chaque monolithe — le **plafond
+  de charge** (`AUD-04`, rappelé) matérialise cette limite côté historique.
+
+#### 2.4.4 Fiabilité
+
+- **`AUD-07` — Réussite et stabilisation des livraisons.** Réussite des déploiements : **82 %** sur le
+  socle historique (**OVH, manuel**) contre **91 %** sur le cloud. Délai de stabilisation après mise à
+  jour : **3,4 jours** (FR/DE/ES/IT) contre **1,7 jour** (UK/CA/US). La chaîne de livraison historique
+  échoue davantage et met **environ deux fois plus de temps** à se stabiliser.
+- **`AUD-08` — Continuité et rétablissement.** Disponibilité moyenne sur 12 mois : **97,2 %**
+  (FR/DE/ES/IT) → **98,1 %** (CA) → **98,6 %** (UK) → **98,9 %** (US). MTTR : **≈ 2 h 45** sur OVH
+  contre **≈ 1 h 10** sur AWS / Azure. Le socle historique subit plus d'indisponibilité et **récupère
+  plus lentement**.
+- **`AUD-09` — Sauvegardes et restauration.** FR/DE/ES/IT : backups **manuels**, 1 ×/jour,
+  **restauration non testée** ; UK/CA : snapshots quotidiens AWS, **pas de tests réguliers** ; US :
+  sauvegardes Azure automatisées, **restauration testée tous les 90 jours**. La capacité réelle à
+  restaurer n'est **éprouvée que sur l'application US**.
+
+#### 2.4.5 Sécurité
+
+- **`AUD-10` — Hachage des mots de passe hétérogène.** **SHA-1** sur FR/DE/ES/IT (fonction
+  **cryptographiquement obsolète** pour des mots de passe) ; **bcrypt** sur UK (cost 10) et US
+  (strength 12) ; **argon2id** sur CA. Le socle historique stocke les mots de passe avec un algorithme
+  déprécié.
+- **`AUD-11` — Protocole de chiffrement hérité.** HTTPS est activé partout, mais **TLS 1.0** — version
+  **dépréciée** — reste accepté sur **FR et IT** « pour compatibilité ».
+- **`AUD-12` — Secrets en fichiers ou variables, sans rotation.** Secrets en **fichiers de
+  configuration** sur le serveur OVH (FR/DE/ES/IT) ; **variables d'environnement** AWS **sans rotation
+  automatisée** (UK/CA) ; **Azure KeyVault** utilisé **partiellement** (US, API seulement). Aucun pays
+  n'a une gestion des secrets complète.
+- **`AUD-13` — Dépendances vulnérables.** Part des packages présentant des vulnérabilités connues :
+  **41 %** (FR), **35–40 %** (DE/ES/IT), **18 %** (UK), **22 %** (CA), **11 %** (US). L'exposition
+  décroît du socle historique vers les applications récentes.
+
+> Ces constats de sécurité forment le **socle factuel** des exigences de sécurité exprimées au cahier
+> des charges (livrable 1, §7).
+
+#### 2.4.6 Disponibilité
+
+- **`AUD-14` — Indisponibilité mensuelle.** Temps moyen d'indisponibilité : **21 à 28 min**
+  (FR/DE/ES/IT), **9 à 16 min** (UK/CA), **7 min** (US). Le socle historique est **trois à quatre
+  fois** plus souvent indisponible que l'application US.
+- **`AUD-15` — Redondance variable.** **Aucune réplication** des instances applicatives sur
+  FR/DE/ES/IT ; **réplication partielle** sur UK/CA ; US **conteneurisé** mais **base non redondante**.
+  Sur le socle historique, la **panne d'une instance interrompt le service** (point de défaillance
+  unique) ; la *charge* et le *taux d'erreur en pic* (`AUD-04` / `AUD-05`, rappelés) pèsent davantage
+  là où il n'y a pas de redondance.
+
+#### 2.4.7 Synthèse des constats
+
+| Constat | Critère | Fait établi (chiffre) |
+|---|---|---|
+| `AUD-01` | Maintenabilité | 4 piles technologiques distinctes, sans socle commun |
+| `AUD-02` | Maintenabilité | Cœur FR copié-adapté en 3 déclinaisons (DE / ES / IT) |
+| `AUD-03` | Maintenabilité | 1 base par pays (schémas divergents) ; API non unifiées |
+| `AUD-04` | Performance | Charge max : 150 → 350 req/s (historique → US) |
+| `AUD-05` | Performance | Erreurs en pic : 4 % → 0,8 % |
+| `AUD-06` | Évolutivité | 100 % monolithes ; 1 conteneurisé ; réplication nulle / partielle |
+| `AUD-07` | Fiabilité | Déploiements 82 % / 91 % ; stabilisation 3,4 j / 1,7 j |
+| `AUD-08` | Fiabilité | Dispo 12 mois 97,2 → 98,9 % ; MTTR 2 h 45 / 1 h 10 |
+| `AUD-09` | Fiabilité | Restauration éprouvée seulement sur US (tous les 90 j) |
+| `AUD-10` | Sécurité | SHA-1 (historique) vs bcrypt / argon2id (récents) |
+| `AUD-11` | Sécurité | TLS 1.0 résiduel (FR, IT) |
+| `AUD-12` | Sécurité | Secrets : fichiers / env sans rotation / KeyVault partiel |
+| `AUD-13` | Sécurité | Dépendances vulnérables : 11 % → 41 % |
+| `AUD-14` | Disponibilité | Indisponibilité mensuelle : 7 → 28 min |
+| `AUD-15` | Disponibilité | Réplication nulle / partielle ; base US non redondante |
+
+Le **verdict critère par critère** — l'existant **valide-t-il** chacun de ces critères ? — ainsi que
+la lecture en **forces / faiblesses / contraintes** et les **directions de remédiation** font l'objet
+de la **conclusion** (§2.5).
