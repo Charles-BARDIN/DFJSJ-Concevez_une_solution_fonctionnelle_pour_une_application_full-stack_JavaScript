@@ -22,7 +22,7 @@ Les chapitres non encore rédigés sont signalés « à venir ».
 | 6 | Modèle de données et de classes | [06-modele-donnees-classes.md](06-modele-donnees-classes.md) |
 | 7 | Vues dynamiques (séquences) | [07-vues-dynamiques-sequences.md](07-vues-dynamiques-sequences.md) |
 | 8 | Intégration des composants tiers | [08-integration-composants-tiers.md](08-integration-composants-tiers.md) |
-| 9 | Bonnes pratiques — sécurité, accessibilité, écoconception | à venir |
+| 9 | Bonnes pratiques — sécurité, accessibilité, écoconception | [09-bonnes-pratiques.md](09-bonnes-pratiques.md) |
 | 10 | Synthèse et couverture | à venir |
 
 > Les **décisions structurantes** (fonctionnelles et techniques) sont consignées dans le
