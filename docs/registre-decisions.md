@@ -32,7 +32,7 @@ existantes**. La grille d'autoévaluation ne mentionne aucun back-office et rang
 l'**intégration de composants tiers** (C.1.7).
 **Décision.** Le système est composé de **(a)** une **application client** (le produit), **(b)** une
 **API CRUD par domaine** exposée à des **applications d'agence tierces** (composants tiers à
-intégrer, modélisés au Stade 3), et **(c)** un **tchat** dont l'un des participants est un **agent de
+intégrer, modélisés dans la proposition d'architecture), et **(c)** un **tchat** dont l'un des participants est un **agent de
 support**. L'usage « employé » existe **uniquement** comme **agent du tchat** (§6) et comme
 **consommateur de l'API**. **Pas de seconde application**, pas de back-office, pas de user stories de
 gestion.
@@ -245,3 +245,17 @@ fonctionnalité hors-sol, non traçable. Support uniquement e-mail / téléphone
 sourdes / malentendantes et ne valide pas la brique temps réel.
 **Conséquences.** US-CHAT-01 / US-CHAT-02 (§6) ; périmètre PoC strict (Customer + Agent, handshake
 authentifié, isolation) ; cohérent avec ADR-003.
+
+## ADR-016 — Export des données personnelles en self-service (droit d'accès / portabilité RGPD)
+**Contexte.** Le RGPD garantit au client un **droit d'accès** (art. 15) et un **droit à la portabilité**
+(art. 20) : obtenir une copie de ses données dans un format réutilisable. Le v0 n'en parle pas, et
+« consulter son profil » (US-PROF-01) **ne couvre pas** cette obligation, qui porte sur **l'ensemble**
+des données, sous forme **exportable**.
+**Décision.** Exposer un **export self-service** des données personnelles du client, dans un **format
+structuré et lisible par machine**, via une user story dédiée (**US-PROF-04**, §3.2) ; priorité
+**Should** en v1.
+**Alternatives écartées.** Rattacher le droit d'accès à « consulter son profil » → incorrect (le profil
+n'est ni l'ensemble des données, ni un export). Traitement **manuel** uniquement (sur demande, hors
+application) → admissible mais moins traçable et moins inclusif ; conservé comme repli si le
+self-service n'est pas livré en v1.
+**Conséquences.** US-PROF-04 (§3.2) ; NFR-RGPD-07 (§7) rattaché à cette US ; tracé en §8.2 / §8.3.

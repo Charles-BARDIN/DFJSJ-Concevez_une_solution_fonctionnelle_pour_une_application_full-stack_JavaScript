@@ -24,7 +24,7 @@ user story :
 | Remboursement 25 % à moins d'une semaine | US-LOC-07 (ADR-011) |
 | Paiement externalisé (prestataire en ligne) | US-PAY-01 ; NFR-SEC-05 |
 | Catégories de véhicule (norme ACRISS) | US-LOC-02 / US-LOC-03 (ADR-008) |
-| API CRUD pour les applications d'agence | §5.1 ; NFR-SEC-06 |
+| API CRUD pour les applications d'agence | §5.1 ; ADR-001 |
 
 → **Aucun besoin du v0 orphelin.**
 
@@ -37,6 +37,7 @@ Chaque user story renvoie à une source — *v0*, *implicite v0*, *énoncé* ou 
 | US-AUTH-01..05 (authentification) | implicite v0 → ADR-002 |
 | US-PROF-01 / US-PROF-02 (profil) | v0 |
 | US-PROF-03 (suppression de compte) | v0 + [HYP] ADR-010 (RGPD) |
+| US-PROF-04 (export des données personnelles) | **[HYP] ADR-016** — droit d'accès / portabilité (RGPD) |
 | US-LOC-01..05 (agences, recherche, offre, réservation, historique) | v0 |
 | US-LOC-06 / US-LOC-07 (modification, annulation) | v0 + [HYP] ADR-011 |
 | US-PAY-01 (paiement) | v0 |
@@ -58,6 +59,7 @@ Zones d'ombre du v0 comblées par décision — **détail dans le registre des d
 | Champs de réservation (permis, âge minimal) | ADR-013 |
 | Clôture (confirmée → terminée) via l'API, au retour du véhicule | ADR-014 |
 | Tchat = ajout au périmètre v0 | ADR-015 |
+| Export self-service des données personnelles (v1) | ADR-016 |
 
 **Encore à trancher** (dans la proposition d'architecture) : prestataire de paiement ; cibles de
 fiabilité / disponibilité (SLA / SLO).

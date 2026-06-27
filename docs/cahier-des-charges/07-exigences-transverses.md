@@ -66,7 +66,7 @@ chaque user story.
 | `NFR-RGPD-04` | **Information & consentement** : finalités explicites, mentions légales. | inscription ; réservation |
 | `NFR-RGPD-05` | **Transferts UE ↔ Amérique du Nord** encadrés par des mécanismes légaux (clauses contractuelles types / décision d'adéquation). | déploiement international |
 | `NFR-RGPD-06` | **Traçabilité** des accès aux données personnelles (journalisation). | §5 ; `NFR-SEC-06` |
-| `NFR-RGPD-07` | **Droit d'accès et portabilité** : le client peut **consulter** et **récupérer ses données personnelles** dans un **format réutilisable** (structuré, lisible par machine). | US-PROF-01 ; pendant de `NFR-RGPD-02` |
+| `NFR-RGPD-07` | **Droit d'accès et portabilité** : le client peut **récupérer l'ensemble de ses données personnelles** dans un **format réutilisable** (structuré, lisible par machine). | US-PROF-04 ; pendant de `NFR-RGPD-02` |
 
 *Priorité : Must (conformité légale).*
 

@@ -3,7 +3,7 @@
 Cette section couvre le **cycle de vie du compte** (authentification) et la **gestion du profil**,
 pour le profil **Client** défini en §2. Le **contrôle d'accès par rôle (RBAC)** distingue le
 **client** et l'**agent de support** (tchat, §6) ; l'accès des applications d'agence tierces à l'API
-est authentifié séparément (Stade 3). Conformément à **ADR-002**, l'authentification repose sur
+est authentifié séparément (dans la proposition d'architecture). Conformément à **ADR-002**, l'authentification repose sur
 **e-mail + mot de passe** (sans 2FA/SSO — évolution possible).
 
 Les mécanismes techniques sous-jacents — **hachage des mots de passe (argon2id), émission et
@@ -74,6 +74,13 @@ d'acceptation et ses **étiquettes d'accessibilité** (§2.3). Source : « v0 »
 - Les **données personnelles** sont **effacées ou anonymisées** ; les **données transactionnelles** soumises à obligation légale (réservations, facturation) sont **conservées sous forme anonymisée** (RGPD — **[HYP] ADR-010**, détaillé en §7).
 - Un **récapitulatif des conséquences** est présenté avant confirmation, en **langage clair**.
 - **Accessibilité** : `A11Y-FORMULAIRES`, `A11Y-LANGUE`, `A11Y-CLAVIER`, `A11Y-DELAIS`.
+
+**US-PROF-04 — Exporter ses données personnelles** · *Should* · *[HYP] ADR-016 (droit d'accès / portabilité RGPD)*
+> En tant que **client**, je veux **exporter mes données personnelles dans un format réutilisable**, afin d'**exercer mon droit d'accès et de portabilité (RGPD)**.
+
+- Étant donné un client connecté, quand il demande l'export, alors le système génère une **copie de l'ensemble de ses données personnelles** dans un **format structuré et lisible par machine** (réutilisable).
+- L'export couvre les données du **profil** et les **réservations** rattachées au client.
+- **Accessibilité** : `A11Y-FORMULAIRES`, `A11Y-CLAVIER`, `A11Y-NOM-ROLE` (statut de génération annoncé), `A11Y-LANGUE`.
 
 ### 3.3 Liens transverses
 - **Sécurité** (hachage, jetons, anti-énumération, TLS) et **RGPD** (droit à l'effacement, minimisation) : exigences détaillées en **§7** ; sémantique de la suppression de compte en **ADR-010**.
