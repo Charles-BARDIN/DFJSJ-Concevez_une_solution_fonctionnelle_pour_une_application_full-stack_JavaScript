@@ -16,4 +16,4 @@ Les sections non encore rédigées sont signalées « à venir ».
 | 5 | Usages du personnel et intégration des applications d'agence | [05-personnel-et-integration-agences.md](05-personnel-et-integration-agences.md) |
 | 6 | Support client en temps réel (tchat) | [06-user-story-tchat-support.md](06-user-story-tchat-support.md) |
 | 7 | Exigences transverses (non fonctionnelles) | [07-exigences-transverses.md](07-exigences-transverses.md) |
-| 8 | Traçabilité, hypothèses et couverture | *à venir* |
+| 8 | Traçabilité, hypothèses et couverture | [08-tracabilite-hypotheses-couverture.md](08-tracabilite-hypotheses-couverture.md) |
