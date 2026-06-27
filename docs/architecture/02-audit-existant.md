@@ -283,3 +283,86 @@ principal, puis **rappelés** sans être recomptés.
 Le **verdict critère par critère** — l'existant **valide-t-il** chacun de ces critères ? — ainsi que
 la lecture en **forces / faiblesses / contraintes** et les **directions de remédiation** font l'objet
 de la **conclusion** (§2.5).
+
+### 2.5 Conclusion de l'audit
+
+**Constat central.** Le problème dominant de l'existant **n'est pas la charge** : la volumétrie est
+**soutenue sans dégradation** partout (`AUD-04`, 150 → 350 req/s) et la **disponibilité reste
+correcte** (`AUD-14`, 7 → 28 min d'indisponibilité mensuelle). Le problème est celui de la
+**cohérence et de la maintenabilité** : **hétérogénéité** des technologies (`AUD-01`), **duplication**
+et **divergence** du code (`AUD-02`), **fragmentation des données** (`AUD-03`), aggravées par une
+**dette de sécurité** sur le socle historique (`AUD-10`→`AUD-13`). C'est sur ces axes structurants —
+et non sur la capacité — que l'existant ne tient pas.
+
+#### 2.5.1 Verdict critère par critère
+
+| Critère | Verdict | Justification (constats, chiffres) |
+|---|---|---|
+| **Maintenabilité** | **Non validé** | `AUD-01` (4 piles sans socle commun), `AUD-02` (cœur FR copié-adapté en DE/ES/IT), `AUD-03` (une base par pays, API non unifiées) |
+| **Performance** | **Validé** — réserve sur le socle historique | `AUD-04` (charge soutenue, 150 → 350 req/s), `AUD-05` (erreurs en pic 0,8 → 4 %) : acceptable, plus faible sur FR/DE/ES/IT |
+| **Évolutivité** | **Non validé** | **Cause première** : `AUD-01` (4 piles divergentes, sans socle commun) et `AUD-03` (données fragmentées, API non unifiées) — toute extension (nouveau pays, nouvelle fonction) se duplique sur des socles séparés. **Facteur secondaire** : `AUD-06` (des monolithes **cloisonnés, non unifiés et peu réplicables** — 1 seul conteneurisé, réplication nulle/partielle) |
+| **Fiabilité** | **Partiellement validé** | continuité correcte (`AUD-08` : 97,2 → 98,9 %, MTTR 2 h 45 / 1 h 10) ; **point faible** : livraison historique (`AUD-07` : 82 %, 3,4 j) et restauration non éprouvée hors US (`AUD-09`) |
+| **Sécurité** | **Non validé** | `AUD-10` (SHA-1), `AUD-11` (TLS 1.0), `AUD-12` (secrets en fichiers / sans rotation), `AUD-13` (jusqu'à 41 % de dépendances vulnérables) |
+| **Disponibilité** | **Validé** — réserve sur le socle historique | `AUD-14` (indisponibilité mensuelle modeste, 7 → 28 min) ; réserve : `AUD-15` (redondance nulle/partielle, base US non redondante) |
+
+En lecture nuancée : **deux critères runtime** (performance, disponibilité) sont **globalement
+satisfaits**, surtout sur UK/CA/US et perfectibles sur le socle historique ; la **fiabilité est
+inégale**, tirée vers le bas par la **livraison** ; **trois critères structurants** (maintenabilité,
+évolutivité, sécurité) **ne sont pas satisfaits**.
+
+#### 2.5.2 Forces, faiblesses et contraintes
+
+**Forces.**
+
+- Les **applications récentes** (UK/CA/US) offrent une **base saine** sur les axes runtime : charge
+  250 → 350 req/s (`AUD-04`), erreurs 0,8 → 1,5 % (`AUD-05`), MTTR ≈ 1 h 10 (`AUD-08`),
+  indisponibilité 7 → 16 min (`AUD-14`).
+- Des **pratiques modernes existent déjà localement** : **argon2id** (CA), **conteneurisation** et
+  **restauration testée** (US) (`AUD-09`, `AUD-10`).
+- La **charge n'est pas un facteur de risque** : elle est soutenue partout (`AUD-04`).
+
+**Faiblesses.**
+
+- **Cohérence / maintenabilité** : hétérogénéité (`AUD-01`), duplication (`AUD-02`), fragmentation des
+  données (`AUD-03`).
+- **Sécurité du socle historique** : SHA-1, TLS 1.0, secrets en fichiers, dépendances vulnérables
+  (`AUD-10`→`AUD-13`).
+- **Livraison et reprise** : déploiements manuels peu fiables et stabilisation lente (`AUD-07`),
+  sauvegardes non éprouvées (`AUD-09`).
+- **Évolutivité et résilience** : d'abord l'**éclatement du parc** — **piles divergentes** (`AUD-01`)
+  et **données fragmentées** (`AUD-03`) — qui renchérit chaque évolution ; s'y ajoutent des
+  **monolithes cloisonnés, non unifiés et peu réplicables** (`AUD-06`) et une **redondance absente sur
+  le socle historique** (`AUD-15`).
+
+**Contraintes** (à porter par la suite, sans préjuger de la solution).
+
+- **Reprise des données** : des bases par pays aux **schémas divergents** (`AUD-03`) — toute
+  convergence devra traiter la migration et la cohérence des données existantes.
+- **Spécificités locales** : des **règles métier propres à chaque pays** (`AUD-02`) à préserver, comme
+  la dimension internationale du produit.
+- **Continuité d'exploitation** : un parc **en production multi-pays** — la transition devra se faire
+  **sans rupture de service**.
+- **Conformité** : des **données personnelles** (RGPD) présentes dans chaque base, à protéger lors de
+  toute évolution.
+- **Compétences** : des équipes habituées à des piles **hétérogènes** (`AUD-01`).
+
+#### 2.5.3 Directions de remédiation
+
+Ces directions énoncent **les problèmes à traiter** ; elles **ne choisissent pas** la solution — le
+choix de l'architecture, des technologies et sa justification relèvent des **chapitres suivants**
+(proposition) et du **registre des décisions**.
+
+- **Unifier le socle technique et les données** pour résorber l'hétérogénéité, la duplication et la
+  fragmentation (`AUD-01`, `AUD-02`, `AUD-03`) — c'est l'**enjeu prioritaire**.
+- **Automatiser la livraison** (intégration et déploiement continus) et **éprouver les restaurations**
+  pour fiabiliser et accélérer les mises en production (`AUD-07`, `AUD-09`).
+- **Reprendre la dette de sécurité** : moderniser le **hachage** des mots de passe, retirer les
+  **protocoles dépréciés**, **centraliser et faire tourner les secrets**, réduire les **dépendances
+  vulnérables** (`AUD-10`→`AUD-13`).
+- **Renforcer la résilience** là où la redondance manque (`AUD-15`).
+- **Préparer la capacité d'évolution et de montée en charge** (`AUD-06`) — dont la **forme** relève de
+  la proposition.
+
+**Mise en perspective.** La priorité n'est **pas la capacité** — la charge est soutenue (`AUD-04`) et
+la disponibilité correcte (`AUD-14`) — mais la **cohérence, la maintenabilité et la sécurité**. C'est
+ce diagnostic qui **oriente** la proposition d'architecture cible, **objet des chapitres suivants**.
