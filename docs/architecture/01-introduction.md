@@ -81,7 +81,8 @@ La proposition d'architecture s'organise en chapitres continus :
    de la réservation, schéma relationnel.
 7. **Vues dynamiques** — diagrammes de séquence des flux porteurs (réservation-paiement-webhook,
    modification tarifaire, tchat).
-8. **Intégration des composants tiers** *(à venir)*.
+8. **Intégration des composants tiers** — applications d'agence (API) et prestataire de paiement :
+   protocoles, interopérabilité, compatibilité et sécurité des intégrations.
 9. **Bonnes pratiques** *(à venir)* — sécurité, accessibilité, écoconception.
 10. **Synthèse et couverture** *(à venir)*.
 
