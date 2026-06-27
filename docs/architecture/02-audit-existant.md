@@ -36,6 +36,15 @@ physique en agence et les processus métier non outillés sont hors sujet.
 ni à un audit de sécurité instrumenté. Ses constats sont donc **étayés par les métriques disponibles**
 et ne comportent **aucun jugement non documenté**.
 
+> **Note — deux mesures de disponibilité non réconciliées.** La source fournit **deux indicateurs de
+> disponibilité** qui ne sont **pas mutuellement cohérents** : le **taux de disponibilité annuel**
+> (`AUD-08`, 97,2 → 98,9 %) implique **plusieurs heures** d'indisponibilité par mois, tandis que le
+> **temps d'indisponibilité mensuel** (`AUD-14`, 7 → 28 min) correspond à une disponibilité **bien
+> supérieure** (de l'ordre de 99,9 % ou plus). L'audit **rapporte les deux telles que fournies** et ne
+> les **réconcilie pas** : la réconciliation n'est **pas dérivable** de la source. Le choix du chiffre
+> sur lequel ancrer une éventuelle **cible** relève de la **proposition** (frontière §1.2), non de
+> l'audit.
+
 ### 2.2 Critères d'évaluation
 
 L'existant est lu au travers de **six critères**. Trois sont **mis en avant par l'énoncé** comme axes
