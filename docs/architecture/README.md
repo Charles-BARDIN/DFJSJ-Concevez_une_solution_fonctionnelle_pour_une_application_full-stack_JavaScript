@@ -20,7 +20,7 @@ Les chapitres non encore rédigés sont signalés « à venir ».
 | 4 | Choix technologiques et alternatives | [04-choix-technologiques.md](04-choix-technologiques.md) |
 | 5 | Architecture cible — composants et déploiement | [05-architecture-cible-composants-deploiement.md](05-architecture-cible-composants-deploiement.md) |
 | 6 | Modèle de données et de classes | [06-modele-donnees-classes.md](06-modele-donnees-classes.md) |
-| 7 | Vues dynamiques (séquences) | à venir |
+| 7 | Vues dynamiques (séquences) | [07-vues-dynamiques-sequences.md](07-vues-dynamiques-sequences.md) |
 | 8 | Intégration des composants tiers | à venir |
 | 9 | Bonnes pratiques — sécurité, accessibilité, écoconception | à venir |
 | 10 | Synthèse et couverture | à venir |

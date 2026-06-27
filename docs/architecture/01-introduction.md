@@ -79,7 +79,8 @@ La proposition d'architecture s'organise en chapitres continus :
    séparable, déploiement régional).
 6. **Modèle de données et de classes** — vue de classes (domaines location et tchat), machine à états
    de la réservation, schéma relationnel.
-7. **Vues dynamiques** *(à venir)* — diagrammes de séquence.
+7. **Vues dynamiques** — diagrammes de séquence des flux porteurs (réservation-paiement-webhook,
+   modification tarifaire, tchat).
 8. **Intégration des composants tiers** *(à venir)*.
 9. **Bonnes pratiques** *(à venir)* — sécurité, accessibilité, écoconception.
 10. **Synthèse et couverture** *(à venir)*.
