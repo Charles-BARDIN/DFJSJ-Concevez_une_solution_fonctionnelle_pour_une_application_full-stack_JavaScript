@@ -79,6 +79,9 @@ Les **interactions** étiquetées :
 - la **couche API** et la **passerelle WebSocket** s'appuient sur le **module d'autorisation** ;
 - les **modules métier** et la **passerelle** lisent / écrivent dans la **base relationnelle**.
 
+La **passerelle temps réel inclut la persistance** des messages : le **module temps réel** porte son
+propre domaine (`conversation` / `message` / `participant`) et **écrit en base**.
+
 Le **paiement** et les **applications d'agence** sont des **composants tiers** : leur place et leurs
 protocoles sont montrés ici ; le **détail de leur intégration** est traité au **chapitre 8** (C.1.7).
 
@@ -153,7 +156,8 @@ horizontale** (ajout d'instances) et on le **redonde**. Cela sert **deux NFR** �
 
 La **base relationnelle** n'est **pas** la cible du *scaling* horizontal : elle est la **source de
 vérité unifiée délibérée** (la re-fragmenter réintroduirait `AUD-03`). La charge étant **modeste**
-(`AUD-04`), une **instance primaire + réplicas de lecture** suffit ; la base **n'est pas un goulot**.
+(`AUD-04`), une **instance primaire + réplicas de lecture** — **dans la même région** (cohérent avec la
+résidence ADR-020) — suffit ; la base **n'est pas un goulot**.
 
 #### 5.2.2 Tension WebSocket multi-instance — résolution sobre
 
