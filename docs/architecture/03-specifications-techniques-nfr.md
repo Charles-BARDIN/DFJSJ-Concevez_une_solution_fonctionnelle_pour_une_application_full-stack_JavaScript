@@ -11,7 +11,8 @@ d'infrastructure), qui n'est pas du ressort du cadrage.
 langage, ni *framework*, ni base de données concrète — c'est l'objet du **chapitre 4** (choix
 technologiques et alternatives). Il s'appuie en revanche sur les **décisions déjà actées** au registre,
 qu'il pose comme **données d'entrée** : style **modulithe modulaire** avec **module temps réel
-séparable** (**ADR-003**), **API CRUD REST par domaine** (**ADR-001**), **deux plans
+séparable** (**ADR-003**), **API CRUD par domaine** (**ADR-001** ; style **REST** arrêté au ch. 4 /
+**ADR-019**), **deux plans
 d'authentification** humain / machine (**ADR-002** / **ADR-018**), **base de données unifiée**
 (**ADR-003**, **ADR-012**).
 
@@ -38,10 +39,10 @@ Ils contraignent les choix du chapitre 4 **sans les anticiper**.
 | Spécification | Principe cible (cadrage) | Ancrage |
 |---|---|---|
 | **Style applicatif** | **Modulithe modulaire** : modules métier délimités, **une seule unité de déploiement**. Le **tchat / temps réel** est un **module séparable** doté d'une **couture d'extraction** (frontière de module, pas nœud déjà séparé). | ADR-003 |
-| **Exposition de service** | **API CRUD REST par domaine** (utilisateur, réservation, offre, agence…), **unifiée**, consommée par l'application client et par les **applications d'agence tierces**. | ADR-001 |
+| **Exposition de service** | **API CRUD par domaine** (utilisateur, réservation, offre, agence…), **unifiée**, consommée par l'application client et par les **applications d'agence tierces**. *(Le style **REST** est arrêté au ch. 4 / **ADR-019**.)* | ADR-001 |
 | **Données** | **Base unifiée** (source de vérité commune), modèle Ville–Agence–Offre et séparation données personnelles / transactionnelles posés au chapitre 6. | ADR-003 ; ADR-012 |
 | **Transport chiffré** | **TLS 1.2+** sur **tous** les échanges ; **terminaison TLS en bordure de plateforme** (passerelle d'entrée) ; **REST sur HTTPS** pour l'API, **WebSocket sécurisé (wss)** pour le tchat via la **passerelle temps réel** (module séparable). | `NFR-SEC-02` ; ADR-003 |
-| **Deux plans d'autorisation** | **Humain** — session / token utilisateur, **RBAC client / agent de support**. **Machine** — **OAuth2 client-credentials** pour les applications d'agence, **scopes par domaine**. Les deux plans sont **distincts** et ne se confondent pas. | ADR-002 ; ADR-018 |
+| **Deux plans d'autorisation** | **Humain** — **token utilisateur** (déjà *token-based*, ADR-006), **RBAC client / agent de support**. **Machine** — **OAuth2 client-credentials** pour les applications d'agence, **scopes par domaine**. Les deux plans sont **distincts** et ne se confondent pas. | ADR-002 ; ADR-018 |
 | **Attentes runtime** | **Redondance** des instances applicatives (sert la disponibilité) et **mise à l'échelle horizontale** (sert la capacité agrégée), **découlant des SLO** (§3.4) — **sans choisir l'infrastructure concrète**. | ADR-017 ; ADR-003 |
 
 > Ces principes sont **délibérément sobres** : ils répondent au diagnostic de l'audit (cohérence,
