@@ -326,8 +326,8 @@ inégale**, tirée vers le bas par la **livraison** ; **trois critères structur
 - Les **applications récentes** (UK/CA/US) offrent une **base saine** sur les axes runtime : charge
   250 → 350 req/s (`AUD-04`), erreurs 0,8 → 1,5 % (`AUD-05`), MTTR ≈ 1 h 10 (`AUD-08`),
   indisponibilité 7 → 16 min (`AUD-14`).
-- Des **pratiques modernes existent déjà localement** : **argon2id** (CA), **conteneurisation** et
-  **restauration testée** (US) (`AUD-09`, `AUD-10`).
+- Des **pratiques modernes existent déjà localement** : **argon2id** (CA, `AUD-10`), **conteneurisation**
+  (US, `AUD-06` / `AUD-15`) et **restauration testée** (US, `AUD-09`).
 - La **charge n'est pas un facteur de risque** : elle est soutenue partout (`AUD-04`).
 
 **Faiblesses.**
