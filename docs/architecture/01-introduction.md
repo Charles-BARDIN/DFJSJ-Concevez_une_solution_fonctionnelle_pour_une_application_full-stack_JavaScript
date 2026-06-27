@@ -73,7 +73,8 @@ La proposition d'architecture s'organise en chapitres continus :
 3. **Spécifications techniques et exigences non fonctionnelles** — spécifications de cadrage
    (agnostiques en technologie) et NFR cible (dont fiabilité / disponibilité et authentification
    machine de l'API).
-4. **Choix technologiques et alternatives** *(à venir)* — sélection et justification de la stack.
+4. **Choix technologiques et alternatives** — sélection et justification de la stack, couche par
+   couche, avec alternatives comparées.
 5. **Architecture cible** *(à venir)* — vues de composants et de déploiement.
 6. **Modèle de données et de classes** *(à venir)*.
 7. **Vues dynamiques** *(à venir)* — diagrammes de séquence.

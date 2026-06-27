@@ -17,7 +17,7 @@ Les chapitres non encore rédigés sont signalés « à venir ».
 | 1 | Introduction — objet, frontière audit / solution, démarche, conventions | [01-introduction.md](01-introduction.md) |
 | 2 | Audit de l'existant — diagnostic technique | [02-audit-existant.md](02-audit-existant.md) |
 | 3 | Spécifications techniques et exigences non fonctionnelles | [03-specifications-techniques-nfr.md](03-specifications-techniques-nfr.md) |
-| 4 | Choix technologiques et alternatives | à venir |
+| 4 | Choix technologiques et alternatives | [04-choix-technologiques.md](04-choix-technologiques.md) |
 | 5 | Architecture cible — composants et déploiement | à venir |
 | 6 | Modèle de données et de classes | à venir |
 | 7 | Vues dynamiques (séquences) | à venir |
