@@ -15,7 +15,7 @@ chaque user story.
 | `NFR-A11Y-01` | Conformité cible **RGAA / WCAG 2.1 AA** sur l'application client **et** l'interface de tchat. | §2.3 ; toutes les US §3-§6 |
 | `NFR-A11Y-02` | **Accessibilité par user story** : chaque US cite ses **étiquettes §2.3** dans ses critères (ADR-004). | US §3-§6 |
 | `NFR-A11Y-03` | **Livrables eux-mêmes accessibles** : hiérarchie de titres, tableaux à en-têtes, alternatives textuelles, intitulés de liens signifiants. | CDC, architecture, README |
-| `NFR-A11Y-04` | **Contrôle d'accessibilité** (revue par critères RGAA + tests automatisables) avant mise en production. | Stade 3/4 |
+| `NFR-A11Y-04` | **Contrôle d'accessibilité** (revue par critères RGAA + tests automatisables) avant mise en production. | Processus de développement (revue + CI) |
 
 *Priorité : Must (axe le plus pondéré).*
 
@@ -40,9 +40,9 @@ chaque user story.
 | `NFR-SEC-04` | **Anti-énumération** : messages neutres à la connexion et à la réinitialisation. | US-AUTH-03 / US-AUTH-05 |
 | `NFR-SEC-05` | **Paiement externalisé** : aucune donnée de carte stockée ; PCI-DSS délégué au prestataire. | US-PAY-01 |
 | `NFR-SEC-06` | **Journalisation** des actions sensibles (accès API agences, mises à jour de données). | §5 |
-| `NFR-SEC-07` | **Dépendances** : analyse de composition logicielle (**SCA**) en intégration continue + mises à jour. | Stade 3/4 |
+| `NFR-SEC-07` | **Dépendances** : analyse de composition logicielle (**SCA**) en intégration continue + mises à jour. | Intégration continue (CI) |
 
-**Constats de l'audit → remédiations** *(synthèse ; l'audit complet est au Stade 2, le §7 pose les exigences cibles)* :
+**Constats de l'audit → remédiations** *(synthèse ; l'audit complet figure dans la proposition d'architecture, le §7 pose les exigences cibles)* :
 
 | Constat (existant) | Remédiation cible |
 |---|---|
@@ -51,8 +51,8 @@ chaque user story.
 | **Secrets en fichiers** de configuration | **Gestionnaire de secrets** (`NFR-SEC-03`) |
 | **35–41 % de dépendances vulnérables** | **SCA en CI** + mises à jour (`NFR-SEC-07`) |
 
-> Les cibles de **fiabilité / disponibilité (SLA / SLO)** sont posées à l'**architecture (Stade 3)**,
-> à partir des constats de l'audit (Stade 2).
+> Les cibles de **fiabilité / disponibilité (SLA / SLO)** sont posées dans la **proposition
+> d'architecture**, à partir des constats de l'**audit de l'existant**.
 
 *Priorité : Must.*
 
@@ -66,6 +66,7 @@ chaque user story.
 | `NFR-RGPD-04` | **Information & consentement** : finalités explicites, mentions légales. | inscription ; réservation |
 | `NFR-RGPD-05` | **Transferts UE ↔ Amérique du Nord** encadrés par des mécanismes légaux (clauses contractuelles types / décision d'adéquation). | déploiement international |
 | `NFR-RGPD-06` | **Traçabilité** des accès aux données personnelles (journalisation). | §5 ; `NFR-SEC-06` |
+| `NFR-RGPD-07` | **Droit d'accès et portabilité** : le client peut **consulter** et **récupérer ses données personnelles** dans un **format réutilisable** (structuré, lisible par machine). | US-PROF-01 ; pendant de `NFR-RGPD-02` |
 
 *Priorité : Must (conformité légale).*
 
@@ -87,6 +88,6 @@ Set **concis et concret** (pas un catalogue) :
 - Décisions sous-jacentes : **ADR-004** (transverses retenues), **ADR-002** (auth / RBAC), **ADR-010**
   (suppression / RGPD), **ADR-013** (permis). Détail dans `registre-decisions.md`.
 - **Accessibilité** : référentiel et étiquettes en **§2.3** ; application par user story aux §3-§6.
-- **Audit → remédiations** : développé au **Stade 2** ; les remédiations cibles (sécurité) sont posées
-  ici et reprises dans l'architecture (Stade 3).
+- **Audit → remédiations** : développé dans l'**audit de l'existant** ; les remédiations cibles
+  (sécurité) sont posées ici et reprises dans la **proposition d'architecture**.
 - La **matrice de traçabilité** (§8) reliera *besoins → user stories → NFR*.
