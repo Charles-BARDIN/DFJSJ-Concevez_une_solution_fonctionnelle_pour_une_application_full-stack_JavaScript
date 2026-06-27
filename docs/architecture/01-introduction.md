@@ -75,7 +75,8 @@ La proposition d'architecture s'organise en chapitres continus :
    machine de l'API).
 4. **Choix technologiques et alternatives** — sélection et justification de la stack, couche par
    couche, avec alternatives comparées.
-5. **Architecture cible** *(à venir)* — vues de composants et de déploiement.
+5. **Architecture cible** — vues de composants et de déploiement (modulithe, module temps réel
+   séparable, déploiement régional).
 6. **Modèle de données et de classes** *(à venir)*.
 7. **Vues dynamiques** *(à venir)* — diagrammes de séquence.
 8. **Intégration des composants tiers** *(à venir)*.

@@ -193,5 +193,5 @@ aucune divergence.
 
 **Anti-sur-ingénierie.** La pile reste **sobre** : **mono-runtime** (un seul écosystème JS/TS),
 **modulithe**, **pas de broker**, **pas d'IdP lourd**, **pas de Nest dans la PoC**. La décision
-consolidée est enregistrée en **ADR-019** ; le **prestataire de paiement** est tranché séparément en
-**ADR-020** (Checkpoint B), avant les vues dynamiques (chapitre 7).
+consolidée est enregistrée en **ADR-019** ; le **prestataire de paiement** est tranché séparément au
+**Checkpoint B**, avant les vues dynamiques (chapitre 7).
