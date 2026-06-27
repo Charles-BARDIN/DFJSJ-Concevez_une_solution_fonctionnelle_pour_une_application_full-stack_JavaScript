@@ -259,3 +259,43 @@ n'est ni l'ensemble des données, ni un export). Traitement **manuel** uniquemen
 application) → admissible mais moins traçable et moins inclusif ; conservé comme repli si le
 self-service n'est pas livré en v1.
 **Conséquences.** US-PROF-04 (§3.2) ; NFR-RGPD-07 (§7) rattaché à cette US ; tracé en §8.2 / §8.3.
+
+## ADR-017 — Cibles de niveau de service (SLO) de la plateforme cible **[HYP]**
+**Contexte.** Le v0 ne fixe **aucune cible de niveau de service** ; l'audit fournit en revanche une
+**baseline mesurée** que toute cible doit honorer sans rien inventer. Trois faits cadrent la décision :
+la **charge n'est pas le problème** (`AUD-04`, 150 → 350 req/s soutenus partout) ; la **disponibilité
+annuelle** s'étage de **97,2 %** (FR/DE/ES/IT) à **98,9 %** (US) (`AUD-08`) ; la **fiabilité de
+livraison et de reprise** est le vrai point faible — MTTR ≈ 2 h 45 / ≈ 1 h 10 (`AUD-08`), réussite de
+déploiement 82 % / 91 % et stabilisation 3,4 j / 1,7 j (`AUD-07`), taux d'erreur en pic 0,8 → 4 %
+(`AUD-05`).
+**Divergence de mesure assumée.** La source donne **deux indicateurs de disponibilité non
+réconciliés** (cf. **note §2.1** de l'audit) : l'**annuel** (`AUD-08`, 97,2 → 98,9 %) implique
+plusieurs heures d'indisponibilité par mois ; le **mensuel** (`AUD-14`, 7 → 28 min) une disponibilité
+de l'ordre de **99,9 % ou plus**. Par **convention SLA**, la cible de disponibilité est **ancrée sur la
+base annuelle** ; ce choix est **explicité** plutôt que masqué — même posture d'honnêteté que la
+réserve de latence ci-dessous.
+**Options envisagées.** **Option A** — aligner sur le meilleur actuel (dispo 98,9 %, MTTR ≤ 1 h 10,
+déploiement ≥ 91 %) : reproduit le meilleur observé sans créditer les corrections structurelles.
+**Option B (retenue)** — meilleur relevé assorti de **planchers sobres**. **Option C** — haute
+disponibilité (≥ 99,95 %, multi-région) : non étayée par la volumétrie.
+**Décision : Option B.** Cibles posées comme **SLO internes** (le périmètre exercice n'a pas de SLA
+contractuel externe ; un SLA s'alignerait sur ces SLO) :
+
+| SLO | Valeur | Ancrage / justification |
+|---|---|---|
+| **Disponibilité (base annuelle)** | **≥ 99,9 %/an** (plancher délibéré) | Cible **ancrée sur l'annuel** (`AUD-08`). Ce n'est **pas** une promesse d'amélioration : contre le **mensuel** (`AUD-14`, ~99,99 %) elle reste **en deçà**. Pris au pied de la lettre, le mensuel imposerait du **4-nines** que la volumétrie (`AUD-04`) ne justifie pas ; ancrer l'annuel avec un plancher sobre est le seul choix cohérent avec l'**anti-sur-ingénierie** (ADR-003) |
+| **MTTR** | **≤ 1 h** | Aligne le parc sur le meilleur cloud ~1 h 10 (`AUD-08`), amélioré par redondance + runbook de reprise |
+| **Réussite de déploiement** | **≥ 95 %** | Au-dessus de 91 % (`AUD-07`), crédible via **CI/CD automatisée** remplaçant le déploiement manuel |
+| **Stabilisation post-release** | **≤ 1 j** | Sous le meilleur actuel 1,7 j (`AUD-07`), via tests automatisés en CI |
+| **Taux d'erreur en pic** | **≤ 1 %** | Relève le pire 4 % vers le meilleur 0,8 % (`AUD-05`) |
+| **Capacité sans dégradation** | **≥ 350 req/s en plancher** + mise à l'échelle **horizontale** | Unifier les applications régionales porte la **somme** des charges, pas le **max** d'une seule (350 = plafond d'**une** app US, `AUD-04`). La cible pose 350 en **plancher** et **scale horizontalement** (élasticité) plutôt qu'en boîte fixe plus grosse → répond à l'**agrégation** sans sur-dimensionner |
+
+**Réserve — latence.** L'audit **ne mesure pas** le temps de réponse ; **aucune cible p95 chiffrée**
+n'est posée (elle serait sans baseline). Objectif à **instrumenter** une fois la plateforme en place.
+**Alternatives écartées.** **Option A** — n'inscrit aucun progrès alors que la cible corrige
+précisément les causes (`AUD-07`, `AUD-15`). **Option C (4-nines / multi-région)** — **sur-ingénierie**
+au regard de la volumétrie (`AUD-04`) et de la criticité du service ; contraire à ADR-003.
+**Conséquences.** Ces SLO deviennent des **NFR mesurables** au chapitre des spécifications techniques
+(disponibilité, MTTR, fiabilité de livraison, taux d'erreur, capacité) et **orientent** le déploiement
+(redondance) et les bonnes pratiques (CI/CD, restauration éprouvée). Ils **ferment côté cible** le grief
+de fiabilité de l'audit (`AUD-07` / `AUD-08` / `AUD-09`).
