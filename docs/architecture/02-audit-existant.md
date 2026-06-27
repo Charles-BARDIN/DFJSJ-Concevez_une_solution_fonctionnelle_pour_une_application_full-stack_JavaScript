@@ -1,29 +1,11 @@
-# Proposition d'architecture — Your Car Your Way (Option B)
+## 2. Audit de l'existant
 
-| | |
-|---|---|
-| **Projet** | Your Car Your Way — nouvelle application web centralisée |
-| **Document** | Proposition d'architecture (livrable 2) |
-| **Version** | 0.1 — version de travail |
-| **Date** | Juin 2026 |
-| **Auteur** | Simon Charles Paul Bardin |
-
-> Ce document constitue le **livrable 2** du projet. Il s'ouvre par un **audit de l'existant** —
-> diagnostic technique des applications actuelles — préalable à la **proposition d'architecture
-> cible** qui le suit. Conformément à l'énoncé, l'**audit** et la **proposition de solution** sont
-> deux parties **distinctes** : le présent chapitre **diagnostique** l'existant ; il **ne choisit
-> pas** l'architecture cible. Le document se lit comme **un seul document continu**.
-
----
-
-## 1. Audit de l'existant
-
-### 1.1 Objet, périmètre et démarche
+### 2.1 Objet, périmètre et démarche
 
 **Objet.** Cet audit transforme la *description technique de l'existant* en un **diagnostic
 structuré**. Il identifie, pour le parc applicatif actuel de Your Car Your Way, ses **forces**, ses
 **faiblesses** et ses **contraintes techniques**, et établit dans quelle mesure l'existant **valide
-ou non** un ensemble de **critères de qualité** (§1.2) — sur la seule base des **faits et métriques**
+ou non** un ensemble de **critères de qualité** (§2.2) — sur la seule base des **faits et métriques**
 communiqués par la description technique.
 
 **Périmètre.** L'audit couvre les **quatre applications web** en production et leur **architecture
@@ -42,33 +24,19 @@ physique en agence et les processus métier non outillés sont hors sujet.
 **Démarche.** L'audit procède en quatre temps :
 
 1. **lecture de l'architecture** globale et par pays — technologies, hébergement, interactions
-   (§1.3) ;
-2. **définition et rappel des critères** d'évaluation (§1.2) ;
-3. **état des lieux** au regard des métriques disponibles (§1.4) ;
+   (§2.3) ;
+2. **définition et rappel des critères** d'évaluation (§2.2) ;
+3. **état des lieux** au regard des métriques disponibles (§2.4) ;
 4. **conclusion** établissant, **critère par critère**, ce que l'existant valide ou non, et
    **pointant des directions de remédiation** — sans préjuger des choix d'architecture cible, qui
-   relèvent des parties suivantes de ce livrable.
+   relèvent des chapitres de proposition (frontière rappelée en §1.2).
 
-Chaque constat de l'audit est **identifié** (`AUD-NN`) afin d'être repris, en aval, par les décisions
-d'architecture : la traçabilité **constat → remédiation** est ainsi préservée.
+**Limite méthodologique.** L'audit s'appuie **exclusivement** sur les éléments fournis par la
+*description technique de l'existant* ; il ne procède ni à un test de charge, ni à une revue de code,
+ni à un audit de sécurité instrumenté. Ses constats sont donc **étayés par les métriques disponibles**
+et ne comportent **aucun jugement non documenté**.
 
-**Sources.** *Description technique de l'existant* (source primaire des faits et des métriques) ;
-**cahier des charges fonctionnel** (livrable 1) en amont, qui renvoie d'ailleurs à cet audit pour le
-diagnostic technique (notamment ses exigences de sécurité, §7 du livrable 1). Les décisions
-structurantes du projet sont consignées dans le **registre des décisions**
-([`registre-decisions.md`](../registre-decisions.md)).
-
-**Limite de l'exercice.** L'audit s'appuie **exclusivement** sur les éléments fournis par la
-description technique ; il ne procède ni à un test de charge, ni à une revue de code, ni à un audit
-de sécurité instrumenté. Les constats sont donc **étayés par les métriques disponibles** et ne
-comportent **aucun jugement non documenté**.
-
-**Accessibilité du livrable.** Comme le cahier des charges, ce document respecte une **hiérarchie de
-titres régulière**, des **tableaux à en-têtes explicites** et des **intitulés de liens signifiants** ;
-tout **diagramme** (à partir de §1.3) est accompagné d'une **alternative textuelle** (voir **ADR-004**,
-registre des décisions).
-
-### 1.2 Critères d'évaluation
+### 2.2 Critères d'évaluation
 
 L'existant est lu au travers de **six critères**. Trois sont **mis en avant par l'énoncé** comme axes
 d'analyse prioritaires — **maintenabilité**, **performance**, **évolutivité** ; trois correspondent
@@ -114,5 +82,5 @@ mobilisés** — afin d'ancrer chaque constat dans un fait et d'éviter les doub
 > **fiabilité** pour le taux de disponibilité sur 12 mois — puis **rappelés** lorsqu'ils éclairent un
 > autre critère (évolutivité, disponibilité), **sans être recomptés**.
 
-La **conclusion de l'audit** (§1.5) reprendra ces six critères un à un pour statuer, métriques à
+La **conclusion de l'audit** (§2.5) reprendra ces six critères un à un pour statuer, métriques à
 l'appui, sur leur **validation** par l'existant.
