@@ -24,8 +24,9 @@ cp .env.example .env   # puis renseigner POC_TOKEN_SIGNING_KEY (cf. « Variables
 
 La **preuve de viabilité de la PoC, ce sont les tests** (pas l'interface). Les tests d'intégration
 prouvent le **handshake authentifié** (token valide → connexion ; absent/invalide → **HTTP 401** à
-l'upgrade) et l'**échange Customer↔Agent** : un message envoyé est **routé** aux participants de la
-même conversation et **persisté**.
+l'upgrade), l'**échange Customer↔Agent** (message **routé** aux participants de la même conversation
+et **persisté**) et l'**isolation de conversation** (un non-participant est **refusé** ; rien n'est
+persisté ni livré).
 
 ```bash
 npm test
@@ -79,7 +80,7 @@ La PoC persiste le **substrat tchat** du modèle ch.06 dans trois tables relatio
 | `message` | `id`, `conversation_id`, `sender_participant_id`, `body`, `sent_at` | `conversation_id` → `conversation(id)` ; `sender_participant_id` → `participant(id)` |
 
 - **Un compte = un siège par conversation** : la contrainte **`UNIQUE (conversation_id, user_account_id)`** interdit qu'un même compte siège deux fois dans une conversation (tentative rejetée par un **résultat typé**, pas une exception brute).
-- **Isolation** : portée par la relation **`participant` → `conversation`**. Le primitif `findParticipant(conversationId, userAccountId)` répond à « ce compte est-il participant de cette conversation ? » ; l'enforcement runtime s'y branchera.
+- **Isolation** : portée par la relation **`participant` → `conversation`**, **appliquée au runtime** : un message d'un compte **non-participant** est **refusé** (`Refusal{isolation_denied}`) — rien n'est persisté, rien n'est livré, seul l'émetteur est notifié (motif neutre, anti-énumération). Le primitif est `findParticipant(conversationId, userAccountId)`.
 - **Intégrité référentielle appliquée** : `PRAGMA foreign_keys = ON` (posé par l'adapter) — un message ne peut référencer ni une conversation ni un participant inexistants.
 - **`user_account_id`** est une **référence opaque** (`TEXT`) vers l'identité **stubée** : la PoC ne persiste pas de table `user_account`, donc aucune clé étrangère vers elle (ch.06 la pose en `BIGINT` FK ; ici l'identité est une chaîne opaque issue du stub).
 

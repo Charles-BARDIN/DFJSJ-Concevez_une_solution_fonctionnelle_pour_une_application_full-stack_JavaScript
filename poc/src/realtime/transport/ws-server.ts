@@ -4,14 +4,14 @@
  * nothing depends back on it (transport -> domain). Both ports are injected, never
  * singletons; the gateway never opens the database and never reads the environment.
  *
- * Scope at this step (3.2a): the authenticated handshake (step 2.2) plus the
- * nominal Customer<->Agent message exchange. A `send` frame is parsed, the sender
- * is resolved from the *connection* (never the payload), the message is persisted,
- * and the resulting `MessageEvent` is broadcast to every connection whose account
- * is a participant of that conversation (the sender included — echo). Conversation
- * isolation as *access control* (refusing a non-participant with
- * `Refusal{isolation_denied}`) is step 3.2b; here `findParticipant` only resolves
- * the sender's participant id.
+ * Scope: the authenticated handshake (step 2.2), the Customer<->Agent message
+ * exchange (step 3.2a), and conversation isolation (step 3.2b). A `send` frame is
+ * parsed; the sender is resolved from the *connection* (never the payload) to a
+ * participant of the *target* conversation. A non-participant is refused
+ * (`Refusal{isolation_denied}`) — nothing persisted, nothing delivered, only the
+ * sender notified. Otherwise the message is persisted and the resulting
+ * `MessageEvent` is broadcast to every connection whose account is a participant of
+ * that conversation (the sender included — echo).
  *
  * Authentication is enforced at the HTTP upgrade: any failure collapses to a
  * neutral HTTP 401 (anti-enumeration, NFR-SEC-04); no `auth_rejected` frame.
@@ -25,7 +25,7 @@ import { deriveSeatRole } from '../identity/seat-role';
 import type { ChatRepository } from '../domain/chat-repository';
 import type { ConversationId } from '../domain/conversation';
 import type { SeatRole, UserAccountId } from '../domain/participant';
-import type { MessageEvent, SendMessageCommand } from '../contract/messages';
+import type { MessageEvent, Refusal, SendMessageCommand } from '../contract/messages';
 
 export interface ConnectionContext {
   readonly userAccountId: UserAccountId;
@@ -83,6 +83,9 @@ function parseSendCommand(raw: string): SendMessageCommand | null {
   return { type: 'send', conversationId, body };
 }
 
+/** The neutral isolation refusal — sent only to a non-participant sender (no leak). */
+const ISOLATION_REFUSAL: Refusal = { type: 'refusal', reason: 'isolation_denied' };
+
 export function createChatServer({ identityService, chatRepository }: ChatServerDeps): Server {
   const httpServer = createServer();
   const wss = new WebSocketServer({ noServer: true });
@@ -110,11 +113,19 @@ export function createChatServer({ identityService, chatRepository }: ChatServer
     const command = parseSendCommand(raw);
     if (command === null) return;
 
-    // Resolve the sender's participant from the *connection* identity (trust
-    // boundary — never the payload). This is resolution, not access control: a
-    // non-participant is dropped here, and turns into Refusal{isolation_denied} at 3.2b.
+    // Isolation control. The sender's account is resolved to a participant of the
+    // *target* conversation via the Participant -> Conversation relation; identity
+    // comes from the connection (trust boundary), the conversation from the frame.
+    // A non-participant is refused: nothing is persisted, nothing is delivered, and
+    // only the sender is told — with a neutral reason that leaks neither the
+    // conversation's existence nor its members (anti-enumeration, NFR-SEC-04).
     const sender = chatRepository.findParticipant(command.conversationId, senderContext.userAccountId);
-    if (sender === null) return;
+    if (sender === null) {
+      if (senderWs.readyState === WebSocket.OPEN) {
+        senderWs.send(JSON.stringify(ISOLATION_REFUSAL));
+      }
+      return;
+    }
 
     const saved = chatRepository.saveMessage({
       conversationId: command.conversationId,
