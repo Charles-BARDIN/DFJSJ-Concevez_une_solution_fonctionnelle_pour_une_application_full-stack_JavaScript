@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Harness — Customer</title>
+    <style>
+      /* CSS réduit au strict lisible — aucun design (harness de démo, ADR-005). */
+      body { font-family: monospace; margin: 1rem; max-width: 42rem; }
+      #status { padding: 0.25rem 0.5rem; border: 1px solid #999; }
+      #messages { list-style: none; padding: 0; }
+      #messages li { padding: 0.15rem 0; border-bottom: 1px solid #ccc; }
+      .refusal { color: #b00000; }
+    </style>
+  </head>
+  <body>
+    <!-- Harness de démonstration (ADR-005) : WebSocket BRUT, aucune dépendance, aucun
+         framework, aucune logique produit. Il NE DÉTIENT AUCUN SECRET : le token est
+         forgé côté serveur et fourni à la main dans le query string ; le rôle
+         (customer/agent) est dérivé du token côté serveur, pas ici. La seule différence
+         entre customer.html et agent.html est le libellé du titre. -->
+    <h1>Tchat — côté Customer</h1>
+
+    <p>
+      <label for="server">Serveur WebSocket</label>
+      <input id="server" size="30" value="ws://127.0.0.1:8080" />
+      <button id="connect" type="button">Se connecter</button>
+    </p>
+
+    <p id="status" role="status" aria-live="polite">Déconnecté</p>
+
+    <p>
+      <label for="body">Message</label>
+      <input id="body" size="40" autocomplete="off" />
+      <button id="send" type="button" disabled>Envoyer</button>
+    </p>
+
+    <h2>Messages reçus</h2>
+    <ul id="messages" aria-live="polite"></ul>
+
+    <script>
+      const params = new URLSearchParams(location.search);
+      const token = params.get('token') ?? '';
+      const conversationId = params.get('conversationId') ?? '';
+
+      const byId = (id) => document.getElementById(id);
+      const statusEl = byId('status');
+      const messagesEl = byId('messages');
+      const bodyEl = byId('body');
+      const sendBtn = byId('send');
+      let ws = null;
+
+      function setStatus(text) {
+        statusEl.textContent = text;
+      }
+
+      function appendLine(text, className) {
+        const li = document.createElement('li');
+        li.textContent = text;
+        if (className) li.className = className;
+        messagesEl.appendChild(li);
+      }
+
+      function connect() {
+        if (!token) {
+          setStatus('Aucun token dans l’URL (ajouter ?token=...&conversationId=...)');
+          return;
+        }
+        const base = byId('server').value.trim();
+        let opened = false;
+        // Le token passe par le query string : c’est l’API WebSocket native du navigateur.
+        ws = new WebSocket(base + '/?token=' + encodeURIComponent(token));
+
+        ws.addEventListener('open', () => {
+          opened = true;
+          setStatus('Connecté');
+          sendBtn.disabled = false;
+        });
+        ws.addEventListener('message', (event) => {
+          let frame;
+          try {
+            frame = JSON.parse(event.data);
+          } catch {
+            return;
+          }
+          if (frame.type === 'message') {
+            appendLine(frame.senderParticipantId + ' : ' + frame.body + '  (' + frame.sentAt + ')');
+          } else if (frame.type === 'refusal') {
+            // Refus in-band : isolation refusée (l’émetteur n’est pas participant).
+            appendLine('REFUS : ' + frame.reason, 'refusal');
+          }
+        });
+        ws.addEventListener('error', () => {
+          // Le statut final est décidé par 'close' (selon qu’on a ouvert ou non).
+        });
+        ws.addEventListener('close', () => {
+          sendBtn.disabled = true;
+          // Fermé sans jamais s’ouvrir = handshake refusé (HTTP 401 à l’upgrade).
+          setStatus(opened ? 'Fermé' : 'Refusé au handshake (token absent/invalide → 401 à l’upgrade)');
+        });
+      }
+
+      function send() {
+        if (!ws || ws.readyState !== WebSocket.OPEN) return;
+        const body = bodyEl.value.trim();
+        if (!body) return;
+        // Trame client→serveur du contrat : AUCUNE identité d’émetteur (frontière de confiance).
+        ws.send(JSON.stringify({ type: 'send', conversationId, body }));
+        bodyEl.value = '';
+      }
+
+      byId('connect').addEventListener('click', connect);
+      sendBtn.addEventListener('click', send);
+      bodyEl.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') send();
+      });
+    </script>
+  </body>
+</html>

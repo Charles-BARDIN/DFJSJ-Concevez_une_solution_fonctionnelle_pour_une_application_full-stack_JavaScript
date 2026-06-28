@@ -34,3 +34,11 @@ export function loadPort(env: NodeJS.ProcessEnv = process.env): number {
   }
   return port;
 }
+
+const DEMO_SEED_ENV_VAR = 'POC_DEMO_SEED';
+
+/** Whether to run the additive demo seed at startup. Off unless `POC_DEMO_SEED` is `1`/`true`. */
+export function loadDemoSeed(env: NodeJS.ProcessEnv = process.env): boolean {
+  const raw = env[DEMO_SEED_ENV_VAR]?.trim();
+  return raw === '1' || raw === 'true';
+}

@@ -3,8 +3,13 @@
  * and the relational chat repository into the raw WebSocket gateway, then listens.
  * The database file and path are decided here; the realtime module receives a
  * `ChatRepository`, never a `Database`, and `process.env` is read only in config.ts.
+ *
+ * Demo mode (POC_DEMO_SEED, off by default) is additive: it seeds a demo
+ * conversation and prints test tokens at startup. Without it the server starts
+ * exactly as in production — an empty `:memory:` store, no seed, no token printout.
  */
-import { loadPort, loadTokenSigningKey } from './config';
+import { loadDemoSeed, loadPort, loadTokenSigningKey } from './config';
+import { seedDemo } from './demo-seed';
 import { StubIdentityService } from './realtime/identity/stub-identity-service';
 import {
   SqliteChatRepository,
@@ -18,7 +23,8 @@ import { createChatServer } from './realtime/transport/ws-server';
 const DATABASE_FILE = ':memory:';
 
 const port = loadPort();
-const identityService = new StubIdentityService(loadTokenSigningKey());
+const signingKey = loadTokenSigningKey();
+const identityService = new StubIdentityService(signingKey);
 
 const db = openDatabase(DATABASE_FILE);
 applySchema(db);
@@ -37,4 +43,16 @@ server.on('error', (error: NodeJS.ErrnoException) => {
 
 server.listen(port, () => {
   console.log(`PoC chat server listening on port ${port}`);
+
+  // Demo seed — off by default, additive. Prints exactly what the harness needs.
+  if (loadDemoSeed()) {
+    const { conversationId, customerToken, agentToken } = seedDemo(chatRepository, signingKey);
+    console.log('--- demo seed (POC_DEMO_SEED) ---');
+    console.log(`conversationId: ${conversationId}`);
+    console.log(`customer token: ${customerToken}`);
+    console.log(`agent token   : ${agentToken}`);
+    console.log(`customer page : harness/customer.html?token=${customerToken}&conversationId=${conversationId}`);
+    console.log(`agent page    : harness/agent.html?token=${agentToken}&conversationId=${conversationId}`);
+    console.log('---------------------------------');
+  }
 });

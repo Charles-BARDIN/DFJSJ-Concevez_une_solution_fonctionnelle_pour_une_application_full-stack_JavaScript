@@ -11,6 +11,7 @@
     "build": "tsc -p tsconfig.build.json && node -e \"require('node:fs').copyFileSync('src/realtime/persistence/schema.sql','dist/realtime/persistence/schema.sql')\"",
     "start": "node dist/server.js",
     "dev": "node --import tsx src/server.ts",
+    "demo": "POC_DEMO_SEED=1 node --env-file=.env dist/server.js",
     "test": "node --import tsx --test \"test/**/*.test.ts\""
   },
   "dependencies": {
