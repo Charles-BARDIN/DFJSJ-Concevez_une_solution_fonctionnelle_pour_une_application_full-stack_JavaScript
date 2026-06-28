@@ -23,8 +23,9 @@ cp .env.example .env   # puis renseigner POC_TOKEN_SIGNING_KEY (cf. « Variables
 ## Lancer les tests
 
 La **preuve de viabilité de la PoC, ce sont les tests** (pas l'interface). Les tests d'intégration
-prouvent le **handshake authentifié** : un token valide ouvre la connexion ; un token absent ou
-invalide est rejeté par un **HTTP 401** à l'upgrade.
+prouvent le **handshake authentifié** (token valide → connexion ; absent/invalide → **HTTP 401** à
+l'upgrade) et l'**échange Customer↔Agent** : un message envoyé est **routé** aux participants de la
+même conversation et **persisté**.
 
 ```bash
 npm test
@@ -39,8 +40,9 @@ npm run build
 node --env-file=.env dist/server.js
 ```
 
-Le serveur écoute le handshake authentifié sur le port **8080**. Le raccourci `npm start` lance
-`node dist/server.js` (la clé doit alors déjà être présente dans l'environnement) ; en
+Le serveur écoute sur le port **`POC_PORT`** (défaut **8080**). **Si le port est déjà utilisé**, il
+l'indique clairement et s'arrête proprement — définir `POC_PORT` sur un port libre. Le raccourci
+`npm start` lance `node dist/server.js` (la clé doit déjà être présente dans l'environnement) ; en
 développement, `npm run dev` exécute la source via `tsx`, sans build.
 
 ## Lancer le harness
@@ -53,6 +55,7 @@ signature depuis l'environnement.
 | Variable | Rôle |
 |---|---|
 | `POC_TOKEN_SIGNING_KEY` | Clé **HMAC-SHA256** de signature du **token de test** utilisé au handshake. Propre au **stub du service d'identité** — distincte de la vraie stack d'identité (OIDC / argon2id), spécifiée seulement à l'architecture (ADR-006). |
+| `POC_PORT` | Port d'écoute du serveur. **Optionnel** — défaut **8080**, entier 1..65535. |
 
 Le modèle est fourni dans `.env.example`. Sur un poste de développement :
 

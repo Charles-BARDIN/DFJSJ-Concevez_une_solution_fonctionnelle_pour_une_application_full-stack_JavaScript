@@ -7,17 +7,29 @@ import { WebSocket } from 'ws';
 import { createChatServer } from '../src/realtime/transport/ws-server';
 import { StubIdentityService } from '../src/realtime/identity/stub-identity-service';
 import { signTestToken } from '../src/realtime/identity/token';
+import {
+  SqliteChatRepository,
+  applySchema,
+  openDatabase,
+} from '../src/realtime/persistence/sqlite-chat-repository';
 
 const KEY = 'integration-test-key';
 
 async function startServer(): Promise<{ url: string; close: () => Promise<void> }> {
-  const server = createChatServer({ identityService: new StubIdentityService(KEY) });
+  const db = openDatabase(':memory:');
+  applySchema(db);
+  const server = createChatServer({
+    identityService: new StubIdentityService(KEY),
+    chatRepository: new SqliteChatRepository(db),
+  });
   await new Promise<void>((resolve) => server.listen(0, resolve));
   const { port } = server.address() as AddressInfo;
   return {
     url: `ws://127.0.0.1:${port}`,
-    close: () =>
-      new Promise<void>((resolve, reject) => server.close((err) => (err ? reject(err) : resolve()))),
+    close: async () => {
+      await new Promise<void>((resolve, reject) => server.close((err) => (err ? reject(err) : resolve())));
+      db.close();
+    },
   };
 }
 

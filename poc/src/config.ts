@@ -17,3 +17,20 @@ export function loadTokenSigningKey(env: NodeJS.ProcessEnv = process.env): strin
   }
   return key;
 }
+
+const PORT_ENV_VAR = 'POC_PORT';
+const DEFAULT_PORT = 8080;
+
+/**
+ * Read the server listen port from the environment. Optional: defaults to 8080 when
+ * absent or blank; otherwise it must be an integer port in 1..65535, else fail-fast.
+ */
+export function loadPort(env: NodeJS.ProcessEnv = process.env): number {
+  const raw = env[PORT_ENV_VAR]?.trim();
+  if (raw === undefined || raw === '') return DEFAULT_PORT;
+  const port = Number(raw);
+  if (!/^\d+$/.test(raw) || port < 1 || port > 65535) {
+    throw new Error(`Invalid ${PORT_ENV_VAR} "${raw}": expected an integer port in 1..65535`);
+  }
+  return port;
+}
