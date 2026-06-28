@@ -3,9 +3,9 @@
  *
  * The real-time module *consumes* identity through this port (a TS interface),
  * never through a shared singleton, so an extracted module would only need an
- * implementation of this contract. A "stub of the identity service" will satisfy
- * it at step 2 (verifying the signed test token); token verification is NOT
- * implemented here — only the contract is declared.
+ * implementation of this contract. A "stub of the identity service" satisfies it
+ * in the PoC (verifying a signed test token); the target identity stack
+ * (issuance / refresh / OIDC) is architecture-only (ADR-006).
  */
 import type { UserAccountId } from '../domain/participant';
 
@@ -17,25 +17,32 @@ import type { UserAccountId } from '../domain/participant';
  */
 export type AccountRole = 'client' | 'support_agent';
 
-/** A verified identity, returned by the identity service after a successful handshake. */
+/** A verified identity, returned by the identity service on success. */
 export interface VerifiedIdentity {
   readonly userAccountId: UserAccountId;
   readonly accountRole: AccountRole;
 }
 
+/** Why a verification failed: token integrity vs claim shape. */
+export type VerificationFailureReason = 'invalid_token' | 'invalid_claims';
+
 /**
- * Port consumed by the real-time module to authenticate a connection. Modelled as
- * potentially remote (returns a promise) so the boundary stays honest even though
- * the step-2 stub verifies the token in process.
+ * Result of a verification — a typed ok/failure value, never a throw, so the
+ * handshake (step 2.2) can branch cleanly and tests can assert on the outcome.
+ * The transport maps any failure to a `Refusal` with reason `auth_rejected`,
+ * without leaking which check failed.
  */
+export type VerificationResult =
+  | { readonly ok: true; readonly identity: VerifiedIdentity }
+  | { readonly ok: false; readonly reason: VerificationFailureReason };
+
 export interface IdentityService {
   /**
-   * Verify a raw access token presented at the WebSocket handshake and resolve the
-   * associated verified identity. Implementations reject when the token is absent
-   * or invalid; the transport maps that rejection to a `Refusal` with reason
-   * `auth_rejected`. Not implemented at this step.
+   * Verify a raw access token presented at the WebSocket handshake. Returns a
+   * typed result (never throws on an invalid token). The PoC implementation is a
+   * stub (ADR-006); a real implementation could be remote, hence the promise.
    *
-   * @param token signed access token presented by the connecting client.
+   * @param token raw access token presented by the connecting client.
    */
-  verify(token: string): Promise<VerifiedIdentity>;
+  verify(token: string): Promise<VerificationResult>;
 }
