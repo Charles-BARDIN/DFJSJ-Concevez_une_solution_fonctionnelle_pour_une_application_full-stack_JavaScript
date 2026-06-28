@@ -6,9 +6,40 @@ isolation de conversation).
 
 ## Prérequis
 
+- [Node.js](https://nodejs.org/) **≥ 22** (le projet utilise le lanceur de tests intégré
+  `node --test` et le chargement natif `--env-file`).
+
 ## Installation
 
+```bash
+git clone <url-du-dépôt>
+cd <dépôt>/poc
+npm install
+cp .env.example .env   # puis renseigner POC_TOKEN_SIGNING_KEY (cf. « Variables d'environnement »)
+```
+
 ## Lancer les tests
+
+La **preuve de viabilité de la PoC, ce sont les tests** (pas l'interface). Les tests d'intégration
+prouvent le **handshake authentifié** : un token valide ouvre la connexion ; un token absent ou
+invalide est rejeté par un **HTTP 401** à l'upgrade.
+
+```bash
+npm test
+```
+
+`npm run typecheck` vérifie les types sans rien émettre.
+
+## Lancer le serveur
+
+```bash
+npm run build
+node --env-file=.env dist/server.js
+```
+
+Le serveur écoute le handshake authentifié sur le port **8080**. Le raccourci `npm start` lance
+`node dist/server.js` (la clé doit alors déjà être présente dans l'environnement) ; en
+développement, `npm run dev` exécute la source via `tsx`, sans build.
 
 ## Lancer le harness
 

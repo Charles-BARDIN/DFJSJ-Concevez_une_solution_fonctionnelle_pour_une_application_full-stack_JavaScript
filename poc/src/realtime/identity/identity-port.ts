@@ -29,8 +29,9 @@ export type VerificationFailureReason = 'invalid_token' | 'invalid_claims';
 /**
  * Result of a verification — a typed ok/failure value, never a throw, so the
  * handshake (step 2.2) can branch cleanly and tests can assert on the outcome.
- * The transport maps any failure to a `Refusal` with reason `auth_rejected`,
- * without leaking which check failed.
+ * The transport maps *any* failure to a single neutral HTTP 401 at the upgrade —
+ * no WebSocket is opened for an unauthenticated client, and the failing check is
+ * never revealed (anti-enumeration, NFR-SEC-04).
  */
 export type VerificationResult =
   | { readonly ok: true; readonly identity: VerifiedIdentity }

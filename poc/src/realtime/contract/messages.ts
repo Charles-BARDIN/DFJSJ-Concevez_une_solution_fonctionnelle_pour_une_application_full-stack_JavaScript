@@ -40,17 +40,20 @@ export interface MessageEvent {
   readonly sentAt: string;
 }
 
-/** Why the server refused a frame or a connection. */
+/**
+ * Why the server refused something *after* the handshake. Authentication is NOT
+ * refused with a frame: an unauthenticated client is rejected with a neutral HTTP
+ * 401 at the upgrade and never gets a WebSocket (see the identity port). This frame
+ * is therefore only for post-handshake refusals over an established connection.
+ */
 export type RefusalReason =
-  /** Handshake token absent or invalid (enforced at step 2). */
-  | 'auth_rejected'
   /** Access to a conversation the connection is not a participant of (step 3). */
-  | 'isolation_denied';
+  'isolation_denied';
 
 /**
- * Server -> client: an expressible refusal. Steps 2 and 3 return this frame to
- * reject an unauthenticated handshake or an out-of-isolation access; declaring it
- * now keeps those rejections part of the contract rather than ad-hoc socket closes.
+ * Server -> client: an expressible refusal over an *established* connection. Used
+ * at step 3 for an out-of-isolation access; declared now so that rejection is part
+ * of the contract rather than an ad-hoc socket close.
  */
 export interface Refusal {
   readonly type: 'refusal';
