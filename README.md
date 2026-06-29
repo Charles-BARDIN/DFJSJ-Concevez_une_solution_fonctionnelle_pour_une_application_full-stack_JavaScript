@@ -23,5 +23,5 @@ Ce dépôt rassemble :
 
 ## Mise en place de la preuve de concept
 
-Les instructions d'installation, de lancement et de test de la PoC — destinées aux
-développeurs juniors — seront documentées ici lors du développement de la preuve de concept.
+L'installation, le lancement et les tests de la preuve de concept sont documentés dans
+[`poc/README.md`](poc/README.md).

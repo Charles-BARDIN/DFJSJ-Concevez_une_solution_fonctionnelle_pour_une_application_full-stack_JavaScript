@@ -8,7 +8,7 @@ isolation de conversation).
 
 - [Node.js](https://nodejs.org/) **≥ 22** (le projet utilise le lanceur de tests intégré
   `node --test` et le chargement natif `--env-file`).
-- **`better-sqlite3`** est un module natif : `npm install` télécharge un **binaire précompilé** pour
+- **`better-sqlite3`** est un module natif : `npm ci` télécharge un **binaire précompilé** pour
   les versions LTS de Node (dont 22) — **ni daemon ni compilation native** requis.
 
 ## Installation
@@ -16,7 +16,7 @@ isolation de conversation).
 ```bash
 git clone <url-du-dépôt>
 cd <dépôt>/poc
-npm install
+npm ci
 cp .env.example .env   # puis renseigner POC_TOKEN_SIGNING_KEY (cf. « Variables d'environnement »)
 ```
 
