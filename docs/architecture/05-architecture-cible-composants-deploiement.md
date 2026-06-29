@@ -144,6 +144,11 @@ et Amérique du Nord. Dans **chaque** région :
 Les **données résident dans leur région** (ADR-020) ; la **structure** (répartiteur, instances, base)
 est **la même** des deux côtés.
 
+> **Périmètre — parcours transrégional.** Chaque client est servi par sa **région de résidence**.
+> Réserver **hors de sa région** relèverait d'une **évolution** (fédération d'identité inter-région),
+> **hors périmètre v1** : le **cloisonnement régional** imposé par le RGPD (ADR-020 / `NFR-RGPD-05`)
+> **prime** sur ce confort, et rien dans le v0 ne le réclame.
+
 #### 5.2.1 Redondance et mise à l'échelle — sur le tier stateless
 
 Le **répartiteur + N instances** forment un **tier stateless** : on l'augmente par **mise à l'échelle

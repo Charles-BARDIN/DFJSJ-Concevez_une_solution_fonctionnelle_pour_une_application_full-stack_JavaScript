@@ -93,8 +93,8 @@ divergence** (`AUD-01`). La justification est **l'écosystème**, **pas le débi
 
 ### 4.6 Style d'API — REST sur HTTPS
 
-**Choix : REST.** Le chapitre 3 posait « API CRUD REST par domaine » comme **donnée d'entrée** (ADR-001)
-sans le **justifier** ; la justification se fait **ici**. L'API est une **API CRUD par domaine**
+**Choix : REST.** Le chapitre 3 posait « API CRUD par domaine » comme **donnée d'entrée** (ADR-001) en
+**différant** le choix du **style** d'API ; la justification du **style REST** se fait **ici** (ADR-019). L'API est une **API CRUD par domaine**
 consommée par des **applications d'agence tierces hétérogènes** (C.1.7) : c'est la **friction
 d'intégration** qui prime. REST offre l'**interopérabilité maximale** et un **outillage ubiquitaire**.
 L'ancrage est le **besoin** (C.1.7 + ADR-001), sans `AUD-NN` forcé.
@@ -139,7 +139,7 @@ reste **in-process** dans le modulithe (module séparable).
 
 ### 4.9 Identité et autorisation — OAuth2 / OIDC + argon2id
 
-**Choix : un serveur d'autorisation standard servant les deux flux**, avec **hachage argon2id**
+**Choix : un module d'autorisation interne servant les deux flux**, avec **hachage argon2id**
 (`NFR-SEC-01`, pratique déjà éprouvée en CA, `AUD-10`). La précision des protocoles :
 
 - **flux humain** (client, agent de support) : **OIDC** — émission d'un **ID token** identifiant
@@ -147,10 +147,10 @@ reste **in-process** dans le modulithe (module séparable).
 - **flux machine** (applications d'agence) : **client-credentials**, qui est de l'**OAuth2 pur** —
   **pas d'utilisateur, pas d'ID token** (ADR-018).
 
-Autrement dit, le serveur sert **OAuth2 pour les deux flux**, et **OIDC se superpose au seul flux
+Autrement dit, ce module sert **OAuth2 pour les deux flux**, et **OIDC se superpose au seul flux
 humain**. Les deux plans d'autorisation restent **distincts** (ADR-002 / ADR-018).
 
-**Spécifié, mais stubé dans la PoC.** Le serveur d'autorisation est **spécifié au niveau architecture**
+**Spécifié, mais stubé dans la PoC.** Ce module d'autorisation est **spécifié au niveau architecture**
 mais **délibérément non instancié en produit lourd** : la PoC **stube** la stack d'identité (ADR-006)
 via un helper de vérification de token. Imposer un IdP déployé obligerait la PoC à le **contourner
 maladroitement**.
@@ -162,7 +162,7 @@ maladroitement**.
 
 ### 4.10 Cohérence stack ↔ PoC
 
-La cohérence entre la stack annoncée et la PoC du Stade 4 est une **exigence explicite de C.1.4**. La
+La cohérence entre la stack annoncée et la preuve de concept est une **exigence explicite de C.1.4**. La
 PoC implémente un **sous-ensemble fidèle** de la cible :
 
 - **serveur WebSocket Node / `ws` brut** — **pas de Nest dans la PoC** (le transport temps réel est
@@ -193,5 +193,4 @@ aucune divergence.
 
 **Anti-sur-ingénierie.** La pile reste **sobre** : **mono-runtime** (un seul écosystème JS/TS),
 **modulithe**, **pas de broker**, **pas d'IdP lourd**, **pas de Nest dans la PoC**. La décision
-consolidée est enregistrée en **ADR-019** ; le **prestataire de paiement** est tranché séparément au
-**Checkpoint B**, avant les vues dynamiques (chapitre 7).
+consolidée est enregistrée en **ADR-019** ; le **prestataire de paiement** est arrêté en **ADR-021**.

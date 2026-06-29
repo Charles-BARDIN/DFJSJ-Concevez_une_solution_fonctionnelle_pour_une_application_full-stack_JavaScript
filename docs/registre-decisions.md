@@ -356,13 +356,12 @@ règle les fautes du socle historique (`AUD-10` / `AUD-11` / `AUD-07`) **indépe
 **Alternatives écartées (transverses).** Pile **polyglotte** (plusieurs runtimes / langages) →
 reproduirait `AUD-01`. *Greenfield* sur technologies **absentes du parc** → barre injustifiée par
 l'audit.
-**Conséquences.** Fixe la stack cible **et celle de la PoC** (Stade 4), qui en implémente un
+**Conséquences.** Fixe la stack cible **et celle de la preuve de concept**, qui en implémente un
 **sous-ensemble** : serveur **WebSocket Node / `ws` brut** (**pas de Nest dans la PoC**), **stockage
 relationnel** pour `conversation` / `message` / `participant` (**structure documentée dans le
 README**), **helper de token stubé** (ADR-006), **hygiène des secrets** de base (clé de signature en
 **variable d'environnement**, `.env.example`). La PoC **donne à voir la séparabilité** du module temps
-réel par sa structure. Le **paiement** (prestataire) est tranché séparément au **Checkpoint B** (son
-numéro d'ADR lui est attribué à son commit).
+réel par sa structure. Le **paiement** est arrêté en **ADR-021**.
 
 ## ADR-020 — Résidence régionale des données de la plateforme unifiée
 **Contexte.** Le produit est **déployé à l'international** (« tous les clients », v0) et `NFR-RGPD-05`

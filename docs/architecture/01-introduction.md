@@ -4,13 +4,13 @@
 |---|---|
 | **Projet** | Your Car Your Way — nouvelle application web centralisée |
 | **Document** | Proposition d'architecture (livrable 2) |
-| **Version** | 0.1 — version de travail |
+| **Version** | 1.0 |
 | **Date** | Juin 2026 |
 | **Auteur** | Simon Charles Paul Bardin |
 
 > Ce document constitue le **livrable 2** du projet. Il se lit comme **un seul document continu** ;
 > le **livrable officiel est le PDF unique** produit par concaténation de ses chapitres (sommaire
-> navigable : [`README.md`](README.md)).
+> navigable : [sommaire du livrable](README.md)).
 
 ---
 
@@ -47,7 +47,7 @@ des directions** de remédiation, sans préjuger de la solution.
 **Démarche.** Le document part des **besoins** (livrable 1) et de la **description technique de
 l'existant**, en tire un **audit** (chapitre 2), puis en déduit une **architecture cible justifiée**
 (chapitres suivants). Les décisions structurantes — fonctionnelles et techniques — sont consignées
-dans le **registre des décisions** ([`registre-decisions.md`](../registre-decisions.md)), au format
+dans le **[registre des décisions](../registre-decisions.md)**, au format
 ADR.
 
 **Conventions de rédaction.**
@@ -87,5 +87,4 @@ La proposition d'architecture s'organise en chapitres continus :
    AA), écoconception.
 10. **Synthèse et couverture** — récapitulatif de la cible et carte de couverture des indicateurs.
 
-Le **sommaire navigable** (liens vers les fichiers sources) figure dans [`README.md`](README.md) ; le
-découpage des chapitres 3 à 10 pourra être affiné.
+Le **sommaire navigable** (liens vers les fichiers sources) figure dans le [sommaire du livrable](README.md).
