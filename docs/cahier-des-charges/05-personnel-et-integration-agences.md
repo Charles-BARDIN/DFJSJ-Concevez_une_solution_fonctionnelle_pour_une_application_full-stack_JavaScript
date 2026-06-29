@@ -25,3 +25,9 @@ Le **seul usage « personnel » dans le périmètre** est l'**agent de support**
 tchat** : il est le pendant du **client** dans l'échange temps réel. Ses besoins et critères
 d'acceptation figurent au **§6** (US-CHAT-02) ; aucune autre capacité ne lui est attribuée dans notre
 système. L'accessibilité de l'interface de tchat s'applique aussi à lui (persona P6, §2).
+
+Le **provisioning des comptes `support_agent`** (création, gestion) relève de l'**administration
+interne** de YCYW — **hors périmètre v1**, au même titre que l'**exploitation en agence** déjà exclue :
+le v1 couvre le **client en self-service** (inscription → compte client, §3) et l'**API tierce** (§5.1),
+**pas** un outil d'administration des agents (ni via les applications d'agence, qui sont tierces).
+Voir **ADR-001** (pas de back-office) et **ADR-002** (RBAC client / agent de support).

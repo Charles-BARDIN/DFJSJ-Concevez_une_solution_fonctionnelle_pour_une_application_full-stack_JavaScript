@@ -56,6 +56,13 @@ Conformément à **ADR-004**, l'accessibilité se joue à **deux niveaux**, comm
   **ARIA live**), focus géré — l'interface de tchat est concernée au même titre que le reste
   (`NFR-A11Y-01`).
 
+> **Paiement — responsabilité a11y partagée.** La **collecte de carte** et le **3-D Secure** se font sur
+> la **page hébergée** du prestataire (ADR-021), hors de notre UI : YCYW garantit l'accessibilité de
+> **son** tunnel (parcours jusqu'à la **redirection** et au **retour**), et la **conformité WCAG de la
+> page hébergée** devient un **critère de sélection du prestataire** (ADR-021, prestataire = **instance
+> réversible** — l'a11y entre dans les critères de choix). C'est la **contrepartie assumée** de
+> l'externalisation PCI-DSS (`NFR-SEC-05`).
+
 **Accessibilité des livrables eux-mêmes** (`NFR-A11Y-03`) : **hiérarchie de titres régulière**,
 **tableaux à en-têtes**, **alternatives textuelles de tous les diagrammes Mermaid** — pratique tenue
 depuis le chapitre 2. Un **contrôle d'accessibilité en intégration continue** (`NFR-A11Y-04`) précède la
