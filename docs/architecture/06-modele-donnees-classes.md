@@ -38,8 +38,8 @@ classDiagram
     pickup_agency_id
     return_agency_id
     acriss_category_code
-    start_date
-    end_date
+    start_at
+    end_at
     price_amount
     price_currency
   }
@@ -135,8 +135,9 @@ utilisateur**.
   retour** peuvent **différer** (aller simple, ADR-012) ;
 - **AcrissCategory** (code ACRISS, label) **catégorise** les offres : la modélisation est au **niveau
   catégorie**, **pas** au véhicule à l'unité (ADR-008) ;
-- **Offer** (offre : id, agence de retrait, agence de retour, catégorie ACRISS, dates de début / fin,
-  **price_amount + price_currency**) — ses villes sont **dérivées** des agences ;
+- **Offer** (offre : id, agence de retrait, agence de retour, catégorie ACRISS, **début / fin
+  horodatés — date et heure** (`start_at` / `end_at`, v0), **price_amount + price_currency**) — ses
+  villes sont **dérivées** des agences ;
 - **UserAccount** (compte : id, email, password_hash, role, status) — `role` distingue **client** et
   **agent de support** (RBAC, ADR-002) ;
 - **PersonalProfile** *(données personnelles)* : **0..1** par compte (identité du titulaire :
@@ -283,11 +284,11 @@ CREATE TABLE offer (
   pickup_agency_id     BIGINT NOT NULL REFERENCES agency(id),
   return_agency_id     BIGINT NOT NULL REFERENCES agency(id),  -- peut différer (aller simple)
   acriss_category_code CHAR(4) NOT NULL REFERENCES acriss_category(code),
-  start_date           DATE NOT NULL,
-  end_date             DATE NOT NULL,
+  start_at             TIMESTAMPTZ NOT NULL,                   -- date ET heure de départ (v0) ; UTC + offset conservé
+  end_at               TIMESTAMPTZ NOT NULL,                   -- date ET heure de retour (v0)
   price_amount         NUMERIC(12,2) NOT NULL,
   price_currency       CHAR(3) NOT NULL,                       -- ISO 4217, devise explicite
-  CHECK (end_date >= start_date)
+  CHECK (end_at >= start_at)
 );
 
 CREATE TABLE user_account (
