@@ -25,19 +25,19 @@ La proposition tient en quelques piliers, chacun justifié à son chapitre :
 ### 10.2 Carte de couverture des indicateurs
 
 Chaque indicateur **C.1.x** est rattaché à son **emplacement de traitement** et à sa **preuve**. Les
-indicateurs portés par la **preuve de concept** (Stade 4) sont marqués « **confirmé au Stade 4** » : le
-livrable 2 les **prépare**, la PoC les **réalise**.
+indicateurs portés par la **preuve de concept** (livrable 3) sont marqués « **confirmé par la preuve
+de concept** » : le livrable 2 les **prépare**, la preuve de concept les **a réalisés**.
 
 | Indicateur | Où il est traité | Preuve / artefact |
 |---|---|---|
 | **C.1.1** — besoins → exigences fonctionnelles | **Livrable 1** (cahier des charges, §1-§8) | User stories + critères d'acceptation ; personas (dont PSH) ; périmètre (ADR-001) |
 | **C.1.2** — spécifications techniques cohérentes avec le fonctionnel | **Livrable 2, ch. 3** | Spécifications de cadrage + NFR (dont axe SLO et `NFR-SEC-08`) |
-| **C.1.3** — audit (structure, forces / faiblesses / risques) **et** exploitation de l'audit | **ch. 2** (sous-indicateurs 1-2) + **ch. 9 §9.2 / §9.5** (sous-indicateur 3) | Audit `AUD-01`→`AUD-15`, verdict §2.5 ; **table de remédiation** §9.2 — **les trois sous-indicateurs sont couverts** |
-| **C.1.4** — choix technologiques comparés + cohérence PoC | **ch. 4** (comparatif par couche, ADR-019) + **§4.10** | Alternatives écartées par couche ; cohérence stack ↔ PoC — **confirmé au Stade 4** (repo PoC) |
-| **C.1.5** — modélisation UML + PoC démontre la viabilité | **ch. 5** (composants / déploiement) + **ch. 6** (classes) + **ch. 7** (séquences) | Figures 2-8 + alt-textes ; PoC tchat (handshake / échange / isolation) — **confirmé au Stade 4** |
-| **C.1.6** — modèle de données + mise en œuvre dans la PoC | **ch. 6** (modèle + DDL) | Modèle des deux domaines ; substrat `conversation` / `message` / `participant` — **mise en œuvre confirmée au Stade 4** |
+| **C.1.3** — audit (structure, forces / faiblesses / risques) **et** exploitation de l'audit | **ch. 2** (sous-indicateurs 1-2) + **ch. 3 / 4 / 5 / 9** (sous-indicateur 3) | Audit `AUD-01`→`AUD-15`, verdict §2.5 ; cible justifiée à partir de l'audit — modulithe / base unifiée (`AUD-01/02/03`, ch.4), refus des microservices (`AUD-04`, ch.4-5), SLO / redondance (`AUD-07/08/15`, ch.3 §3.4 / ch.5 §5.2.1), **bouclage sécurité** (`AUD-10`→`13`, table §9.2) — **les trois sous-indicateurs sont couverts** |
+| **C.1.4** — choix technologiques comparés + cohérence PoC | **ch. 4** (comparatif par couche, ADR-019) + **§4.10** | Alternatives écartées par couche ; cohérence stack ↔ PoC — **confirmé par la preuve de concept** (repo PoC) |
+| **C.1.5** — modélisation UML + PoC démontre la viabilité | **ch. 5** (composants / déploiement) + **ch. 6** (classes) + **ch. 7** (séquences) | Figures 2-8 + alt-textes ; PoC tchat (handshake / échange / isolation) — **confirmé par la preuve de concept** |
+| **C.1.6** — modèle de données + mise en œuvre dans la PoC | **ch. 6** (modèle + DDL) | Modèle des deux domaines ; substrat `conversation` / `message` / `participant` — **mise en œuvre confirmée par la preuve de concept** |
 | **C.1.7** — intégration des composants tiers + interopérabilité + bonnes pratiques | **ch. 8** (deux tiers, interopérabilité) + **ch. 9** (transverses) | Auth M2M (figure 9), webhook signé ; remédiation sécurité, a11y, écoconception |
-| **C.1.8** — environnement de développement + README junior + gestion des secrets | **Stade 4** (repo PoC) | Setup reproductible, README, `.env.example` — **confirmé au Stade 4** |
+| **C.1.8** — environnement de développement + README junior + gestion des secrets | **preuve de concept** (repo PoC) | Setup reproductible, README, `.env.example` — **confirmé par la preuve de concept** |
 
 Aucun indicateur n'est orphelin.
 
@@ -58,4 +58,4 @@ et à la présente proposition (livrable 2). Les grands arbitrages :
 | Prestataire de paiement | ADR-021 |
 
 Le livrable 2 est ainsi complet : l'**audit** diagnostique l'existant, la **proposition** en déduit une
-cible **justifiée**, et la **preuve de concept** (Stade 4) en validera la brique temps réel.
+cible **justifiée**, et la **preuve de concept** (livrable 3) **en a validé** la brique temps réel.

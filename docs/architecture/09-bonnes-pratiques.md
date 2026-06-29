@@ -9,9 +9,10 @@ Conformément à **ADR-004**, les exigences transverses sont des **exigences à 
 l'**accessibilité** est la **plus pondérée**. Le présent chapitre ne récite **aucun référentiel** : il
 **cible ce produit** et, pour la sécurité, **répond nommément à l'audit**.
 
-Ce volet **ferme le troisième sous-indicateur de C.1.3** (« exploiter l'audit pour orienter et
-justifier la cible ») : la table de remédiation §9.2 répond, **constat par constat**, au verdict
-« sécurité **non validée** » de l'audit (§2.5). La **sécurité propre aux intégrations tierces** (auth
+Ce volet **boucle le dernier verdict négatif de l'audit** — la **sécurité** (« non validée », §2.5) :
+la table de remédiation §9.2 y répond **constat par constat**. L'**exploitation de l'audit pour
+justifier la cible** (troisième sous-indicateur de C.1.3) ne se limite **pas** à ce chapitre : elle est
+**répartie ch.3 / 4 / 5 / 9** (cf. §9.5). La **sécurité propre aux intégrations tierces** (auth
 machine, webhook signé, TLS des échanges) a été traitée au **chapitre 8** ; elle est **référencée**
 ici, **pas re-détaillée**.
 
@@ -86,8 +87,12 @@ mesures ajoutées.
 L'audit (§2.5) déclarait la **sécurité « non validée »**. La cible y **répond constat par constat** —
 SHA-1 → argon2id (`AUD-10`), TLS 1.0 → TLS 1.2+/wss (`AUD-11`), secrets en fichiers → gestionnaire +
 rotation (`AUD-12`), dépendances vulnérables → SCA en CI (`AUD-13`) — chaque correction **ancrée** (table
-§9.2). Le **troisième sous-indicateur de C.1.3** (exploiter l'audit pour **justifier** la cible) est
-ainsi **bouclé**.
+§9.2). L'**exploitation de l'audit pour justifier la cible** (troisième sous-indicateur de C.1.3) ne
+se joue **pas seulement ici** : elle est **répartie** — modulithe et base unifiée répondent à
+`AUD-01` / `AUD-02` / `AUD-03` (ch.4), le refus des microservices à `AUD-04` (ch.4-5), les SLO et la
+redondance à `AUD-07` / `AUD-08` / `AUD-15` (ch.3 §3.4, ch.5 §5.2.1). Le **présent chapitre boucle le
+dernier verdict négatif resté ouvert**, la **sécurité** (`AUD-10`→`AUD-13`, table §9.2) ; le
+sous-indicateur est ainsi **couvert par l'ensemble ch.3 / 4 / 5 / 9**.
 
 **Rattachement au registre.**
 

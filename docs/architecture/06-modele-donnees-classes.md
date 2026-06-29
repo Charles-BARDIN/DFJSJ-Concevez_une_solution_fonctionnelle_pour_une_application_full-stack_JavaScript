@@ -2,7 +2,7 @@
 
 Ce chapitre pose le **modèle de la cible** : une **vue de classes** des deux domaines (location et
 tchat), la **machine à états** de la réservation, et un **schéma relationnel de cadrage**. Il est la
-**source** de ce que la preuve de concept (Stade 4) implémentera pour le tchat
+**source** de ce que la preuve de concept (livrable 3) implémentera pour le tchat
 (`conversation` / `message` / `participant`). Le niveau reste le **cadrage** : entités, attributs clés,
 relations et contraintes importantes — **pas** un schéma de production exhaustif (index fins,
 partitionnement : hors cadrage).
@@ -239,8 +239,10 @@ tarif **baisse**.
 
 ### 6.4 Paiement agnostique au prestataire
 
-Le prestataire de paiement **n'est pas encore tranché** (il le sera au Checkpoint B, avant le
-chapitre 7). Le modèle est **délibérément indépendant** du prestataire :
+Le **mécanisme** de paiement est arrêté en **ADR-021** (collecte hébergée par le prestataire,
+confirmation par webhook authentifié, prestataire = **instance réversible**) ; le **modèle de données
+reste agnostique du prestataire** — c'est précisément ce qu'**ADR-021 confirme**, sans rouvrir ce
+chapitre. Le modèle est **délibérément indépendant** du prestataire :
 
 - `Payment` stocke une **direction** (`charge` | `refund`), une **référence de transaction opaque**
   (identifiant rendu par le prestataire), un **statut** et un **montant + devise** — ce qui rend
@@ -397,9 +399,10 @@ CREATE TABLE message (
 | Identité locataire + permis (donnée réglementée) | ADR-013 |
 | Clôture *confirmée → terminée* via API agence | ADR-014 |
 | Référentiel relationnel unifié (types, SGBD) | ADR-019 |
+| Paiement agnostique au prestataire (`charge` / `refund`) | ADR-021 |
 
 > **Substrat de la PoC.** Les tables **`conversation`**, **`participant`** et **`message`** sont
-> **exactement** la structure que la preuve de concept (Stade 4) **met en œuvre** pour le tchat —
+> **exactement** la structure que la preuve de concept **met en œuvre** pour le tchat —
 > satisfaisant l'exigence **C.1.6** (structure de données mise en œuvre dans la PoC). L'**isolation de
 > conversation** y est portée par la relation **`participant` → `conversation`** (un participant
 > n'accède qu'à ses conversations).
@@ -408,6 +411,12 @@ CREATE TABLE message (
 > il supporte **N participants** par conversation. La règle « **Customer + Agent**, deux côtés » de la
 > PoC (ADR-006) est une **contrainte applicative**, **pas** une contrainte de schéma — le modèle reste
 > **extensible** (p. ex. conversation à plusieurs intervenants) sans changer la structure.
+>
+> **Deux vocabulaires de rôle, par conception.** `user_account.role` (`client` / `support_agent`) et
+> `participant.role` (`customer` / `agent`) sont **distincts à dessein** : le premier est le rôle du
+> **compte** (RBAC, ADR-002), le second le rôle du **siège** tenu dans une conversation. La projection
+> de l'un vers l'autre est une **règle applicative** — celle que la PoC implémente par la fonction pure
+> `deriveSeatRole` (`client` → `customer`, `support_agent` → `agent`).
 
 **Anti-sur-ingénierie.** Modèle de **cadrage** : pas d'historisation fine, pas de table de
 journalisation au niveau schéma (la traçabilité `NFR-SEC-06` est une **exigence**, pas une table
