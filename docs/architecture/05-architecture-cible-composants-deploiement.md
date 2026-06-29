@@ -104,8 +104,8 @@ graph TB
       I2eu["Instance modulithe 2<br/>(passerelle WS in-process)"]
     end
     DBeu[("Base relationnelle<br/>régionale UE")]
-    LBeu -->|"REST + wss<br/>(affinité de conversation)"| I1eu
-    LBeu -->|"REST + wss<br/>(affinité de conversation)"| I2eu
+    LBeu -->|"REST + wss<br/>(affinité de session)"| I1eu
+    LBeu -->|"REST + wss<br/>(affinité de session)"| I2eu
     I1eu --> DBeu
     I2eu --> DBeu
   end
@@ -117,8 +117,8 @@ graph TB
       I2na["Instance modulithe 2<br/>(passerelle WS in-process)"]
     end
     DBna[("Base relationnelle<br/>régionale Amérique du Nord")]
-    LBna -->|"REST + wss<br/>(affinité de conversation)"| I1na
-    LBna -->|"REST + wss<br/>(affinité de conversation)"| I2na
+    LBna -->|"REST + wss<br/>(affinité de session)"| I1na
+    LBna -->|"REST + wss<br/>(affinité de session)"| I2na
     I1na --> DBna
     I2na --> DBna
   end
@@ -164,28 +164,45 @@ vérité unifiée délibérée** (la re-fragmenter réintroduirait `AUD-03`). La
 (`AUD-04`), une **instance primaire + réplicas de lecture** — **dans la même région** (cohérent avec la
 résidence ADR-020) — suffit ; la base **n'est pas un goulot**.
 
-#### 5.2.2 Tension WebSocket multi-instance — résolution sobre
+#### 5.2.2 Tension WebSocket multi-instance — affinité de session et backplane
 
 Un déploiement multi-instance soulève une objection légitime : *« si le Customer est servi par
-l'instance 1 et l'Agent par l'instance 2, ils ne peuvent pas échanger »*. La résolution retenue est
-**sobre** :
+l'instance 1 et l'Agent par l'instance 2, ils ne peuvent pas échanger »*. La résolution s'appuie sur le
+**modèle de connexion réel** — une connexion est liée à une **identité de compte**, **pas** à une
+conversation : le handshake ne porte que le **token** ; le `conversationId` n'y figure pas, il est
+**résolu par message**.
 
-- **routage par affinité de conversation** au répartiteur : les **deux participants d'une même
-  conversation** sont routés vers la **même instance** (par identifiant de conversation). La passerelle
-  reste **in-process**, sans état partagé entre instances ;
-- **aucun broker** (Redis, Kafka) : la volumétrie ne révèle **aucun problème de charge** (`AUD-04`) ;
-  un broker serait de la **sur-ingénierie** ;
-- la **couture d'extraction** (ADR-003) garde l'option ouverte : **si** la charge temps réel l'exigeait
-  un jour, la passerelle pourrait être **extraite** avec un **backplane dédié** — **pas maintenant**.
+- **Routage par affinité de session**, sur l'**identité de connexion** (compte / token) : une connexion
+  donnée est servie de façon **stable** par une instance (*sticky session*). C'est ce que le handshake
+  permet réellement ; on **ne route pas** sur une clé de conversation que la connexion **ne porte pas**,
+  et la connexion d'un **agent** (un compte, **plusieurs** conversations) ne peut être épinglée à aucune
+  conversation particulière.
+- **Co-localisation inter-comptes non garantie** : l'affinité de session **ne garantit pas** que les
+  **deux comptes** d'une même conversation (Customer **et** Agent) soient servis par la **même** instance
+  — deux comptes distincts peuvent l'être par deux instances. En **instance unique** — ce que la
+  **preuve de concept démontre** — la **diffusion in-process** suffit et l'échange est **prouvé de bout
+  en bout** (handshake, échange, isolation, persistance).
+- **Fan-out inter-instances = backplane** : en **multi-instance**, livrer un message aux membres servis
+  par d'**autres** instances requiert un **backplane** (bus de diffusion inter-instances). Ce backplane
+  **est** la **couture d'extraction** d'**ADR-003** — la passerelle temps réel extractible — **non** un
+  ajout imprévu. Il porte le **fan-out**, **pas l'absorption de charge** : la volumétrie ne révèle
+  **aucun problème de débit** (`AUD-04`), donc il reste **minimal** — **pas** un broker dimensionné pour
+  la charge.
 
-**Reconnexion après coupure réseau.** La même **affinité de conversation** soutient la **reprise de
+**Périmètre de preuve — honnête.** La preuve de concept valide le **module temps réel en instance
+unique** : handshake authentifié, échange Customer ↔ Agent, isolation et persistance, **prouvés par
+tests d'intégration**. La **montée en charge multi-instance** est une **évolution** qui **active le
+backplane** déjà identifié comme **couture** (ADR-003) — **pas une refonte**. On **ne revendique pas**
+que le routage in-process résout, à lui seul, le multi-instance.
+
+**Reconnexion après coupure réseau.** La même **affinité de session** soutient la **reprise de
 connexion** que le cahier des charges renvoie ici (US-CHAT-01, livrable 1) :
 
 - en cas de **coupure réseau**, le **client** détecte la perte de connexion et **en informe
   l'utilisateur** (**dégradation gracieuse** : l'interface signale un état « reconnexion en cours »
   plutôt que d'échouer silencieusement) ;
-- la **reconnexion** est **re-routée vers la même instance** par l'**affinité de conversation** — le
-  mécanisme ci-dessus, appliqué à la reconnexion comme à la première connexion ;
+- la **reconnexion** est **re-routée vers la même instance** par l'**affinité de session** (identité de
+  connexion) — le mécanisme ci-dessus, appliqué à la reconnexion comme à la première connexion ;
 - l'**historique** de la conversation est **rechargé depuis la persistance** (§5.1 ; ch.06 ; ch.07
   §7.4) : la reprise **ne perd aucun message**.
 
@@ -197,7 +214,8 @@ historique rechargé), pas un protocole de *heartbeat* ni de *backoff* chiffrés
 On ne dessine **que ce que les NFR / SLO justifient**. Sont **délibérément absents** :
 
 - **aucun fournisseur d'identité déployé à part** — l'autorisation est un **module interne** (§4.9) ;
-- **aucun broker** de messages (cf. §5.2.2) ;
+- **aucun broker de messages dimensionné pour la charge** (distinct du **backplane de fan-out**
+  inter-instances de §5.2.2 — conditionnel, couture ADR-003) ;
 - **aucune passerelle d'API en produit séparé**, **aucun *service mesh*** : le modulithe expose
   directement son API REST derrière le répartiteur.
 
