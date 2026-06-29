@@ -170,21 +170,24 @@ zone grise pour les règles métier (§4) et la machine à états de réservatio
 semaine** du début, remboursement de **25 %** seulement ». Rien sur l'annulation au-delà d'une semaine
 ni sur le dernier moment (< 48 h).
 **Options envisagées.** **Option A** — fidélité stricte au v0 : 25 % sur tout « < 1 semaine », y
-compris < 48 h. **Option B (retenue)** — réalisme métier : palier supplémentaire **< 48 h / no-show à
-0 %**, en lisant « moins d'une semaine » comme le créneau [1 semaine – 48 h].
+compris < 48 h. **Option B (retenue)** — réalisme métier : palier supplémentaire **< 48 h à 0 % (annulation
+tardive)**, en lisant « moins d'une semaine » comme le créneau [1 semaine – 48 h].
 **Décision : Option B.** Matrice retenue :
 
 | Créneau avant le début | Modification | Annulation — remboursement |
 |---|---|---|
 | > 1 semaine | Autorisée | 100 % |
 | ≤ 1 semaine et > 48 h | Autorisée | 25 % (v0) |
-| ≤ 48 h (no-show) | Refusée | 0 % |
+| ≤ 48 h (annulation tardive) | Refusée | 0 % |
 
-**Justification.** (1) **Cohérence interne** : la modification est déjà refusée à ≤ 48 h (v0) ;
-rembourser 25 % alors qu'aucune modification n'est possible serait incohérent. (2) **Usage du
-secteur** : le dernier moment est traité comme un no-show non remboursé. (3) **Non-contradiction** :
-le v0 fixe la pénalité « dans la semaine » sans expliciter les dernières 48 h. L'Option A reste
-possible si l'on privilégie la lettre stricte du v0.
+**Justification.** (1) **Usage du secteur** : une réservation annulée au tout dernier moment
+(≤ 48 h) est une **perte sèche** pour le loueur, traitée comme **non remboursée** — pratique courante
+du secteur. (2) **Non-contradiction avec le v0** : le v0 fixe la pénalité « à moins d'une semaine »
+sans expliciter les dernières 48 h ; l'Option B lit « moins d'une semaine » comme le créneau
+[1 semaine – 48 h] et ajoute le palier ≤ 48 h. **L'Option A** (lettre stricte du v0 : 25 % partout
+sous une semaine) **reste un repli tracé** pour qui privilégie la lettre. *L'écart ne tient pas à la
+fenêtre de modification : modification et annulation sont distinctes — on peut annuler une
+réservation qu'on ne peut plus modifier.*
 **Conséquences.** Une **modification qui change le tarif** est un cas à part entière (§4) : le
 **complément** (hausse) ou le **remboursement partiel** (baisse) transite par le **prestataire de
 paiement externe**, confirmé par **webhook** (US-LOC-06). Alimente la machine à états de réservation.
