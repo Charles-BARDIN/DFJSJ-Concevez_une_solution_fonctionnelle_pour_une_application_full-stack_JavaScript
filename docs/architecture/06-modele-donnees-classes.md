@@ -196,8 +196,8 @@ stateDiagram-v2
   Modifiee --> Terminee : clôture au retour du véhicule (API agence, ADR-014)
   Confirmee --> Annulee : annulation (matrice de remboursement, ADR-011)
   Modifiee --> Annulee : annulation (matrice de remboursement, ADR-011)
-  Confirmee --> NoShow : ≤ 48 h sans présentation
-  Modifiee --> NoShow : ≤ 48 h sans présentation
+  Confirmee --> NoShow : non-présentation au retrait — bascule système à l'expiration du créneau (0 %)
+  Modifiee --> NoShow : non-présentation au retrait — bascule système à l'expiration du créneau (0 %)
   Terminee --> [*]
   Annulee --> [*]
   NoShow --> [*]
@@ -218,7 +218,8 @@ Transitions :
   **application d'agence via l'API** (ADR-014) ;
 - **Confirmee / Modifiee → Annulee** : **annulation**, soumise à la **matrice de remboursement**
   (ADR-011 : 100 % > 1 semaine ; 25 % entre 1 semaine et 48 h ; 0 % ≤ 48 h) ;
-- **Confirmee / Modifiee → NoShow** : **≤ 48 h sans présentation** (no-show, 0 %).
+- **Confirmee / Modifiee → NoShow** : **non-présentation du client au retrait** — **bascule automatique
+  du système** à l'**expiration du créneau de retrait** (no-show, **0 %**).
 
 **Terminee**, **Annulee** et **NoShow** sont des états **terminaux**. Le déclencheur de **Confirmee**
 est un **webhook de paiement**, mais l'état et la **référence** restent **agnostiques au prestataire**
@@ -334,7 +335,7 @@ CREATE TABLE payment (
   id                    BIGINT PRIMARY KEY,
   booking_id            BIGINT NOT NULL REFERENCES booking(id),
   direction             TEXT NOT NULL CHECK (direction IN ('charge','refund')),  -- charge (paiement / complément) ou remboursement (ADR-011)
-  transaction_reference TEXT NOT NULL,   -- référence opaque du prestataire (aucune carte)
+  transaction_reference TEXT NOT NULL UNIQUE,  -- référence opaque (aucune carte) ; UNIQUE = clé d'idempotence du webhook (ADR-021)
   status                TEXT NOT NULL,
   amount                NUMERIC(12,2) NOT NULL,                -- montant positif ; le sens est porté par direction
   currency              CHAR(3) NOT NULL                       -- ISO 4217
