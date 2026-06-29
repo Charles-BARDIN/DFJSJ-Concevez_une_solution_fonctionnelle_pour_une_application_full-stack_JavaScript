@@ -55,6 +55,6 @@ exigée par l'indicateur C.1.5) :
 > **dégradation gracieuse** et la **reconnexion** sont assumés et précisés dans la **proposition d'architecture**.
 
 ### 6.4 Liens transverses
-- **Architecture** : module temps réel **séparable** (gateway extractible, ADR-003) ; transport WebSocket, **persistance des messages** (historique), sécurité du handshake (§7).
+- **Architecture** : module temps réel **séparable** (gateway extractible, ADR-003) ; transport WebSocket, **reconnexion / dégradation gracieuse**, **persistance des messages** (historique), sécurité du handshake (§7).
 - **Preuve de concept** : périmètre strict — **Customer + Agent**, handshake authentifié, échange, isolation ; **harness HTML nu** pour la démonstration ; **aucune** stack d'identité réimplémentée.
 - **Accessibilité** : le canal **texte** sert P4 ; l'interface de tchat respecte les étiquettes a11y (messages **annoncés**, **opérable au clavier**).

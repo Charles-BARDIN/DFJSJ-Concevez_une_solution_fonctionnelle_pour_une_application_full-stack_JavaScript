@@ -178,6 +178,20 @@ l'instance 1 et l'Agent par l'instance 2, ils ne peuvent pas échanger »*. La r
 - la **couture d'extraction** (ADR-003) garde l'option ouverte : **si** la charge temps réel l'exigeait
   un jour, la passerelle pourrait être **extraite** avec un **backplane dédié** — **pas maintenant**.
 
+**Reconnexion après coupure réseau.** La même **affinité de conversation** soutient la **reprise de
+connexion** que le cahier des charges renvoie ici (US-CHAT-01, livrable 1) :
+
+- en cas de **coupure réseau**, le **client** détecte la perte de connexion et **en informe
+  l'utilisateur** (**dégradation gracieuse** : l'interface signale un état « reconnexion en cours »
+  plutôt que d'échouer silencieusement) ;
+- la **reconnexion** est **re-routée vers la même instance** par l'**affinité de conversation** — le
+  mécanisme ci-dessus, appliqué à la reconnexion comme à la première connexion ;
+- l'**historique** de la conversation est **rechargé depuis la persistance** (§5.1 ; ch.06 ; ch.07
+  §7.4) : la reprise **ne perd aucun message**.
+
+Le niveau reste le **cadrage** : on pose le **comportement** (détection, reprise ré-épinglée,
+historique rechargé), pas un protocole de *heartbeat* ni de *backoff* chiffrés.
+
 #### 5.2.3 Ce que l'on ne déploie pas (anti-sur-ingénierie)
 
 On ne dessine **que ce que les NFR / SLO justifient**. Sont **délibérément absents** :
