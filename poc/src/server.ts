@@ -22,8 +22,20 @@ import { createChatServer } from './realtime/transport/ws-server';
 // here would persist across restarts; not needed at this step.
 const DATABASE_FILE = ':memory:';
 
-const port = loadPort();
-const signingKey = loadTokenSigningKey();
+// Configuration is a startup fail-fast too: a missing or invalid env var should
+// read like the EADDRINUSE handler below — one clear line and exit 1, never a raw
+// stack. config.ts throws with an actionable message; we surface it and exit here.
+function loadConfig(): { port: number; signingKey: string } {
+  try {
+    return { port: loadPort(), signingKey: loadTokenSigningKey() };
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    console.error(message);
+    process.exit(1);
+  }
+}
+
+const { port, signingKey } = loadConfig();
 const identityService = new StubIdentityService(signingKey);
 
 const db = openDatabase(DATABASE_FILE);
