@@ -83,8 +83,9 @@ sans collision avec les axes existants.
 
 > **Lecture de `NFR-SLO-01` (disponibilité).** La cible est un **plancher délibéré en base annuelle**
 > (convention SLA). Ce n'est **pas** une amélioration générale de la disponibilité : **rapportée au
-> temps d'indisponibilité mensuel** (`AUD-14`, de l'ordre de 99,99 %), elle reste **en deçà**. Pris au
-> pied de la lettre, le mensuel imposerait du **4-nines** que la **volumétrie** (`AUD-04`, 150–350
+> temps d'indisponibilité mensuel** (`AUD-14`, de l'ordre de 99,9 % — 99,94 → 99,98 %), elle reste **en
+> deçà**. Pris au pied de la lettre, le mensuel imposerait une cible **proche du 4-nines** (sans
+> l'atteindre) que la **volumétrie** (`AUD-04`, 150–350
 > req/s) ne justifie pas ; **ancrer l'annuel** avec un plancher sobre est le seul choix cohérent avec
 > l'**anti-sur-ingénierie** (**ADR-003**). La **divergence annuel / mensuel** est signalée en **note
 > §2.1** de l'audit ; elle n'est **pas réconciliable** à partir de la source.

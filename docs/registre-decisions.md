@@ -186,9 +186,9 @@ tardive)**, en lisant « moins d'une semaine » comme le créneau [1 semaine –
 
 **Justification.** (1) **Usage du secteur** : une réservation annulée au tout dernier moment
 (≤ 48 h) est une **perte sèche** pour le loueur, traitée comme **non remboursée** — pratique courante
-du secteur. (2) **Non-contradiction avec le v0** : le v0 fixe la pénalité « à moins d'une semaine »
-sans expliciter les dernières 48 h ; l'Option B lit « moins d'une semaine » comme le créneau
-[1 semaine – 48 h] et ajoute le palier ≤ 48 h. **L'Option A** (lettre stricte du v0 : 25 % partout
+du secteur. (2) **Déviation assumée du v0** : « à moins d'une semaine → 25 % » **couvre naturellement**
+les dernières 48 h ; les passer à **0 %** (Option B) est donc un **écart délibéré** à la lettre du v0,
+**justifié** par l'usage du secteur (perte sèche du dernier moment) et **tracé** comme [HYP]. **L'Option A** (lettre stricte du v0 : 25 % partout
 sous une semaine) **reste un repli tracé** pour qui privilégie la lettre. *L'écart ne tient pas à la
 fenêtre de modification : modification et annulation sont distinctes — on peut annuler une
 réservation qu'on ne peut plus modifier.*
@@ -292,7 +292,7 @@ contractuel externe ; un SLA s'alignerait sur ces SLO) :
 
 | SLO | Valeur | Ancrage / justification |
 |---|---|---|
-| **Disponibilité (base annuelle)** | **≥ 99,9 %/an** (plancher délibéré) | Cible **ancrée sur l'annuel** (`AUD-08`). Ce n'est **pas** une promesse d'amélioration : contre le **mensuel** (`AUD-14`, ~99,99 %) elle reste **en deçà**. Pris au pied de la lettre, le mensuel imposerait du **4-nines** que la volumétrie (`AUD-04`) ne justifie pas ; ancrer l'annuel avec un plancher sobre est le seul choix cohérent avec l'**anti-sur-ingénierie** (ADR-003) |
+| **Disponibilité (base annuelle)** | **≥ 99,9 %/an** (plancher délibéré) | Cible **ancrée sur l'annuel** (`AUD-08`). Ce n'est **pas** une promesse d'amélioration : contre le **mensuel** (`AUD-14`, de l'ordre de 99,9 % — 99,94 → 99,98 %) elle reste **en deçà**. Pris au pied de la lettre, le mensuel imposerait une cible **proche du 4-nines** (sans l'atteindre) que la volumétrie (`AUD-04`) ne justifie pas ; ancrer l'annuel avec un plancher sobre est le seul choix cohérent avec l'**anti-sur-ingénierie** (ADR-003) |
 | **MTTR** | **≤ 1 h** | Aligne le parc sur le meilleur cloud ~1 h 10 (`AUD-08`), amélioré par redondance + runbook de reprise |
 | **Réussite de déploiement** | **≥ 95 %** | Au-dessus de 91 % (`AUD-07`), crédible via **CI/CD automatisée** remplaçant le déploiement manuel |
 | **Stabilisation post-release** | **≤ 1 j** | Sous le meilleur actuel 1,7 j (`AUD-07`), via tests automatisés en CI |
@@ -377,6 +377,11 @@ personnelles imposée par le RGPD.
 **Décision.** **Déploiement régional de la plateforme unifiée** : **un déployable par région** (UE,
 Amérique du Nord), **même schéma, même code, même contrat d'API**, mais **données résidentes par
 région**. Le **modèle logique est unique** ; seule la **résidence physique** est régionale.
+**Cas du Royaume-Uni.** La région « UE » s'entend ici au sens **résidence européenne des données** : le
+marché **UK** (hors Union depuis le Brexit, devise GBP) y est **rattaché** — données résidentes en
+Europe — plutôt que modélisé en **région distincte** (choix sobre) ; l'encadrement des transferts
+UK ↔ UE relève d'un **mécanisme d'adéquation** (`NFR-RGPD-05`). Un découpage dédié resterait une
+**évolution**.
 **Distinction load-bearing — ce n'est PAS la fragmentation d'`AUD-03`.** `AUD-03` = **schémas
 divergents** + **codebases par pays** + **échanges manuels** : une divergence **subie**. Ici : **un
 schéma, un code, un contrat** ; les données sont **partitionnées par région pour une raison légale**,
