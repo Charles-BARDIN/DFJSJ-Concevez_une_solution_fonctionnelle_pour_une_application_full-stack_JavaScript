@@ -24,12 +24,15 @@ La proposition tient en quelques piliers, chacun justifié à son chapitre :
 
 ### 10.2 Carte de couverture des indicateurs
 
-Chaque indicateur **C.1.x** est rattaché à son **emplacement de traitement** et à sa **preuve**. Les
+Chaque indicateur **C.1.x** est rattaché à son **emplacement de traitement** et à sa **preuve**, en
+plus du **critère transverse** de rédaction des documents (clarté, structure, accessibilité) porté en
+tête de table. Les
 indicateurs portés par la **preuve de concept** (livrable 3) sont marqués « **confirmé par la preuve
 de concept** » : le livrable 2 les **prépare**, la preuve de concept les **a réalisés**.
 
 | Indicateur | Où il est traité | Preuve / artefact |
 |---|---|---|
+| **Transverse** — documents rédigés clairs, structurés, **accessibles aux différents niveaux d'expertise et aux personnes en situation de handicap** (fiche, en-tête « Tous les documents rédigés ») | Transverse aux trois livrables — **L1 §1.1** (parties prenantes techniques **et** non techniques) ; **`NFR-A11Y-03`** (§7) ; **ch. 9 §9.3** | Hiérarchie de titres régulière + tableaux à en-têtes + **alternatives textuelles des 9 figures** (`NFR-A11Y-03`) ; **README destiné aux développeurs juniors** (livrable 3) ; lisibilité à plusieurs niveaux d'expertise |
 | **C.1.1** — besoins → exigences fonctionnelles | **Livrable 1** (cahier des charges, §1-§8) | User stories + critères d'acceptation ; personas (dont PSH) ; périmètre (ADR-001) |
 | **C.1.2** — spécifications techniques cohérentes avec le fonctionnel | **Livrable 2, ch. 3** | Spécifications de cadrage + NFR (dont axe SLO et `NFR-SEC-08`) |
 | **C.1.3** — audit (structure, forces / faiblesses / risques) **et** exploitation de l'audit | **ch. 2** (sous-indicateurs 1-2) + **ch. 3 / 4 / 5 / 9** (sous-indicateur 3) | Audit `AUD-01`→`AUD-15`, verdict §2.5 ; cible justifiée à partir de l'audit — modulithe / base unifiée (`AUD-01/02/03`, ch.4), refus des microservices (`AUD-04`, ch.4-5), SLO / redondance (`AUD-07/08/15`, ch.3 §3.4 / ch.5 §5.2.1), **bouclage sécurité** (`AUD-10`→`13`, table §9.2) — **les trois sous-indicateurs sont couverts** |

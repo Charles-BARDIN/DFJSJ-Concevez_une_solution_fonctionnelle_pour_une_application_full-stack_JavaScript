@@ -115,7 +115,14 @@ démarrage du projet ». Projet démarré en **juin 2026**. Deux formes coexiste
 contenu** des documents et l'identité **dans les noms de fichiers**.
 **Décision.** **Date** = **062026** ; **noms de fichiers PDF** = `Bardin_Charles_Option_B_N_nom_livrable_062026` ;
 **auteur dans le contenu** (bloc auteur, page de garde) = **Simon Charles Paul Bardin** (état civil
-complet).
+complet). Les **trois noms de fichiers exacts à l'export** — leurs jetons de libellé sont **prescrits
+par la grille** (« Cela donnera » : `cahier_charges` / `proposition_architecture` / `repo_poc`),
+**distincts des noms de dossiers sources** (`cahier-des-charges`, `architecture`) afin d'éviter
+`..._cahier_des_charges_...` ou `..._architecture_...` à la génération — sont :
+- `Bardin_Charles_Option_B_1_cahier_charges_062026`
+- `Bardin_Charles_Option_B_2_proposition_architecture_062026`
+- `Bardin_Charles_Option_B_3_repo_poc_062026`
+
 **Alternatives écartées.** `012026` (exemple générique de l'énoncé) → ne correspond pas au démarrage
 réel. `Bardin_SimonCharles` dans les noms de fichiers → remplacé par `Bardin_Charles`.
 **Conséquences.** Appliqué à l'export PDF et à tout bloc auteur des livrables.

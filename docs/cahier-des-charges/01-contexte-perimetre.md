@@ -4,7 +4,7 @@
 |---|---|
 | **Projet** | Your Car Your Way — nouvelle application web centralisée |
 | **Document** | Cahier des charges fonctionnel (livrable 1) |
-| **Version** | 0.1 — version de travail |
+| **Version** | 1.0 |
 | **Date** | Juin 2026 |
 | **Auteur** | Simon Charles Paul Bardin |
 
