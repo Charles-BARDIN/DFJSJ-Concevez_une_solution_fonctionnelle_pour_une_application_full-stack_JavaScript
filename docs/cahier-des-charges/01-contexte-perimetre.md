@@ -59,7 +59,7 @@ adossée à une **API**, et complétée d'un **tchat de support** dont l'un des 
 |---|---|
 | **Application client** | Le produit : compte et profil, authentification, recherche et réservation de location, paiement, historique, modification / annulation, **support en temps réel (tchat)**. Destinée à tous les clients, **y compris les personnes en situation de handicap**. |
 | **API (CRUD par domaine)** | Exposée aux **applications d'agence tierces existantes** (utilisateur, réservation, offre, agence…), conformément à l'exigence du v0. Ces applications sont des **composants tiers à intégrer** (modélisés dans la proposition d'architecture, C.1.7), **non développés ici**. |
-| **Tchat de support** | Échange en temps réel entre un **client (Customer)** et un **agent de support (Agent)** ; ce dernier est le **seul usage « personnel »** du périmètre (cf. §6). |
+| **Tchat de support** **[HYP]** | Échange en temps réel entre un **client (Customer)** et un **agent de support (Agent)** ; ce dernier est le **seul usage « personnel »** du périmètre. **Ajout au périmètre v0 — [HYP] ADR-015** (cf. §6). |
 
 > **Respect de l'exclusion du v0.** Le v0 précise que l'application « *ne concerne pas les actions
 > que les employés font en agence* » et demande seulement une **API** pour les applications
@@ -82,7 +82,7 @@ s'appliquent à l'application client et au tchat ; elles sont détaillées en **
 - La **gestion du parc de véhicules à l'unité** (inventaire physique, affectation d'un véhicule
   précis, maintenance) : les offres sont exprimées au **niveau catégorie ACRISS** — voir
   **[HYP] ADR-008**.
-- Les **applications mobiles natives** : le périmètre est une **application web** (responsive),
+- Les **applications mobiles natives** : le périmètre est une **application web** (responsive — usage multi-appareils, cf. persona **P1**, §2.2),
   conformément à l'énoncé.
 
 > **Périmètre fonctionnel vs périmètre de réalisation.** Le présent **projet** relève du
@@ -100,8 +100,8 @@ couverture et la traçabilité sont récapitulées en **§8**.
 **Hypothèses.** Ce projet est mené **sans interlocuteur métier** disponible : chaque zone d'ombre du
 v0 est comblée par une **hypothèse raisonnable, décidée et tracée** dans le **registre des décisions**
 versionné (`registre-decisions.md`, à la racine de `docs/`), au format ADR ; elle est signalée dans
-le texte par la mention **[HYP]** suivie de la référence ADR. **Aucune exigence n'est introduite
-sans être ainsi signalée.**
+le texte par la mention **[HYP]** suivie de la référence ADR. **Tout écart au v0 et tout ajout de
+périmètre sont signalés [HYP] ; les exigences transverses (§7) découlent du mandat d'ADR-004.**
 
 **Conventions de rédaction.**
 
@@ -132,7 +132,7 @@ Le cahier des charges s'organise en huit sections continues :
 3. **Exigences fonctionnelles — Authentification et profil**.
 4. **Exigences fonctionnelles — Recherche, réservation et paiement**.
 5. **Usages du personnel et intégration des applications d'agence**.
-6. **Exigence fonctionnelle — Support client en temps réel (tchat)**.
+6. **Exigences fonctionnelles — Support client en temps réel (tchat)**.
 7. **Exigences transverses (non fonctionnelles)** — accessibilité, internationalisation, sécurité,
    RGPD, écoconception.
 8. **Traçabilité, hypothèses et couverture** — matrice besoins → user stories, renvoi au registre des

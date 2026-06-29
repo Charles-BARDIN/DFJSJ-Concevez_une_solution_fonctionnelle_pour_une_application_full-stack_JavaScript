@@ -1,4 +1,4 @@
-## 6. Exigence fonctionnelle — Support client en temps réel (tchat)
+## 6. Exigences fonctionnelles — Support client en temps réel (tchat)
 
 > **Ajout au périmètre v0 (hypothèse — ADR-015).** Le tchat **n'est pas dans le cahier des charges
 > v0** ; il est **imposé comme sujet de la preuve de concept** (énoncé étape 4 + autoévaluation

@@ -12,7 +12,7 @@ d'accessibilité** (§2.3), source.*
 
 ### 4.1 Consultation et recherche *(Visiteur)*
 
-**US-LOC-01 — Consulter la liste des agences** · *Should* · *v0*
+**US-LOC-01 — Consulter la liste des agences** · *Must* · *v0*
 > En tant que **visiteur**, je veux **consulter la liste des agences de location**, afin de **repérer les points de retrait et de retour**.
 
 - Quand j'ouvre la liste des agences, alors chaque agence est présentée avec sa **ville** et ses informations de localisation.
@@ -72,7 +72,7 @@ d'accessibilité** (§2.3), source.*
 **US-LOC-07 — Annuler une réservation** · *Must* · *v0 + ADR-011*
 > En tant que **client**, je veux **annuler une réservation**, afin d'**être remboursé selon les conditions**.
 
-- Étant donné le **créneau avant le début**, quand j'annule, alors le **remboursement** applique la matrice ADR-011 : **> 1 semaine → 100 %** ; **≤ 1 semaine et > 48 h → 25 %** ; **≤ 48 h → 0 % (no-show)**.
+- Étant donné le **créneau avant le début**, quand j'annule, alors le **remboursement** applique la matrice ADR-011 : **> 1 semaine → 100 %** ; **≤ 1 semaine et > 48 h → 25 %** ; **≤ 48 h → 0 % (annulation tardive)**.
 - Le **remboursement** éventuel est exécuté via le **prestataire de paiement externe**, confirmé par **webhook** ; l'état passe à **annulée** après confirmation.
 - Avant validation, un **récapitulatif** indique le **montant remboursé** en **langage clair** (action irréversible).
 - **Accessibilité** : `A11Y-FORMULAIRES`, `A11Y-LANGUE`, `A11Y-CLAVIER`, `A11Y-DELAIS`.
@@ -85,7 +85,7 @@ d'accessibilité** (§2.3), source.*
 |---|---|---|
 | > 1 semaine | Autorisée | 100 % |
 | ≤ 1 semaine et > 48 h | Autorisée | 25 % |
-| ≤ 48 h (no-show) | Refusée | 0 % |
+| ≤ 48 h (annulation tardive) | Refusée | 0 % |
 
 - **Catégories de véhicule** : norme **ACRISS** (ADR-008) ; les offres et réservations sont au **niveau catégorie** (pas de gestion du parc à l'unité).
 - **Modèle agence / ville / offre** : ADR-012 — la recherche par ville se résout vers les **agences** de ces villes, qui portent les offres (retrait/retour en agence ; aller simple possible).

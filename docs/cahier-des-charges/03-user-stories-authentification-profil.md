@@ -35,7 +35,7 @@ d'acceptation et ses **étiquettes d'accessibilité** (§2.3). Source : « v0 »
 **US-AUTH-03 — Connexion** · *Must* · *implicite v0 → ADR-002*
 > En tant que **client**, je veux **me connecter avec mon e-mail et mon mot de passe**, afin d'**accéder à mon espace**.
 
-- Étant donné des identifiants valides, quand je me connecte, alors j'accède à mon espace ; le **rôle** (client / personnel) détermine les accès (RBAC, ADR-002).
+- Étant donné des identifiants valides, quand je me connecte, alors j'accède à mon espace ; le **rôle** (client / agent de support) détermine les accès (RBAC, ADR-002).
 - Étant donné des identifiants invalides, quand je me connecte, alors un **message neutre** s'affiche (sans indiquer quel champ est erroné).
 - **Accessibilité** : `A11Y-FORMULAIRES`, `A11Y-CLAVIER`, `A11Y-NOM-ROLE`.
 
@@ -67,11 +67,11 @@ d'acceptation et ses **étiquettes d'accessibilité** (§2.3). Source : « v0 »
 - Étant donné une valeur invalide (ex. date de naissance incohérente), quand j'enregistre, alors l'erreur est identifiée et une correction est suggérée.
 - **Accessibilité** : `A11Y-FORMULAIRES`, `A11Y-CLAVIER`, `A11Y-NOM-ROLE`.
 
-**US-PROF-03 — Supprimer son compte** · *Must* · *v0 + [HYP] ADR-010 (RGPD)*
+**US-PROF-03 — Supprimer son compte** · *Must* · *v0 + ADR-010 (RGPD)*
 > En tant que **client**, je veux **supprimer mon compte en confirmant mon mot de passe**, afin d'**exercer mon droit à l'effacement**.
 
 - Étant donné un client connecté, quand il demande la suppression, **saisit son mot de passe** (exigé par le v0) puis confirme l'action **irréversible**, alors le compte est supprimé.
-- Les **données personnelles** sont **effacées ou anonymisées** ; les **données transactionnelles** soumises à obligation légale (réservations, facturation) sont **conservées sous forme anonymisée** (RGPD — **[HYP] ADR-010**, détaillé en §7).
+- Les **données personnelles** sont **effacées ou anonymisées** ; les **données transactionnelles** soumises à obligation légale (réservations, facturation) sont **conservées sous forme anonymisée** (RGPD — **ADR-010**, détaillé en §7).
 - Un **récapitulatif des conséquences** est présenté avant confirmation, en **langage clair**.
 - **Accessibilité** : `A11Y-FORMULAIRES`, `A11Y-LANGUE`, `A11Y-CLAVIER`, `A11Y-DELAIS`.
 

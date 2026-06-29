@@ -36,11 +36,12 @@ Chaque user story renvoie à une source — *v0*, *implicite v0*, *énoncé* ou 
 |---|---|
 | US-AUTH-01..05 (authentification) | implicite v0 → ADR-002 |
 | US-PROF-01 / US-PROF-02 (profil) | v0 |
-| US-PROF-03 (suppression de compte) | v0 + [HYP] ADR-010 (RGPD) |
+| US-PROF-03 (suppression de compte) | v0 + ADR-010 (RGPD) |
 | US-PROF-04 (export des données personnelles) | **[HYP] ADR-016** — droit d'accès / portabilité (RGPD) |
-| US-LOC-01..05 (agences, recherche, offre, réservation, historique) | v0 |
-| US-LOC-06 / US-LOC-07 (modification, annulation) | v0 + [HYP] ADR-011 |
-| US-PAY-01 (paiement) | v0 |
+| US-LOC-01..03, US-LOC-05 (agences, recherche, offre, historique) | v0 |
+| US-LOC-04 (réservation) | v0 + ADR-013 |
+| US-LOC-06 / US-LOC-07 (modification, annulation) | v0 + ADR-011 |
+| US-PAY-01 (paiement) | v0 + ADR-011 |
 | US-CHAT-01 / US-CHAT-02 (tchat) | **[HYP] ADR-015** — ajout au périmètre (énoncé étape 4 + autoévaluation C.1.5) |
 
 → **Aucune user story hors-sol** (chaque US tracée à une source).
@@ -54,15 +55,17 @@ Zones d'ombre du v0 comblées par décision — **détail dans le registre des d
 |---|---|
 | Consultation publique sans compte (profil Visiteur) | ADR-009 |
 | Offres au niveau catégorie ACRISS (pas de parc à l'unité) | ADR-008 |
-| Matrice modification / annulation / remboursement (no-show 0 % à < 48 h) | ADR-011 |
+| Matrice modification / annulation / remboursement (annulation tardive : 0 % à moins de 48 h) | ADR-011 |
 | Relation agence / ville / offre | ADR-012 |
 | Champs de réservation (permis, âge minimal) | ADR-013 |
 | Clôture (confirmée → terminée) via l'API, au retour du véhicule | ADR-014 |
 | Tchat = ajout au périmètre v0 | ADR-015 |
 | Export self-service des données personnelles (v1) | ADR-016 |
 
-**Encore à trancher** (dans la proposition d'architecture) : prestataire de paiement ; cibles de
-fiabilité / disponibilité (SLA / SLO).
+**Tranchés dans la proposition d'architecture** (livrable 2) : le **prestataire de paiement**
+(**ADR-021** — mécanisme externalisé, Stripe comme instance) et les **cibles de fiabilité /
+disponibilité** (**SLO — ADR-017**). Le cahier des charges en pose le besoin ; la proposition
+d'architecture en arrête les valeurs.
 
 ### 8.4 Couverture du périmètre fonctionnel
 
