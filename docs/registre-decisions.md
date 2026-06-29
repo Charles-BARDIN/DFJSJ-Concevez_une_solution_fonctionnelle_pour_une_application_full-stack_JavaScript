@@ -10,8 +10,10 @@ Chaque décision suit la même trame : **Contexte / Décision / Alternatives éc
 
 **Légende — [HYP].** La mention **[HYP]** signale une **hypothèse** : un point laissé ouvert par le
 cahier des charges initial (v0), tranché ici par une décision raisonnable et défendable, faute
-d'interlocuteur métier disponible. Les ADR sans cette mention consolident un besoin déjà présent
-dans les sources.
+d'interlocuteur métier disponible — **que le client pourrait arbitrer autrement**. Les ADR sans cette
+mention consolident un besoin déjà présent dans les sources : **les décisions d'architecture mandatées
+par l'énoncé** (stack, découpage) **et les obligations légales** (ex. anonymisation RGPD) **ne sont pas
+des hypothèses**, même si elles résultent d'un choix d'architecte.
 
 ---
 
@@ -118,19 +120,21 @@ complet).
 réel. `Bardin_SimonCharles` dans les noms de fichiers → remplacé par `Bardin_Charles`.
 **Conséquences.** Appliqué à l'export PDF et à tout bloc auteur des livrables.
 
-## ADR-008 — Granularité des offres : niveau catégorie ACRISS ; pas de gestion du parc à l'unité
+## ADR-008 — Granularité des offres : niveau catégorie ACRISS ; pas de gestion du parc à l'unité **[HYP]**
 **Contexte.** Le v0 définit une offre par ville de départ / retour, dates, **catégorie de véhicule
 (norme ACRISS)** et tarif — jamais par véhicule précis. La gestion physique du parc (inventaire,
 affectation, maintenance) relève de l'exploitation en agence.
 **Décision.** Offres et réservations sont modélisées au **niveau catégorie ACRISS**. La **gestion du
 parc à l'unité est hors périmètre** (périmètre : application client) ; la disponibilité est traitée au
-niveau **catégorie / agence / période**.
+niveau **catégorie / agence / période**. **Portée de l'hypothèse** : la **catégorie ACRISS** est **au
+v0** (ferme) ; l'élément hypothétique est la **granularité de disponibilité** (catégorie / agence /
+période) et l'**exclusion du parc à l'unité**, que le v0 ne tranche pas.
 **Alternatives écartées.** Modéliser chaque véhicule unitaire → complexité d'inventaire non demandée
 par le v0, hors cadrage.
 **Conséquences.** Simplifie le modèle de données ; cohérent avec le v0. Une extension « inventaire à
 l'unité » reste possible (évolution).
 
-## ADR-009 — Profils utilisateurs et niveaux d'accès
+## ADR-009 — Profils utilisateurs et niveaux d'accès **[HYP]**
 **Contexte.** Le v0 ne précise pas si la consultation (agences, recherche, offres, détail) exige un
 compte — il ne dit **jamais** qu'elle est publique. Le périmètre (ADR-001) comporte une application
 client et un agent de support (tchat).
@@ -162,7 +166,7 @@ Conservation intégrale → contraire à la minimisation et au droit à l'efface
 **Conséquences.** À détailler en §7 (RGPD) et dans le modèle de données (séparation données
 personnelles / transactionnelles). Cohérent avec US-PROF-03.
 
-## ADR-011 — Politique de modification / annulation / remboursement
+## ADR-011 — Politique de modification / annulation / remboursement **[HYP]**
 **Contexte.** La réservation est modifiable et annulable (v0) ; il faut une politique complète et sans
 zone grise pour les règles métier (§4) et la machine à états de réservation. Référence temporelle =
 **date / heure de début** (prise du véhicule).
@@ -192,7 +196,7 @@ réservation qu'on ne peut plus modifier.*
 **complément** (hausse) ou le **remboursement partiel** (baisse) transite par le **prestataire de
 paiement externe**, confirmé par **webhook** (US-LOC-06). Alimente la machine à états de réservation.
 
-## ADR-012 — Relation agence / ville / offre
+## ADR-012 — Relation agence / ville / offre **[HYP]**
 **Contexte.** Conditionne le modèle de données et les user stories de recherche / réservation (§4).
 **Ce que dit le v0.** « Consulter la liste des agences » ; recherche par ville de départ / retour ;
 offre définie par villes, dates, catégorie ACRISS, tarif — sans relier explicitement offre et agence.
@@ -207,7 +211,7 @@ d'agences décorative) ; 1 ville = 1 agence (irréaliste).
 → offres » : aucun trou entre la ville cherchée et l'agence de retrait / retour. Base de l'entité
 Ville–Agence–Offre.
 
-## ADR-013 — Champs « informations personnelles » de la réservation
+## ADR-013 — Champs « informations personnelles » de la réservation **[HYP]**
 **Contexte.** Le v0 demande de fournir ses informations personnelles (pré-remplies depuis le profil
 si présentes) ; définir lesquelles sans sur-spécifier.
 **Ce que dit le v0.** Profil = nom, prénom, date de naissance, adresse. Réservation = « informations
@@ -221,7 +225,7 @@ fins sont renvoyés en **évolution**. Hors v1 (évolution) : assurances, option
 **Alternatives écartées.** Se limiter aux 4 champs du profil (irréaliste, pas de permis) ; spécifier
 finement (catégories de permis, assurances, conducteurs additionnels) → sur-ingénierie.
 
-## ADR-014 — Clôture de réservation (confirmée → terminée) via l'API, au retour du véhicule
+## ADR-014 — Clôture de réservation (confirmée → terminée) via l'API, au retour du véhicule **[HYP]**
 **Contexte.** L'état « terminée » figure dans le cycle de vie mais aucune user story ne décrivait la
 transition **confirmée → terminée**.
 **Décision.** La clôture est déclenchée **au retour du véhicule en agence**, **via l'API**, par une
@@ -234,7 +238,7 @@ anticipés.
 **Conséquences.** Décrite en §5 (intégration des apps d'agence) ; cohérente avec ADR-001 et la machine
 à états (architecture).
 
-## ADR-015 — Tchat de support temps réel : ajout au périmètre v0 (hypothèse)
+## ADR-015 — Tchat de support temps réel : ajout au périmètre v0 **[HYP]**
 **Contexte.** Le tchat est **imposé comme sujet de la preuve de concept** (énoncé étape 4 +
 autoévaluation C.1.5) mais **absent du cahier des charges v0**. Il faut un ancrage métier pour ne pas
 l'introduire « hors-sol ».
@@ -249,14 +253,16 @@ sourdes / malentendantes et ne valide pas la brique temps réel.
 **Conséquences.** US-CHAT-01 / US-CHAT-02 (§6) ; périmètre PoC strict (Customer + Agent, handshake
 authentifié, isolation) ; cohérent avec ADR-003.
 
-## ADR-016 — Export des données personnelles en self-service (droit d'accès / portabilité RGPD)
+## ADR-016 — Export des données personnelles en self-service (droit d'accès / portabilité RGPD) **[HYP]**
 **Contexte.** Le RGPD garantit au client un **droit d'accès** (art. 15) et un **droit à la portabilité**
 (art. 20) : obtenir une copie de ses données dans un format réutilisable. Le v0 n'en parle pas, et
 « consulter son profil » (US-PROF-01) **ne couvre pas** cette obligation, qui porte sur **l'ensemble**
 des données, sous forme **exportable**.
 **Décision.** Exposer un **export self-service** des données personnelles du client, dans un **format
 structuré et lisible par machine**, via une user story dédiée (**US-PROF-04**, §3.2) ; priorité
-**Should** en v1.
+**Should** en v1. **Portée de l'hypothèse** : le **droit** d'accès / portabilité est **ferme** (RGPD,
+art. 15/20) ; seule la **modalité self-service en v1** (vs traitement manuel sur demande, repli tracé)
+est hypothétique — d'où la distinction avec **ADR-010** (effacement, obligation légale ferme).
 **Alternatives écartées.** Rattacher le droit d'accès à « consulter son profil » → incorrect (le profil
 n'est ni l'ensemble des données, ni un export). Traitement **manuel** uniquement (sur demande, hors
 application) → admissible mais moins traçable et moins inclusif ; conservé comme repli si le
