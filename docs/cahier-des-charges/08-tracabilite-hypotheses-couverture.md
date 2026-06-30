@@ -1,10 +1,10 @@
 ## 8. Traçabilité, hypothèses et couverture
 
-Cette dernière section rend le cahier des charges **vérifiable** : aucun besoin du v0 n'est orphelin,
-aucune user story n'est hors-sol, les hypothèses sont listées (détail dans le registre des
-décisions), et le périmètre fonctionnel est couvert.
+Cette dernière section rend le cahier des charges **vérifiable** : aucun besoin n'est orphelin,
+aucune user story n'est hors-sol, les hypothèses sont tracées (détail dans le registre des décisions,
+en annexe), et le périmètre fonctionnel est couvert.
 
-### 8.1 Couverture des besoins du v0 *(aucun besoin orphelin)*
+### 8.1 Couverture des besoins *(aucun besoin orphelin)*
 
 Chaque fonctionnalité listée dans le cahier des charges initial (v0) est couverte par au moins une
 user story :
@@ -48,24 +48,15 @@ Chaque user story renvoie à une source — *v0*, *implicite v0*, *énoncé* ou 
 
 ### 8.3 Hypothèses retenues
 
-Zones d'ombre du v0 comblées par décision — **détail dans le registre des décisions**
-(`registre-decisions.md`), non recopié ici :
+Les points laissés ouverts par la spécification initiale sont comblés par des hypothèses **tracées et
+argumentées dans le registre des décisions (annexe)** — contexte, décision, alternatives écartées et
+conséquences pour chacune —, signalées dans le texte par la mention **[HYP]**. Elles correspondent aux
+décisions **ADR-008, ADR-009, ADR-011, ADR-012, ADR-013, ADR-014, ADR-015 et ADR-016** ; le détail
+n'est pas recopié ici.
 
-| Hypothèse | ADR |
-|---|---|
-| Consultation publique sans compte (profil Visiteur) | ADR-009 |
-| Offres au niveau catégorie ACRISS (pas de parc à l'unité) | ADR-008 |
-| Matrice modification / annulation / remboursement (annulation tardive : 0 % à moins de 48 h) | ADR-011 |
-| Relation agence / ville / offre | ADR-012 |
-| Champs de réservation (permis, âge minimal) | ADR-013 |
-| Clôture (confirmée → terminée) via l'API, au retour du véhicule | ADR-014 |
-| Tchat = ajout au périmètre v0 | ADR-015 |
-| Export self-service des données personnelles (v1) | ADR-016 |
-
-**Tranchés dans la proposition d'architecture** (livrable 2) : le **prestataire de paiement**
-(**ADR-021** — mécanisme externalisé, Stripe comme instance) et les **cibles de fiabilité /
-disponibilité** (**SLO — ADR-017**). Le cahier des charges en pose le besoin ; la proposition
-d'architecture en arrête les valeurs.
+Deux points relèvent de la **proposition d'architecture** (livrable 2), qui en arrête les valeurs : le
+**prestataire de paiement** (**ADR-021**) et les **cibles de fiabilité / disponibilité** (**SLO,
+ADR-017**). Le cahier des charges en pose le besoin.
 
 ### 8.4 Couverture du périmètre fonctionnel
 
@@ -80,5 +71,5 @@ Les trois éléments du périmètre (§1.3) sont couverts :
 ### 8.5 Clôture du cahier des charges
 
 Le périmètre fonctionnel est **entièrement couvert et tracé** ; les exigences transverses (§7)
-s'appliquent à l'ensemble. Le détail des décisions figure dans `registre-decisions.md`. La
+s'appliquent à l'ensemble. Le détail des décisions figure dans le registre des décisions (annexe). La
 **proposition d'architecture** (livrable 2) prend le relais pour la conception technique.

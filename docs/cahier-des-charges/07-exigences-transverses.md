@@ -86,7 +86,7 @@ Set **concis et concret** (pas un catalogue) :
 
 ### 7.6 Liens transverses
 - Décisions sous-jacentes : **ADR-004** (transverses retenues), **ADR-002** (auth / RBAC), **ADR-010**
-  (suppression / RGPD), **ADR-013** (permis). Détail dans `registre-decisions.md`.
+  (suppression / RGPD), **ADR-013** (permis). Détail dans le registre des décisions (annexe).
 - **Accessibilité** : référentiel et étiquettes en **§2.3** ; application par user story aux §3-§6.
 - **Audit → remédiations** : développé dans l'**audit de l'existant** ; les remédiations cibles
   (sécurité) sont posées ici et reprises dans la **proposition d'architecture**.

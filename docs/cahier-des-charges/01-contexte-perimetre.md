@@ -94,7 +94,7 @@ couverture et la traçabilité sont récapitulées en **§8**.
 
 **Hypothèses.** Ce projet est mené **sans interlocuteur métier** disponible : chaque zone d'ombre du
 v0 est comblée par une **hypothèse raisonnable, décidée et tracée** dans le **registre des décisions**
-versionné (`registre-decisions.md`, à la racine de `docs/`), au format ADR ; elle est signalée dans
+(annexe), au format ADR ; elle est signalée dans
 le texte par la mention **[HYP]** suivie de la référence ADR. **Tout écart au v0 et tout ajout de
 périmètre sont signalés [HYP] ; les exigences transverses (§7) découlent du mandat d'ADR-004.**
 
