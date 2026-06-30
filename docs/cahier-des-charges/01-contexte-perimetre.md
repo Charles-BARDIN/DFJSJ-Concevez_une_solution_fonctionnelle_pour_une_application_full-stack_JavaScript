@@ -40,7 +40,7 @@ clients, afin d'**unifier les usages**, d'**améliorer l'expérience utilisateur
 
 Le diagnostic technique de l'existant (forces, faiblesses, contraintes) fait l'objet d'un **audit
 dédié** dans la proposition d'architecture ; il n'est pas repris ici, sauf lorsqu'il éclaire
-directement un besoin (par exemple les exigences de sécurité, §7).
+directement un besoin, comme les exigences de sécurité.
 
 ### 1.3 Périmètre
 

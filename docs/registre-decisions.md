@@ -69,7 +69,7 @@ distinct) est modélisé comme **module séparable** — une **passerelle temps 
 découper le reste.
 **Alternatives écartées.** **Microservices** → répondent à des contraintes de charge / organisation
 que l'audit ne révèle pas ; sur-ingénierie au regard du cadrage et de la volumétrie. **Monolithe non
-modulaire** → reproduit la dette de cohérence de l'existant.
+modulaire** → recrée en interne un couplage fort, l'écueil de maintenabilité qu'on cherche à éviter.
 **Conséquences.** Cible sobre, justifiée par l'audit ; le module temps réel pourra être extrait si la
 charge WebSocket l'exige.
 
@@ -277,7 +277,7 @@ base annuelle** ; ce choix est **explicité** plutôt que masqué — même post
 réserve de latence ci-dessous.
 **Options envisagées.** **Option A** — aligner sur le meilleur actuel (dispo 98,9 %, MTTR ≤ 1 h 10,
 déploiement ≥ 91 %) : reproduit le meilleur observé sans créditer les corrections structurelles.
-**Option B (retenue)** — meilleur relevé assorti de **planchers sobres**. **Option C** — haute
+**Option B (retenue)** — on retient le meilleur niveau observé dans le parc, complété de seuils minimaux raisonnables. **Option C** — haute
 disponibilité (≥ 99,95 %, multi-région) : non étayée par la volumétrie.
 **Décision : Option B.** Cibles posées comme **SLO internes** (à ce stade de cadrage, pas de SLA
 contractuel externe ; un SLA s'alignerait sur ces SLO) :
@@ -344,9 +344,9 @@ règle les fautes du socle historique (`AUD-10` / `AUD-11` / `AUD-07`) **indépe
 |---|---|---|---|
 | **Runtime** | **Node.js** | Meilleures métriques du parc sur l'app US (`AUD-04/05/07/08/14`) ; runtime **le plus répandu** du parc (cœur FR/DE/ES/IT **et** US) → leverage la **plus large compétence** existante (contrainte « équipes habituées aux piles hétérogènes », constat de l'audit, proposition d'architecture) | **PHP/Laravel** (UK) et **Java/Spring** (CA) : piles présentes, métriques moindres, ré-éparpilleraient ; **runtime absent du parc** : prolifération (`AUD-01`) |
 | **Langage** | **TypeScript** (front + back) | **Durcissement** : typage statique contre la **divergence** du code (`AUD-01` / `AUD-02`) ; **un seul langage typé** full-stack | **JavaScript nu** : cohérent Node mais n'outille pas contre la divergence |
-| **Framework backend** | **NestJS** | Son **système de modules** traduit le **modulithe modulaire** (ADR-003) — le module temps réel séparable devient un **module de première classe** ; **injection de dépendances + TS natif** = contrats explicites (`AUD-01` / `AUD-02`). L'audit ne mesure aucun framework : pas d'`AUD-NN` forcé | **Express nu** : pas de structure modulaire de première classe ; framework d'un **autre runtime** : prolifération |
+| **Framework backend** | **NestJS** | Son **système de modules** traduit le **modulithe modulaire** (ADR-003) — le module temps réel séparable devient un **module de première classe** ; **injection de dépendances + TS natif** = contrats explicites (`AUD-01` / `AUD-02`). L'audit ne mesure aucun framework : ce choix s'appuie sur l'adéquation à l'architecture (modulithe modulaire, ADR-003), non sur une métrique | **Express nu** : pas de structure modulaire de première classe ; framework d'un **autre runtime** : prolifération |
 | **Frontend** | **React** | Front de l'app US **éprouvée** ; **un seul écosystème JS/TS** avec le back (réduit `AUD-01`). Justifié par l'écosystème, **non** par le débit (350 req/s = `AUD-04`, mesure **backend**) | **Angular** (CA) : pile distincte ; **EJS** (FR) : rendu serveur legacy |
-| **Style d'API** | **REST sur HTTPS** | **Tiers hétérogènes** + **CRUD par domaine** (ADR-001) : friction d'intégration minimale, outillage ubiquitaire. Pas d'`AUD-NN` forcé | **GraphQL** : pour client riche, pas du CRUD inter-organisations ; **gRPC** : hostile aux intégrateurs tiers hétérogènes / navigateurs |
+| **Style d'API** | **REST sur HTTPS** | **Tiers hétérogènes** + **CRUD par domaine** (ADR-001) : friction d'intégration minimale, outillage ubiquitaire. Ce choix s'appuie sur l'intégration avec des tiers hétérogènes, non sur une métrique | **GraphQL** : pour client riche, pas du CRUD inter-organisations ; **gRPC** : hostile aux intégrateurs tiers hétérogènes / navigateurs |
 | **Base de données** | **Relationnel — PostgreSQL** | Deux justifications **distinctes** : **unifier** une base (vs fragmentation `AUD-03`, **agnostique au moteur**) **et** **relationnel = domaine** — intégrité Ville–Agence–Offre (ADR-012), **ACID** de la machine à états (ADR-011 / ADR-014), séparation perso/transactionnel RGPD (ADR-010). L'audit ne nomme **aucun SGBD** existant | **NoSQL document** : relâche l'intégrité référentielle et les garanties transactionnelles requises |
 | **Temps réel** | **WebSocket via `ws` in-process** | WebSocket décidé (ADR-003) ; passerelle = **module in-process** du modulithe (même runtime, frontière de **module**) ; la volumétrie ne révèle **aucune charge** (`AUD-04`) | **Broker (Redis/Kafka)** : sur-ingénierie non justifiée par la charge ; **socket.io** : couche d'abstraction / *fallbacks* superflus |
 | **Identité / autorisation** | **OAuth2 / OIDC + argon2id** | Deux flux (ADR-002 / ADR-018) : **OIDC** (ID token) pour le flux **humain**, **client-credentials OAuth2 pur** (sans utilisateur ni ID token) pour le flux **machine** ; **argon2id** déjà éprouvé (CA, `AUD-10`) | **IdP lourd déployé** : la PoC devrait le contourner (stubé, ADR-006) |

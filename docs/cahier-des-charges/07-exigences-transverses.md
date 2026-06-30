@@ -17,7 +17,7 @@ chaque user story.
 | `NFR-A11Y-03` | **Livrables eux-mêmes accessibles** : hiérarchie de titres, tableaux à en-têtes, alternatives textuelles, intitulés de liens signifiants. | CDC, architecture, README |
 | `NFR-A11Y-04` | **Contrôle d'accessibilité** (revue par critères RGAA + tests automatisables) avant mise en production. | Processus de développement (revue + CI) |
 
-*Priorité : Must (axe le plus pondéré).*
+*Priorité : Must.*
 
 ### 7.2 Internationalisation (i18n / l10n)
 
@@ -28,7 +28,7 @@ chaque user story.
 | `NFR-I18N-03` | **Fuseaux horaires** : dates et heures de prise / retour interprétées et affichées sans ambiguïté. | US-LOC-02 ; P1 |
 | `NFR-I18N-04` | **Formats locaux** (dates, nombres) adaptés à la locale. | US d'affichage |
 
-*Priorité : Must (déploiement international, « tous les clients » — v0).*
+*Priorité : Must (déploiement international pour tous les clients — v0).*
 
 ### 7.3 Sécurité
 

@@ -104,8 +104,3 @@ fournit les **étiquettes réutilisables** citées par les critères d'acceptati
 > **Usage.** Chaque user story des sections 3 à 6 cite les étiquettes pertinentes dans ses critères
 > d'acceptation (par exemple un formulaire → `A11Y-FORMULAIRES` + `A11Y-CLAVIER`). C'est ce qui
 > garantit l'**accessibilité par user story** (ADR-004) et rend chaque persona PSH **opérationnel**.
-
-#### 2.3.3 Lien avec la suite
-- Les exigences transverses d'accessibilité (objectif de conformité, audit, accessibilité des
-  livrables) sont formalisées en **§7**.
-- La **matrice de traçabilité** (§8) reliera *profils → user stories → étiquettes d'accessibilité*.
