@@ -1,6 +1,6 @@
 ## 8. Intégration des composants tiers
 
-Ce chapitre modélise l'**intégration des composants tiers** de la cible (C.1.7) : leurs **protocoles**,
+Ce chapitre modélise l'**intégration des composants tiers** de la cible : leurs **protocoles**,
 la **connectivité**, la **compatibilité** avec les choix d'architecture, et la **sécurité propre à
 l'intégration**. Le niveau reste le **cadrage**.
 
@@ -107,7 +107,7 @@ transition d'état) et **idempotent** (la **référence opaque** absorbe les re-
 
 ### 8.4 Compatibilité et absence d'incohérence
 
-Le garde-fou de C.1.7 : **aucune incohérence** entre les composants tiers et les choix retenus.
+Le garde-fou de **compatibilité** : **aucune incohérence** entre les composants tiers et les choix retenus.
 
 | Élément d'intégration tierce | Cohérent avec | Décision |
 |---|---|---|

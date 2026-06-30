@@ -83,7 +83,7 @@ La **passerelle temps réel inclut la persistance** des messages : le **module t
 propre domaine (`conversation` / `message` / `participant`) et **écrit en base**.
 
 Le **paiement** et les **applications d'agence** sont des **composants tiers** : leur place et leurs
-protocoles sont montrés ici ; le **détail de leur intégration** est traité au **chapitre 8** (C.1.7).
+protocoles sont montrés ici ; le **détail de leur intégration** est traité au **chapitre 8**.
 
 ### 5.2 Vue de déploiement
 
@@ -231,4 +231,4 @@ On ne dessine **que ce que les NFR / SLO justifient**. Sont **délibérément ab
 | Redondance + scaling horizontal du tier stateless (disponibilité, capacité) | ADR-017 |
 
 Les **composants tiers** (paiement, applications d'agence) sont **situés** ici ; le **détail de leur
-intégration** — contrats, séquences, gestion des webhooks — relève du **chapitre 8** (C.1.7).
+intégration** — contrats, séquences, gestion des webhooks — relève du **chapitre 8**.

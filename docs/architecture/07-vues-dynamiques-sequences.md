@@ -201,7 +201,7 @@ Ordre des échanges et points de décision :
 
 > **Lien preuve de concept.** Ce flux est **exactement** ce que la preuve de concept **démontre par tests
 > d'intégration** : **handshake authentifié** (jeton valide accepté ; absent / invalide rejeté),
-> **échange Customer ↔ Agent**, **isolation de conversation** — cohérence C.1.5.
+> **échange Customer ↔ Agent**, **isolation de conversation**.
 
 ### 7.5 Rattachement au registre
 

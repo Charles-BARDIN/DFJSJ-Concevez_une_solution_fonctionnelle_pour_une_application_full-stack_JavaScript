@@ -63,7 +63,7 @@ côté React et côté Node) **réduit la surface de divergence** entre front et
 **Choix : NestJS.** Justifié — **au même grain que PostgreSQL** — par son **adéquation au modulithe**,
 non par familiarité. Le **système de modules** de Nest est une **traduction directe** du **modulithe
 modulaire** (ADR-003) : frontières explicites, dépendances déclarées. Le **module temps réel séparable**
-y devient un **module de première classe** doté d'une couture nette (sert C.1.2 et C.1.5).
+y devient un **module de première classe** doté d'une couture nette.
 L'**injection de dépendances** et le **TypeScript natif** rendent les **contrats explicites**, dans le
 prolongement de la thèse TS (`AUD-01/02`). L'audit ne mesure **aucun framework** — il n'y a donc **pas
 d'`AUD-NN` forcé** ici, comme pour REST (§4.6).
@@ -95,9 +95,9 @@ divergence** (`AUD-01`). La justification est **l'écosystème**, **pas le débi
 
 **Choix : REST.** Le chapitre 3 posait « API CRUD par domaine » comme **donnée d'entrée** (ADR-001) en
 **différant** le choix du **style** d'API ; la justification du **style REST** se fait **ici** (ADR-019). L'API est une **API CRUD par domaine**
-consommée par des **applications d'agence tierces hétérogènes** (C.1.7) : c'est la **friction
+consommée par des **applications d'agence tierces hétérogènes** : c'est la **friction
 d'intégration** qui prime. REST offre l'**interopérabilité maximale** et un **outillage ubiquitaire**.
-L'ancrage est le **besoin** (C.1.7 + ADR-001), sans `AUD-NN` forcé.
+L'ancrage est le **besoin** (ADR-001), sans `AUD-NN` forcé.
 
 | Alternative | Évaluation | Verdict |
 |---|---|---|
@@ -162,16 +162,16 @@ maladroitement**.
 
 ### 4.10 Cohérence stack ↔ PoC
 
-La cohérence entre la stack annoncée et la preuve de concept est une **exigence explicite de C.1.4**. La
+La cohérence entre la stack annoncée et la preuve de concept est **un point de validation clé de l'architecture**. La
 PoC implémente un **sous-ensemble fidèle** de la cible :
 
 - **serveur WebSocket Node / `ws` brut** — **pas de Nest dans la PoC** (le transport temps réel est
   identique sous tout framework ; Nest héberge les **modules REST** que la PoC **stube / omet**) ;
 - **stockage relationnel** pour `conversation` / `message` / `participant`, **structure documentée dans
-  le README** (C.1.6 exige sa mise en œuvre dans la PoC) ;
+  le README** (mise en œuvre dans la PoC) ;
 - **helper de vérification de token stubé** (ADR-006) ;
 - **hygiène des secrets de base** : **clé de signature du token en variable d'environnement**,
-  **`.env.example`** documenté (C.1.8) — le *système* de secrets (vault / rotation) reste, lui,
+  **`.env.example`** documenté — le *système* de secrets (vault / rotation) reste, lui,
   spécifié à l'architecture.
 
 La **structure du code** de la PoC **donne à voir la séparabilité** du module temps réel ; ce que la PoC
@@ -186,7 +186,7 @@ aucune divergence.
 | Langage | **TypeScript** (front + back) | durcissement vs divergence (`AUD-01/02`) |
 | Framework backend | **NestJS** | modules = modulithe (ADR-003) ; contrats explicites |
 | Frontend | **React** | front US éprouvé ; écosystème unique (`AUD-01`) |
-| API | **REST / HTTPS** | tiers hétérogènes (C.1.7) + CRUD par domaine (ADR-001) |
+| API | **REST / HTTPS** | tiers hétérogènes + CRUD par domaine (ADR-001) |
 | Base | **Relationnel / PostgreSQL** | unifier (`AUD-03`) + domaine (ADR-010/011/012/014) |
 | Temps réel | **WebSocket `ws` in-process** | ADR-003 ; pas de charge (`AUD-04`) |
 | Identité | **OAuth2 / OIDC + argon2id** | ADR-002 / ADR-018 ; `AUD-10` |

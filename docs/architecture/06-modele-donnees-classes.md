@@ -405,7 +405,7 @@ CREATE TABLE message (
 
 > **Substrat de la PoC.** Les tables **`conversation`**, **`participant`** et **`message`** sont
 > **exactement** la structure que la preuve de concept **met en œuvre** pour le tchat —
-> satisfaisant l'exigence **C.1.6** (structure de données mise en œuvre dans la PoC). L'**isolation de
+> la **structure de données est ainsi mise en œuvre dans la PoC**. L'**isolation de
 > conversation** y est portée par la relation **`participant` → `conversation`** (un participant
 > n'accède qu'à ses conversations).
 >
