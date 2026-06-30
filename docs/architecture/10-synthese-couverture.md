@@ -1,34 +1,34 @@
 ## 10. Synthèse et couverture
 
-Chapitre de clôture du document. Il **récapitule** la proposition d'architecture et fournit la **carte
-de couverture des indicateurs**. Il ne réargumente rien et n'introduit aucune décision : chaque point
-**renvoie** au chapitre et à la décision où il a été traité.
+Chapitre de clôture du document. Il récapitule la proposition d'architecture et fournit la carte
+de couverture des indicateurs. Il ne réargumente rien et n'introduit aucune décision : chaque point
+renvoie au chapitre et à la décision où il a été traité.
 
 ### 10.1 Synthèse de la cible
 
 La proposition tient en quelques piliers, chacun justifié à son chapitre :
 
-- **Architecture** : un **modulithe modulaire** avec un **module temps réel séparable** (couture
-  d'extraction), justifié par l'audit (cohérence / maintenabilité, pas la charge) — **ADR-003**,
+- **Architecture** : un modulithe modulaire avec un module temps réel séparable (couture
+  d'extraction), justifié par l'audit (cohérence / maintenabilité, pas la charge), **ADR-003**,
   chapitre 5.
-- **Stack** : **consolidée sur le socle moderne déjà éprouvé** du parc (Node / TypeScript / NestJS /
-  React / REST), pas un *greenfield* — **ADR-019**, chapitre 4.
-- **Données** : **base relationnelle unifiée** (corrige la fragmentation de l'existant), à **résidence
-  régionale** pour le RGPD — **ADR-019 / ADR-020**, chapitres 5 et 6.
-- **Autorisation** : **deux plans distincts**, humain (RBAC client / agent) et machine (OAuth2
-  client-credentials des applications d'agence) — **ADR-002 / ADR-018**, chapitres 4 et 8.
-- **Paiement** : **externalisé et réversible** (collecte hébergée, webhook authentifié, prestataire =
-  instance) — **ADR-021**, chapitres 7 et 8.
-- **Transverses** : **quatre exigences à part entière**, **accessibilité en tête** (RGAA / WCAG 2.1 AA),
-  la sécurité **remédiant nommément** les constats d'audit — **ADR-004**, chapitre 9.
+- **Stack** : consolidée sur le socle moderne déjà éprouvé du parc (Node / TypeScript / NestJS /
+  React / REST), pas un *greenfield*, **ADR-019**, chapitre 4.
+- **Données** : base relationnelle unifiée (corrige la fragmentation de l'existant), à résidence
+  régionale pour le RGPD, **ADR-019 / ADR-020**, chapitres 5 et 6.
+- **Autorisation** : deux plans distincts, humain (RBAC client / agent) et machine (OAuth2
+  client-credentials des applications d'agence), **ADR-002 / ADR-018**, chapitres 4 et 8.
+- **Paiement** : externalisé et réversible (collecte hébergée, webhook authentifié, prestataire =
+  instance), **ADR-021**, chapitres 7 et 8.
+- **Transverses** : quatre exigences à part entière, accessibilité en tête (RGAA / WCAG 2.1 AA),
+  la sécurité remédiant nommément les constats d'audit, **ADR-004**, chapitre 9.
 
 ### 10.2 Carte de couverture des indicateurs
 
-Chaque indicateur **C.1.x** est rattaché à son **emplacement de traitement** et à sa **preuve**, en
-plus du **critère transverse** de rédaction des documents (clarté, structure, accessibilité) porté en
+Chaque indicateur C.1.x est rattaché à son emplacement de traitement et à sa preuve, en
+plus du critère transverse de rédaction des documents (clarté, structure, accessibilité) porté en
 tête de table. Les
-indicateurs portés par la **preuve de concept** sont marqués « **confirmé par la preuve
-de concept** » : la présente proposition les **prépare**, la preuve de concept les **a réalisés**.
+indicateurs portés par la preuve de concept sont marqués « confirmé par la preuve
+de concept » : la présente proposition les prépare, la preuve de concept les a réalisés.
 
 | Indicateur | Où il est traité | Preuve / artefact |
 |---|---|---|
@@ -46,8 +46,8 @@ Aucun indicateur n'est orphelin.
 
 ### 10.3 Renvoi au registre des décisions
 
-Les **décisions structurantes** (ADR-000 → ADR-021) — fonctionnelles et techniques — sont tracées dans
-le [registre des décisions](../registre-decisions.md), **transverse** au cahier des charges
+Les décisions structurantes (ADR-000 → ADR-021) — fonctionnelles et techniques — sont tracées dans
+le [registre des décisions](../registre-decisions.md), transverse au cahier des charges
 et à la présente proposition. Les grands arbitrages :
 
 | Arbitrage | Décision |
@@ -60,5 +60,5 @@ et à la présente proposition. Les grands arbitrages :
 | Résidence régionale des données | ADR-020 |
 | Prestataire de paiement | ADR-021 |
 
-La proposition d'architecture est ainsi complète : l'**audit** diagnostique l'existant, la **proposition** en déduit une
-cible **justifiée**, et la **preuve de concept** **en a validé** la brique temps réel.
+La proposition d'architecture est ainsi complète : l'audit diagnostique l'existant, la proposition en déduit une
+cible justifiée, et la preuve de concept en a validé la brique temps réel.

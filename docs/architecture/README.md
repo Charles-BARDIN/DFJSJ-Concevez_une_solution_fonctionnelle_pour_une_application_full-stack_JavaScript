@@ -1,14 +1,14 @@
 # Proposition d'architecture — sommaire
 
-Ce dossier contient les **sources Markdown** de la proposition d'architecture de *Your Car Your Way*
-(livrable 2). Ces fichiers forment **un seul document continu** : ils se lisent — et se concatènent —
-dans l'ordre des chapitres ci-dessous. Le **livrable officiel est le PDF unique** produit par
-concaténation à l'étape de finalisation ; les fichiers de ce dossier en sont les sources.
+Ce dossier contient les sources Markdown de la proposition d'architecture de *Your Car Your Way*
+(livrable 2). Ces fichiers forment un seul document continu : ils se lisent — et se concatènent —
+dans l'ordre des chapitres ci-dessous. Le livrable officiel est le PDF unique produit par
+concaténation à l'étape de finalisation. Les fichiers de ce dossier en sont les sources.
 
-Ce document se compose d'un **audit de l'existant** (chapitre 2), qui **diagnostique** les
-applications actuelles, puis d'une **proposition d'architecture cible** (chapitres 3 et suivants), qui
-en **déduit la solution** ; leur articulation est cadrée au **chapitre 1**. Le diagnostic et le choix
-de la solution sont **deux parties distinctes**.
+Ce document se compose d'un audit de l'existant (chapitre 2), qui diagnostique les
+applications actuelles, puis d'une proposition d'architecture cible (chapitres 3 et suivants), qui
+en déduit la solution. Leur articulation est cadrée au chapitre 1. Le diagnostic et le choix
+de la solution sont deux parties distinctes.
 
 | Ch. | Chapitre | Source |
 |---|---|---|
@@ -23,6 +23,6 @@ de la solution sont **deux parties distinctes**.
 | 9 | Bonnes pratiques — sécurité, accessibilité, écoconception | [09-bonnes-pratiques.md](09-bonnes-pratiques.md) |
 | 10 | Synthèse et couverture | [10-synthese-couverture.md](10-synthese-couverture.md) |
 
-> Les **décisions structurantes** (fonctionnelles et techniques) sont consignées dans le
+> Les décisions structurantes (fonctionnelles et techniques) sont consignées dans le
 > [registre des décisions](../registre-decisions.md), commun au cahier des charges et à la
 > proposition d'architecture.

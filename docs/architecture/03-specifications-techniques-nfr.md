@@ -2,39 +2,39 @@
 
 ### 3.1 Objet et niveau de cadrage
 
-Ce chapitre pose les **spécifications techniques de cadrage** de l'architecture cible et ses
-**exigences non fonctionnelles (NFR)**. Il énonce le **quoi mesurable** et les **principes** ; il ne
-descend **pas** au niveau de la configuration (valeurs de *timeout*, tailles de pool, détails
+Ce chapitre pose les spécifications techniques de cadrage de l'architecture cible et ses
+exigences non fonctionnelles (NFR). Il énonce le quoi mesurable et les principes. Il ne
+descend pas au niveau de la configuration (valeurs de *timeout*, tailles de pool, détails
 d'infrastructure), qui n'est pas du ressort du cadrage.
 
-**Frontière avec le chapitre 4.** Ce chapitre reste **agnostique en technologie** : il ne choisit ni
-langage, ni *framework*, ni base de données concrète — c'est l'objet du **chapitre 4** (choix
-technologiques et alternatives). Il s'appuie en revanche sur les **décisions déjà actées** au registre,
-qu'il pose comme **données d'entrée** : style **modulithe modulaire** avec **module temps réel
-séparable** (**ADR-003**), **API CRUD par domaine** (**ADR-001** ; style **REST** arrêté au ch. 4 /
-**ADR-019**), **deux plans
-d'authentification** humain / machine (**ADR-002** / **ADR-018**), **base de données unifiée**
+**Frontière avec le chapitre 4.** Ce chapitre reste agnostique en technologie : il ne choisit ni
+langage, ni *framework*, ni base de données concrète, c'est l'objet du chapitre 4 (choix
+technologiques et alternatives). Il s'appuie en revanche sur les décisions déjà actées au registre,
+qu'il pose comme données d'entrée : style modulithe modulaire avec module temps réel
+séparable (**ADR-003**), API CRUD par domaine (**ADR-001** ; style REST arrêté au ch. 4 /
+**ADR-019**), deux plans
+d'authentification humain / machine (**ADR-002** / **ADR-018**), base de données unifiée
 (**ADR-003**, **ADR-012**).
 
-**Non-duplication avec le cahier des charges.** Le cahier des charges définit **déjà**
-un catalogue de NFR transverses — accessibilité (`NFR-A11Y-01..04`), internationalisation
+**Non-duplication avec le cahier des charges.** Le cahier des charges définit déjà
+un catalogue de NFR transverses, accessibilité (`NFR-A11Y-01..04`), internationalisation
 (`NFR-I18N-01..04`), sécurité (`NFR-SEC-01..07`), RGPD (`NFR-RGPD-01..07`), écoconception
-(`NFR-ECO-01..05`). Ce chapitre **ne les ré-énumère pas** (un second catalogue divergent reproduirait
+(`NFR-ECO-01..05`). Ce chapitre ne les ré-énumère pas (un second catalogue divergent reproduirait
 le défaut `AUD-03` reproché à l'existant). Il procède en trois temps :
 
-1. il pose les **spécifications techniques de cadrage** de la cible (§3.2) ;
-2. il **traduit** les NFR existants du §7 du cahier des charges en **implications d'architecture** qui les réalisent (§3.3),
+1. il pose les spécifications techniques de cadrage de la cible (§3.2) ;
+2. il traduit les NFR existants du §7 du cahier des charges en implications d'architecture qui les réalisent (§3.3),
    sans les recopier ;
-3. il **ajoute** les seuls **NFR nouveaux** (§3.4 fiabilité / disponibilité, §3.5 authentification
-   machine), en **continuant la numérotation** du §7 du cahier des charges.
+3. il ajoute les seuls NFR nouveaux (§3.4 fiabilité / disponibilité, §3.5 authentification
+   machine), en continuant la numérotation du §7 du cahier des charges.
 
-La traçabilité **spécification / NFR → moteur** (ADR, constat d'audit `AUD-NN`) est récapitulée en
+La traçabilité spécification / NFR → moteur (ADR, constat d'audit `AUD-NN`) est récapitulée en
 §3.6.
 
 ### 3.2 Spécifications techniques de cadrage (agnostiques en technologie)
 
-Le tableau ci-dessous fixe les **principes structurants** de la cible, chacun rattaché à sa décision.
-Ils contraignent les choix du chapitre 4 **sans les anticiper**.
+Le tableau ci-dessous fixe les principes structurants de la cible, chacun rattaché à sa décision.
+Ils contraignent les choix du chapitre 4 sans les anticiper.
 
 | Spécification | Principe cible (cadrage) | Ancrage |
 |---|---|---|
@@ -45,14 +45,14 @@ Ils contraignent les choix du chapitre 4 **sans les anticiper**.
 | **Deux plans d'autorisation** | **Humain** — **token utilisateur** (déjà *token-based*, ADR-006), **RBAC client / agent de support**. **Machine** — **OAuth2 client-credentials** pour les applications d'agence, **scopes par domaine**. Les deux plans sont **distincts** et ne se confondent pas. | ADR-002 ; ADR-018 |
 | **Attentes runtime** | **Redondance** des instances applicatives (sert la disponibilité) et **mise à l'échelle horizontale** (sert la capacité agrégée), **découlant des SLO** (§3.4) — **sans choisir l'infrastructure concrète**. | ADR-017 ; ADR-003 |
 
-> Ces principes sont **délibérément sobres** : ils répondent au diagnostic de l'audit (cohérence,
+> Ces principes sont délibérément sobres : ils répondent au diagnostic de l'audit (cohérence,
 > maintenabilité, sécurité, fiabilité) sans sur-dimensionner. Toute spécification plus fine
 > (configuration, dimensionnement) relève de l'implémentation, non du cadrage.
 
 ### 3.3 NFR existants (cahier des charges) — traduction en spécifications techniques
 
-Pour chaque axe, le tableau donne l'**implication d'architecture** qui **réalise** les NFR déjà posés
-au §7 du cahier des charges. Il s'agit d'une **traduction en spécifications**, pas d'une recopie : les
+Pour chaque axe, le tableau donne l'implication d'architecture qui réalise les NFR déjà posés
+au §7 du cahier des charges. Il s'agit d'une traduction en spécifications, pas d'une recopie : les
 identifiants restent ceux du §7 du cahier des charges, qui demeure leur catalogue de référence.
 
 | Axe (cahier des charges) | Implication d'architecture / spécification technique qui le réalise |
@@ -65,10 +65,10 @@ identifiants restent ceux du §7 du cahier des charges, qui demeure leur catalog
 
 ### 3.4 NFR nouveaux — Fiabilité et disponibilité (axe SLO)
 
-Le §7.3 du cahier des charges **renvoyait explicitement** les cibles de fiabilité / disponibilité à la
-proposition d'architecture. Elles sont posées **ici**, en **opérationnalisant ADR-017** : l'ADR porte
-la **décision et sa justification** ; le NFR ajoute la **cible mesurable et son mode de vérification**.
-Le §7 du cahier des charges ne comportait pas d'axe fiabilité / disponibilité ; un **nouvel axe `NFR-SLO`** est donc créé,
+Le §7.3 du cahier des charges renvoyait explicitement les cibles de fiabilité / disponibilité à la
+proposition d'architecture. Elles sont posées ici, en **opérationnalisant ADR-017** : l'ADR porte
+la décision et sa justification. Le NFR ajoute la cible mesurable et son mode de vérification.
+Le §7 du cahier des charges ne comportait pas d'axe fiabilité / disponibilité. Un **nouvel axe `NFR-SLO`** est donc créé,
 sans collision avec les axes existants.
 
 | NFR | Cible mesurable | Mesure / vérification | Ancrage |
@@ -81,24 +81,24 @@ sans collision avec les axes existants.
 | `NFR-SLO-06` | **Capacité ≥ 350 req/s en plancher** + **mise à l'échelle horizontale** | Charge soutenue sans dégradation, **vérifiée par test de charge** avant mise en production | ADR-017 ; `AUD-04` |
 | `NFR-SLO-07` | **Latence — sans cible chiffrée, à instrumenter** | **p95 à mesurer** une fois la plateforme en place ; **aucune cible posée** | ADR-017 (réserve) |
 
-> **Lecture de `NFR-SLO-01` (disponibilité).** La cible est un **plancher délibéré en base annuelle**
-> (convention SLA). Ce n'est **pas** une amélioration générale de la disponibilité : **rapportée au
-> temps d'indisponibilité mensuel** (`AUD-14`, de l'ordre de 99,9 % — 99,94 → 99,98 %), elle reste **en
-> deçà**. Pris au pied de la lettre, le mensuel imposerait une cible **proche du 4-nines** (sans
-> l'atteindre) que la **volumétrie** (`AUD-04`, 150–350
-> req/s) ne justifie pas ; **ancrer l'annuel** avec un plancher sobre est le seul choix cohérent avec
-> l'**anti-sur-ingénierie** (**ADR-003**). La **divergence annuel / mensuel** est signalée en **note
-> §2.1** de l'audit ; elle n'est **pas réconciliable** à partir de la source.
+> **Lecture de `NFR-SLO-01` (disponibilité).** La cible est un plancher délibéré en base annuelle
+> (convention SLA). Ce n'est pas une amélioration générale de la disponibilité : rapportée au
+> temps d'indisponibilité mensuel (`AUD-14`, de l'ordre de 99,9 %, 99,94 → 99,98 %), elle reste en
+> deçà. Pris au pied de la lettre, le mensuel imposerait une cible proche du 4-nines (sans
+> l'atteindre) que la volumétrie (`AUD-04`, 150–350
+> req/s) ne justifie pas ; ancrer l'annuel avec un plancher sobre est le seul choix cohérent avec
+> l'anti-sur-ingénierie (**ADR-003**). La divergence annuel / mensuel est signalée en note
+> §2.1 de l'audit ; elle n'est pas réconciliable à partir de la source.
 
 > **Lecture de `NFR-SLO-06` (capacité).** Unifier les applications régionales revient à porter la
-> **somme** des charges sur une plateforme, non le **maximum** d'une seule (350 req/s = plafond d'**une**
-> application, l'US, `AUD-04`). La cible pose donc **350 req/s en plancher** et **passe à l'échelle
-> horizontalement** (élasticité) plutôt qu'en boîte fixe plus grosse : elle répond à l'**agrégation
-> sans sur-dimensionner**.
+> somme des charges sur une plateforme, non le maximum d'une seule (350 req/s = plafond d'une
+> application, l'US, `AUD-04`). La cible pose donc 350 req/s en plancher et passe à l'échelle
+> horizontalement (élasticité) plutôt qu'en boîte fixe plus grosse : elle répond à l'agrégation
+> sans sur-dimensionner.
 
 ### 3.5 NFR nouveau — Sécurité : authentification machine-to-machine de l'API agences (`NFR-SEC-08`)
 
-Le §7.3 du cahier des charges s'arrête à `NFR-SEC-07` ; ce nouveau besoin **continue la série SEC** et **opérationnalise
+Le §7.3 du cahier des charges s'arrête à `NFR-SEC-07`. Ce nouveau besoin continue la série SEC et **opérationnalise
 ADR-018**.
 
 | NFR | Exigence | Mesure / vérification | Ancrage |
@@ -107,8 +107,8 @@ ADR-018**.
 
 ### 3.6 Traçabilité (NFR / spécification → moteur)
 
-Chaque NFR nouveau et chaque spécification renvoie au **constat d'audit** et à la **décision** qui le
-motivent — la chaîne **constat → remédiation** (§1.3) est ainsi préservée.
+Chaque NFR nouveau et chaque spécification renvoie au constat d'audit et à la décision qui le
+motivent, la chaîne constat → remédiation (§1.3) est ainsi préservée.
 
 | Élément | Décision (ADR) | Constat d'audit | Lien NFR |
 |---|---|---|---|
@@ -117,6 +117,6 @@ motivent — la chaîne **constat → remédiation** (§1.3) est ainsi préserv�
 | Spéc. de remédiation sécurité (argon2id, TLS 1.2+/wss, gestionnaire de secrets, SCA) | — (posées dans le cahier des charges) | `AUD-10`, `AUD-11`, `AUD-12`, `AUD-13` | `NFR-SEC-01/02/03/07` |
 | Style modulithe + couture temps réel ; base unifiée ; API unifiée | ADR-003 ; ADR-001 ; ADR-012 | `AUD-01`, `AUD-02`, `AUD-03`, `AUD-06` | — |
 
-> **Frontière rappelée.** Ce chapitre **mesure** et **principe** ; il ne **choisit pas** la
+> **Frontière rappelée.** Ce chapitre mesure et principe ; il ne choisit pas la
 > technologie. La sélection et la justification de la stack — réalisant ces spécifications et ces NFR —
-> font l'objet du **chapitre 4**.
+> font l'objet du chapitre 4.
