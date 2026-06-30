@@ -15,6 +15,9 @@ mention consolident un besoin déjà présent dans les sources : **les décision
 structurantes** (stack, découpage) **et les obligations légales** (ex. anonymisation RGPD) **ne sont pas
 des hypothèses**, même si elles résultent d'un choix d'architecte.
 
+**Références `AUD-NN`.** Les références **`AUD-NN`** renvoient aux constats de l'audit de l'existant,
+détaillé dans la proposition d'architecture.
+
 ---
 
 ## ADR-000 — Méthode : combler les manques du v0 par des hypothèses tracées
@@ -35,14 +38,14 @@ applicative de notre système.
 **Décision.** Le système est composé de **(a)** une **application client** (le produit), **(b)** une
 **API CRUD par domaine** exposée à des **applications d'agence tierces** (composants tiers à
 intégrer, modélisés dans la proposition d'architecture), et **(c)** un **tchat** dont l'un des participants est un **agent de
-support**. L'usage « employé » existe **uniquement** comme **agent du tchat** (§6) et comme
+support**. L'usage « employé » existe **uniquement** comme **agent du tchat** et comme
 **consommateur de l'API**. **Pas de seconde application**, pas de back-office, pas de user stories de
 gestion.
 **Alternatives écartées.** Concevoir « deux surfaces » (application client + application back-office)
 → **contredit l'exclusion explicite du v0** et invente une application non demandée ; le v0 ne demande
 qu'une **API** pour les applications d'agence — l'agence est un **composant tiers**, pas une surface applicative.
-**Conséquences.** Cadre le périmètre (§1.3), les profils (§2, pas de rôle de gestion), les usages du
-personnel et l'intégration des apps d'agence (§5) et le tchat (§6). L'administration (offres, agences,
+**Conséquences.** Cadre le périmètre, les profils (pas de rôle de gestion), les usages du
+personnel et l'intégration des apps d'agence et le tchat. L'administration (offres, agences,
 réservations) est réalisée par les applications d'agence via l'API.
 
 ## ADR-002 — Authentification : e-mail / mot de passe + contrôle d'accès par rôle (RBAC)
@@ -133,13 +136,13 @@ client et un agent de support (tchat).
   secteur ; le v0 est muet sur ce point.)*
 - **Client** (authentifié) : parcours complet — compte / profil, réservation, paiement, historique,
   modification / annulation, support (tchat).
-- **Agent de support** (authentifié) : **participant du tchat** (§6), pendant du client.
+- **Agent de support** (authentifié) : **participant du tchat**, pendant du client.
 Le RBAC (ADR-002) distingue **client** et **agent de support**. **Aucun rôle de gestion** :
 l'administration relève des applications d'agence tierces (API).
 **Alternatives écartées.** Tout placer derrière authentification → friction inutile à la consultation.
 Introduire un rôle de gestion (« gestionnaire ») → supposerait une application back-office hors
 périmètre (ADR-001).
-**Conséquences.** Cadre les profils (§2.1) ; cohérent avec ADR-001.
+**Conséquences.** Cadre les profils ; cohérent avec ADR-001.
 
 ## ADR-010 — Suppression de compte : effacement des données personnelles + conservation légale anonymisée
 **Contexte.** Le v0 exige la suppression de compte (avec saisie du mot de passe). Le RGPD ouvre un
@@ -152,12 +155,12 @@ pour la durée légale requise. La **saisie du mot de passe** (v0) et une **conf
 protègent l'action irréversible.
 **Alternatives écartées.** Effacement total immédiat → non conforme aux obligations de conservation.
 Conservation intégrale → contraire à la minimisation et au droit à l'effacement.
-**Conséquences.** À détailler en §7 (RGPD) et dans le modèle de données (séparation données
+**Conséquences.** À détailler dans les exigences RGPD et dans le modèle de données (séparation données
 personnelles / transactionnelles). Cohérent avec US-PROF-03.
 
 ## ADR-011 — Politique de modification / annulation / remboursement **[HYP]**
 **Contexte.** La réservation est modifiable et annulable (v0) ; il faut une politique complète et sans
-zone grise pour les règles métier (§4) et la machine à états de réservation. Référence temporelle =
+zone grise pour les règles métier de la location et la machine à états de réservation. Référence temporelle =
 **date / heure de début** (prise du véhicule).
 **Ce que dit le v0.** Modification possible **jusqu'à 48 h** avant le début ; « à **moins d'une
 semaine** du début, remboursement de **25 %** seulement ». Rien sur l'annulation au-delà d'une semaine
@@ -181,12 +184,12 @@ les dernières 48 h ; les passer à **0 %** (Option B) est donc un **écart dél
 sous une semaine) **reste un repli tracé** pour qui privilégie la lettre. *L'écart ne tient pas à la
 fenêtre de modification : modification et annulation sont distinctes — on peut annuler une
 réservation qu'on ne peut plus modifier.*
-**Conséquences.** Une **modification qui change le tarif** est un cas à part entière (§4) : le
+**Conséquences.** Une **modification qui change le tarif** est un cas à part entière de la location : le
 **complément** (hausse) ou le **remboursement partiel** (baisse) transite par le **prestataire de
 paiement externe**, confirmé par **webhook** (US-LOC-06). Alimente la machine à états de réservation.
 
 ## ADR-012 — Relation agence / ville / offre **[HYP]**
-**Contexte.** Conditionne le modèle de données et les user stories de recherche / réservation (§4).
+**Contexte.** Conditionne le modèle de données et les US de recherche / réservation.
 **Ce que dit le v0.** « Consulter la liste des agences » ; recherche par ville de départ / retour ;
 offre définie par villes, dates, catégorie ACRISS, tarif — sans relier explicitement offre et agence.
 **Décision.** **Ville** : référentiel géographique. **Agence** : appartient à une ville (1 ville →
@@ -208,7 +211,7 @@ personnelles » + paiement. Pas de mention du permis ni de l'âge.
 **Décision.** **Repris du profil** (pré-remplis si présents — v0) : nom, prénom, date de naissance,
 adresse, e-mail. **Spécifique location [HYP]** : **numéro de permis de conduire** (+ pays de
 délivrance) ; **respect d'un âge minimal du conducteur**. Le **numéro de permis est une donnée
-personnelle réglementée** → soumis à la **minimisation et à la conservation RGPD** (ADR-010, §7).
+personnelle réglementée** → soumis à la **minimisation et à la conservation RGPD** (ADR-010, exigences RGPD).
 L'**âge minimal est paramétrable** (peut varier selon la catégorie ACRISS et le pays) ; les barèmes
 fins sont renvoyés en **évolution**. Hors v1 (évolution) : assurances, options, conducteur additionnel.
 **Alternatives écartées.** Se limiter aux 4 champs du profil (irréaliste, pas de permis) ; spécifier
@@ -224,7 +227,7 @@ transition **confirmée → terminée**.
 gestion absente du périmètre (le v0 exclut les actions des employés ; l'administration passe par les
 apps d'agence). Une transition purement automatique à la date de fin → ignore retards et retours
 anticipés.
-**Conséquences.** Décrite en §5 (intégration des apps d'agence) ; cohérente avec ADR-001 et la machine
+**Conséquences.** Décrite dans l'intégration des apps d'agence ; cohérente avec ADR-001 et la machine
 à états (architecture).
 
 ## ADR-015 — Tchat de support temps réel : ajout au périmètre v0 **[HYP]**
@@ -232,14 +235,14 @@ anticipés.
 d'assistance client en temps réel ; il faut l'ancrer pour ne pas l'introduire « hors-sol », et il
 **valide la brique temps réel** de l'architecture cible (preuve de concept).
 **Décision.** Le besoin « **support / assistance client en temps réel** » est **ajouté au périmètre
-fonctionnel comme [HYP]** (US-CHAT-01, §6), justifié par un besoin métier réel **et par
+fonctionnel comme [HYP]** (US-CHAT-01, support tchat), justifié par un besoin métier réel **et par
 l'accessibilité** : la persona **P4 (cliente sourde)** est exclue du support téléphonique → le **canal
 texte temps réel est inclusif**. Le tchat valide la **brique temps réel** de l'architecture cible
 (module séparable, ADR-003) et fait l'objet de la **preuve de concept**.
 **Alternatives écartées.** Traiter le tchat seulement comme artefact de PoC sans besoin métier →
 fonctionnalité hors-sol, non traçable. Support uniquement e-mail / téléphone → exclut les personnes
 sourdes / malentendantes et ne valide pas la brique temps réel.
-**Conséquences.** US-CHAT-01 / US-CHAT-02 (§6) ; périmètre PoC strict (Customer + Agent, handshake
+**Conséquences.** US-CHAT-01 / US-CHAT-02 (support tchat) ; périmètre PoC strict (Customer + Agent, handshake
 authentifié, isolation) ; cohérent avec ADR-003.
 
 ## ADR-016 — Export des données personnelles en self-service (droit d'accès / portabilité RGPD) **[HYP]**
@@ -248,7 +251,7 @@ authentifié, isolation) ; cohérent avec ADR-003.
 « consulter son profil » (US-PROF-01) **ne couvre pas** cette obligation, qui porte sur **l'ensemble**
 des données, sous forme **exportable**.
 **Décision.** Exposer un **export self-service** des données personnelles du client, dans un **format
-structuré et lisible par machine**, via une user story dédiée (**US-PROF-04**, §3.2) ; priorité
+structuré et lisible par machine**, via une user story dédiée (**US-PROF-04**, gestion du profil) ; priorité
 **Should** en v1. **Portée de l'hypothèse** : le **droit** d'accès / portabilité est **ferme** (RGPD,
 art. 15/20) ; seule la **modalité self-service en v1** (vs traitement manuel sur demande, repli tracé)
 est hypothétique — d'où la distinction avec **ADR-010** (effacement, obligation légale ferme).
@@ -256,7 +259,7 @@ est hypothétique — d'où la distinction avec **ADR-010** (effacement, obligat
 n'est ni l'ensemble des données, ni un export). Traitement **manuel** uniquement (sur demande, hors
 application) → admissible mais moins traçable et moins inclusif ; conservé comme repli si le
 self-service n'est pas livré en v1.
-**Conséquences.** US-PROF-04 (§3.2) ; NFR-RGPD-07 (§7) rattaché à cette US ; tracé en §8.2 / §8.3.
+**Conséquences.** US-PROF-04 (gestion du profil) ; NFR-RGPD-07 (exigences RGPD) rattaché à cette US ; tracé dans la traçabilité (sources et hypothèses).
 
 ## ADR-017 — Cibles de niveau de service (SLO) de la plateforme cible **[HYP]**
 **Contexte.** Le v0 ne fixe **aucune cible de niveau de service** ; l'audit fournit en revanche une
@@ -267,7 +270,7 @@ livraison et de reprise** est le vrai point faible — MTTR ≈ 2 h 45 / ≈ 1 h
 déploiement 82 % / 91 % et stabilisation 3,4 j / 1,7 j (`AUD-07`), taux d'erreur en pic 0,8 → 4 %
 (`AUD-05`).
 **Divergence de mesure assumée.** La source donne **deux indicateurs de disponibilité non
-réconciliés** (cf. **note §2.1** de l'audit) : l'**annuel** (`AUD-08`, 97,2 → 98,9 %) implique
+réconciliés** (cf. la note de l'**audit de l'existant**, proposition d'architecture) : l'**annuel** (`AUD-08`, 97,2 → 98,9 %) implique
 plusieurs heures d'indisponibilité par mois ; le **mensuel** (`AUD-14`, 7 → 28 min) une disponibilité
 de l'ordre de **99,9 % ou plus**. Par **convention SLA**, la cible de disponibilité est **ancrée sur la
 base annuelle** ; ce choix est **explicité** plutôt que masqué — même posture d'honnêteté que la
@@ -293,13 +296,13 @@ n'est posée (elle serait sans baseline). Objectif à **instrumenter** une fois 
 **Alternatives écartées.** **Option A** — n'inscrit aucun progrès alors que la cible corrige
 précisément les causes (`AUD-07`, `AUD-15`). **Option C (4-nines / multi-région)** — **sur-ingénierie**
 au regard de la volumétrie (`AUD-04`) et de la criticité du service ; contraire à ADR-003.
-**Conséquences.** Ces SLO deviennent des **NFR mesurables** au chapitre des spécifications techniques
+**Conséquences.** Ces SLO deviennent des **NFR mesurables** dans les spécifications techniques (de la proposition d'architecture)
 (disponibilité, MTTR, fiabilité de livraison, taux d'erreur, capacité) et **orientent** le déploiement
 (redondance) et les bonnes pratiques (CI/CD, restauration éprouvée). Ils **ferment côté cible** le grief
 de fiabilité de l'audit (`AUD-07` / `AUD-08` / `AUD-09`).
 
 ## ADR-018 — Authentification machine-to-machine de l'API exposée aux applications d'agence **[HYP]**
-**Contexte.** Le cahier des charges pose (§3) que l'accès des **applications d'agence tierces** à l'API
+**Contexte.** Le cahier des charges pose (au titre de l'authentification) que l'accès des **applications d'agence tierces** à l'API
 est **authentifié séparément, dans la proposition d'architecture** : l'**existence** d'une
 authentification distincte est décidée, mais **aucun ADR n'en choisit le mécanisme**. Il faut le faire
 ici, et le **distinguer du RBAC humain** (ADR-002) : ce sont **deux plans d'autorisation** — un
@@ -322,10 +325,10 @@ machine. **mTLS** reste un **durcissement optionnel** pour les intégrations les
 (évolution).
 **Alternatives écartées.** **Clés d'API** — secret statique, rotation manuelle : **reconduit `AUD-12`**.
 **mTLS seul** — **PKI surdimensionnée** pour des tiers hétérogènes au regard du cadrage.
-**Conséquences.** La stack d'identité (chapitre choix techno) prévoit un **serveur d'autorisation**
+**Conséquences.** La stack d'identité (choix technologiques de la proposition d'architecture) prévoit un **serveur d'autorisation**
 servant les **deux flux** ; le côté **humain est déjà *token-based*** (émission / refresh **stubés** dans
 la PoC, **ADR-006**), si bien que le flux *client-credentials* est un **ajout incrémental** et non un
-sous-système neuf. Le chapitre d'intégration des composants tiers décrit le parcours `client_id` /
+sous-système neuf. L'intégration des composants tiers décrit le parcours `client_id` /
 `secret` → token → appel API avec scopes ; `NFR-SEC-06` est alimenté (journalisation par `client_id`).
 Le plan d'autorisation machine est modélisé au déploiement, **distinct du RBAC humain** (ADR-002).
 
@@ -339,7 +342,7 @@ règle les fautes du socle historique (`AUD-10` / `AUD-11` / `AUD-07`) **indépe
 
 | Couche | Choix | Ancrage | Alternatives écartées |
 |---|---|---|---|
-| **Runtime** | **Node.js** | Meilleures métriques du parc sur l'app US (`AUD-04/05/07/08/14`) ; runtime **le plus répandu** du parc (cœur FR/DE/ES/IT **et** US) → leverage la **plus large compétence** existante (contrainte « équipes habituées aux piles hétérogènes », §2.5.2) | **PHP/Laravel** (UK) et **Java/Spring** (CA) : piles présentes, métriques moindres, ré-éparpilleraient ; **runtime absent du parc** : prolifération (`AUD-01`) |
+| **Runtime** | **Node.js** | Meilleures métriques du parc sur l'app US (`AUD-04/05/07/08/14`) ; runtime **le plus répandu** du parc (cœur FR/DE/ES/IT **et** US) → leverage la **plus large compétence** existante (contrainte « équipes habituées aux piles hétérogènes », constat de l'audit, proposition d'architecture) | **PHP/Laravel** (UK) et **Java/Spring** (CA) : piles présentes, métriques moindres, ré-éparpilleraient ; **runtime absent du parc** : prolifération (`AUD-01`) |
 | **Langage** | **TypeScript** (front + back) | **Durcissement** : typage statique contre la **divergence** du code (`AUD-01` / `AUD-02`) ; **un seul langage typé** full-stack | **JavaScript nu** : cohérent Node mais n'outille pas contre la divergence |
 | **Framework backend** | **NestJS** | Son **système de modules** traduit le **modulithe modulaire** (ADR-003) — le module temps réel séparable devient un **module de première classe** ; **injection de dépendances + TS natif** = contrats explicites (`AUD-01` / `AUD-02`). L'audit ne mesure aucun framework : pas d'`AUD-NN` forcé | **Express nu** : pas de structure modulaire de première classe ; framework d'un **autre runtime** : prolifération |
 | **Frontend** | **React** | Front de l'app US **éprouvée** ; **un seul écosystème JS/TS** avec le back (réduit `AUD-01`). Justifié par l'écosystème, **non** par le débit (350 req/s = `AUD-04`, mesure **backend**) | **Angular** (CA) : pile distincte ; **EJS** (FR) : rendu serveur legacy |
@@ -379,12 +382,12 @@ la fragmentation.
 **Alternatives écartées.** **Région unique + clauses contractuelles types / décision d'adéquation** →
 **patch juridique faible** pour un produit mondial ; **concentre** toutes les données dans une seule
 juridiction. **Fragmentation par pays** → c'est exactement `AUD-03`, rejeté.
-**Conséquences.** Le chapitre de déploiement (ch.05) dessine une **architecture identique par région**
+**Conséquences.** Le déploiement (proposition d'architecture) dessine une **architecture identique par région**
 (répartiteur + N instances + base régionale) ; le **schéma** et le **contrat d'API** restent **uniques**.
 Sert `NFR-RGPD-05`. **Ancrage** : `NFR-RGPD-05` / ADR-019 / `AUD-03`.
 
 ## ADR-021 — Prestataire de paiement **[HYP]**
-**Contexte.** Le v0 cite « **Stripe (par exemple)** » sans l'imposer. Le modèle de données (chapitre 6)
+**Contexte.** Le v0 cite « **Stripe (par exemple)** » sans l'imposer. Le modèle de données (proposition d'architecture)
 est **déjà agnostique** au prestataire : l'entité `Payment` ne porte qu'une **référence de transaction
 opaque**, un **statut**, une **direction** (`charge` / `refund`) et un **montant / devise** — **aucune
 donnée de carte** (`NFR-SEC-05`) ; l'état `confirmed` de la réservation est déclenché par **webhook**.
@@ -398,16 +401,16 @@ de ce mécanisme.
   *backend* → **PCI-DSS délégué** (`NFR-SEC-05`). C'est aussi la page hébergée qui **porte
   l'authentification forte** (**3-D Secure / DSP2**), **hors de notre système** : nous ne manipulons ni
   carte ni *challenge* d'authentification.
-- **Confirmation par webhook** : la transition vers l'état **`confirmed`** (machine à états, §6.3)
+- **Confirmation par webhook** : la transition vers l'état **`confirmed`** (machine à états de la réservation)
   n'est appliquée **qu'après vérification de l'authenticité** de l'appel (**signature du prestataire
   vérifiée**). Un webhook entrant qui modifie un état est une **surface de sécurité** : sans cette
   vérification, un `confirmed` serait **forgeable**. Le **principe** est posé ici ; le détail
-  (vérification de signature, traitement) relève du chapitre 7 et des exigences de sécurité.
-- **Idempotence** : la **référence de transaction opaque** (chapitre 6) sert de **clé d'idempotence**
+  (vérification de signature, traitement) relève des vues dynamiques et exigences de sécurité (proposition d'architecture).
+- **Idempotence** : la **référence de transaction opaque** (modèle de données) sert de **clé d'idempotence**
   pour absorber les **re-livraisons** de webhook (relances du prestataire) — **sans** double transition
   d'état ni double `Payment`.
 - **Remboursement / complément** via l'**API du prestataire**, matérialisé par un `Payment` **`charge`**
-  (hausse) ou **`refund`** (baisse) sur la **même** réservation (§6.4, matrice ADR-011).
+  (hausse) ou **`refund`** (baisse) sur la **même** réservation (matrice de remboursement, ADR-011).
 
 *L'instance* (Stripe) est justifiée par les **besoins**, non par l'exemple du v0 seul : **webhooks
 matures** (déclencheur d'état fiable) ; **multi-devise** (`NFR-I18N-02`) ; **collecte hébergée**
@@ -421,8 +424,8 @@ cadrage — sa recevabilité **confirme l'agnosticité** du modèle. **Intégrat
 côté *backend*** → ferait **transiter la carte** par notre système et nous chargerait du PCI-DSS
 (`NFR-SEC-05`), rejetée. **Stocker un moyen de paiement chez nous** → rejeté (`NFR-SEC-05`).
 **Conséquences.** Le **mécanisme** étant **réversible**, changer de prestataire **ne modifie ni
-`Booking` ni `Payment`** : seul le **détail d'intégration** (chapitre 7) en dépend. Alimente le
-**chapitre 7** (séquence réservation → page hébergée → webhook authentifié → transition d'état ;
-modification → `charge` / `refund`) et le **chapitre 8** (le prestataire est un **composant tiers**, au
-même titre que les applications d'agence). **Confirme l'agnosticité** posée au chapitre 6, qui **n'est
+`Booking` ni `Payment`** : seul le **détail d'intégration** (proposition d'architecture) en dépend. Alimente les
+**séquences de réservation / paiement** (réservation → page hébergée → webhook authentifié → transition d'état ;
+modification → `charge` / `refund`) et l'**intégration des composants tiers** (le prestataire est un **composant tiers**, au
+même titre que les applications d'agence). **Confirme l'agnosticité** posée dans le modèle de données, qui **n'est
 pas rouvert**.
