@@ -1,9 +1,9 @@
 ## 2. Profils utilisateurs et accessibilité
 
-La section 1 a délimité le périmètre — **application client + API pour applications d'agence tierces
-+ tchat de support**. Cette section caractérise **qui** utilise le système et **avec quelles
-contraintes** — en particulier les **personnes en situation de handicap (PSH)**, traitées ici comme
-un **fil directeur** et non comme une annexe (conformément à **ADR-004**).
+La section 1 a délimité le périmètre — **application client + API pour applications d'agence
+tierces + tchat de support**. Cette section caractérise **qui** utilise le système et **avec
+quelles contraintes** — en particulier les **personnes en situation de handicap (PSH)**, traitées
+ici comme un **fil directeur** et non comme une annexe (conformément à **ADR-004**).
 
 Ces profils servent de socle aux user stories des sections 3 à 6 : chaque besoin y est rattaché à un
 profil, et chaque critère d'accessibilité y renvoie au **référentiel opérationnel** défini en §2.3.

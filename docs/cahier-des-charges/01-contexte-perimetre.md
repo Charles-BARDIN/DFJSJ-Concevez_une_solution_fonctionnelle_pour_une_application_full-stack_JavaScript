@@ -8,18 +8,12 @@
 | **Date** | Juin 2026 |
 | **Auteur** | Simon Charles Paul Bardin |
 
-> Ce document consolide et complète la version initiale du cahier des charges (v0), explicitement
-> incomplète. Il se lit comme **un seul document continu** : les sections 1 à 8 s'enchaînent et se
-> répondent (plan détaillé en §1.5).
-
----
-
 ## 1. Introduction
 
 ### 1.1 Objet du document
 
-Ce document **consolide et complète les besoins fonctionnels** de la nouvelle application
-**Your Car Your Way (YCYW)**. Il exprime ces besoins du **point de vue métier et utilisateur** —
+Ce document **est le cahier des charges fonctionnel de référence** de l'application
+**Your Car Your Way (YCYW)**. Il exprime les besoins du **point de vue métier et utilisateur** —
 sous forme de *user stories* assorties de **critères d'acceptation** — ainsi que les **exigences
 transverses** (non fonctionnelles).
 
@@ -29,8 +23,9 @@ prenantes **non techniques** (validation des besoins) qu'aux parties prenantes *
 (entrée de la conception), et sert de référence aux deux livrables suivants : la proposition
 d'architecture et la preuve de concept.
 
-La version initiale (v0) porte la mention « *cette section n'est pas exhaustive ni complétée* ». Le
-présent document la **reprend intégralement, la structure et comble ses manques**.
+La **spécification initiale fournie** constitue une **source** que ce document **intègre et étend** :
+ses besoins sont repris et structurés, et les points qu'elle laissait ouverts sont **arbitrés et
+signalés [HYP]**, selon la méthode décrite en **ADR-000**.
 
 ### 1.2 Contexte
 
