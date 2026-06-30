@@ -53,7 +53,7 @@ adossée à une **API**, et complétée d'un **tchat de support** dont l'un des 
 | Élément | Description |
 |---|---|
 | **Application client** | Le produit : compte et profil, authentification, recherche et réservation de location, paiement, historique, modification / annulation, **support en temps réel (tchat)**. Destinée à tous les clients, **y compris les personnes en situation de handicap**. |
-| **API (CRUD par domaine)** | Exposée aux **applications d'agence tierces existantes** (utilisateur, réservation, offre, agence…), conformément à l'exigence du v0. Ces applications sont des **composants tiers à intégrer** (modélisés dans la proposition d'architecture, C.1.7), **non développés ici**. |
+| **API (CRUD par domaine)** | Exposée aux **applications d'agence tierces existantes** (utilisateur, réservation, offre, agence…), conformément à l'exigence du v0. Ces applications sont des **composants tiers à intégrer** (modélisés dans la proposition d'architecture), **non développés ici**. |
 | **Tchat de support** **[HYP]** | Échange en temps réel entre un **client (Customer)** et un **agent de support (Agent)** ; ce dernier est le **seul usage « personnel »** du périmètre. **Ajout au périmètre v0 — [HYP] ADR-015** (cf. §6). |
 
 > **Respect de l'exclusion du v0.** Le v0 précise que l'application « *ne concerne pas les actions
@@ -69,7 +69,7 @@ s'appliquent à l'application client et au tchat ; elles sont détaillées en **
 
 - Les **applications d'agence tierces** : elles **consomment** l'API mais ne sont ni spécifiées ni
   développées ici ; seul le **contrat d'API** les concerne (intégration des composants tiers,
-  proposition d'architecture, C.1.7).
+  proposition d'architecture).
 - Toute **application de gestion / back-office** propre à YCYW : **hors périmètre** —
   l'administration passe par les applications d'agence tierces.
 - Les **opérations physiques en agence** non médiatisées par le système (remise des clés, état des

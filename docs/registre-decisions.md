@@ -31,7 +31,7 @@ contexte.
 **Contexte.** Le v0 décrit une **application client** et **exclut explicitement** « les actions que
 les employés font en agence » ; il demande seulement une **API** pour les **applications d'agence
 existantes**. La grille d'autoévaluation ne mentionne aucun back-office et range l'agence dans
-l'**intégration de composants tiers** (C.1.7).
+l'**intégration de composants tiers**.
 **Décision.** Le système est composé de **(a)** une **application client** (le produit), **(b)** une
 **API CRUD par domaine** exposée à des **applications d'agence tierces** (composants tiers à
 intégrer, modélisés dans la proposition d'architecture), et **(c)** un **tchat** dont l'un des participants est un **agent de
@@ -247,7 +247,7 @@ anticipés.
 
 ## ADR-015 — Tchat de support temps réel : ajout au périmètre v0 **[HYP]**
 **Contexte.** Le tchat est **imposé comme sujet de la preuve de concept** (énoncé étape 4 +
-autoévaluation C.1.5) mais **absent du cahier des charges v0**. Il faut un ancrage métier pour ne pas
+autoévaluation) mais **absent du cahier des charges v0**. Il faut un ancrage métier pour ne pas
 l'introduire « hors-sol ».
 **Décision.** Le besoin « **support / assistance client en temps réel** » est **ajouté au périmètre
 fonctionnel comme [HYP]** (US-CHAT-01, §6), justifié par un besoin métier réel **et par
@@ -361,7 +361,7 @@ règle les fautes du socle historique (`AUD-10` / `AUD-11` / `AUD-07`) **indépe
 | **Langage** | **TypeScript** (front + back) | **Durcissement** : typage statique contre la **divergence** du code (`AUD-01` / `AUD-02`) ; **un seul langage typé** full-stack | **JavaScript nu** : cohérent Node mais n'outille pas contre la divergence |
 | **Framework backend** | **NestJS** | Son **système de modules** traduit le **modulithe modulaire** (ADR-003) — le module temps réel séparable devient un **module de première classe** ; **injection de dépendances + TS natif** = contrats explicites (`AUD-01` / `AUD-02`). L'audit ne mesure aucun framework : pas d'`AUD-NN` forcé | **Express nu** : pas de structure modulaire de première classe ; framework d'un **autre runtime** : prolifération |
 | **Frontend** | **React** | Front de l'app US **éprouvée** ; **un seul écosystème JS/TS** avec le back (réduit `AUD-01`). Justifié par l'écosystème, **non** par le débit (350 req/s = `AUD-04`, mesure **backend**) | **Angular** (CA) : pile distincte ; **EJS** (FR) : rendu serveur legacy |
-| **Style d'API** | **REST sur HTTPS** | **Tiers hétérogènes** (C.1.7) + **CRUD par domaine** (ADR-001) : friction d'intégration minimale, outillage ubiquitaire. Pas d'`AUD-NN` forcé | **GraphQL** : pour client riche, pas du CRUD inter-organisations ; **gRPC** : hostile aux intégrateurs tiers hétérogènes / navigateurs |
+| **Style d'API** | **REST sur HTTPS** | **Tiers hétérogènes** + **CRUD par domaine** (ADR-001) : friction d'intégration minimale, outillage ubiquitaire. Pas d'`AUD-NN` forcé | **GraphQL** : pour client riche, pas du CRUD inter-organisations ; **gRPC** : hostile aux intégrateurs tiers hétérogènes / navigateurs |
 | **Base de données** | **Relationnel — PostgreSQL** | Deux justifications **distinctes** : **unifier** une base (vs fragmentation `AUD-03`, **agnostique au moteur**) **et** **relationnel = domaine** — intégrité Ville–Agence–Offre (ADR-012), **ACID** de la machine à états (ADR-011 / ADR-014), séparation perso/transactionnel RGPD (ADR-010). L'audit ne nomme **aucun SGBD** existant | **NoSQL document** : relâche l'intégrité référentielle et les garanties transactionnelles requises |
 | **Temps réel** | **WebSocket via `ws` in-process** | WebSocket décidé (ADR-003) ; passerelle = **module in-process** du modulithe (même runtime, frontière de **module**) ; la volumétrie ne révèle **aucune charge** (`AUD-04`) | **Broker (Redis/Kafka)** : sur-ingénierie non justifiée par la charge ; **socket.io** : couche d'abstraction / *fallbacks* superflus |
 | **Identité / autorisation** | **OAuth2 / OIDC + argon2id** | Deux flux (ADR-002 / ADR-018) : **OIDC** (ID token) pour le flux **humain**, **client-credentials OAuth2 pur** (sans utilisateur ni ID token) pour le flux **machine** ; **argon2id** déjà éprouvé (CA, `AUD-10`) | **IdP lourd déployé** : la PoC devrait le contourner (stubé, ADR-006) |

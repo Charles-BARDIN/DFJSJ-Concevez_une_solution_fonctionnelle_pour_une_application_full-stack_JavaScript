@@ -1,8 +1,8 @@
 ## 6. Exigences fonctionnelles — Support client en temps réel (tchat)
 
 > **Ajout au périmètre v0 (hypothèse — ADR-015).** Le tchat **n'est pas dans le cahier des charges
-> v0** ; il est **imposé comme sujet de la preuve de concept** (énoncé étape 4 + autoévaluation
-> C.1.5). Il est introduit ici comme un **besoin métier réel** — « assistance client en temps
+> v0** ; il est **imposé comme sujet de la preuve de concept** (énoncé étape 4 + autoévaluation).
+> Il est introduit ici comme un **besoin métier réel** — « assistance client en temps
 > réel » — et non comme une fonctionnalité hors-sol.
 
 ### 6.1 Besoin métier et justification
@@ -40,7 +40,7 @@ L'agent **accède aux conversations en attente et en prend une en charge** dans 
 
 ### 6.3 Critères validés par la preuve de concept
 La PoC démontre **exactement** les critères de sécurité et de temps réel ci-dessus (cohérence
-exigée par l'indicateur C.1.5) :
+exigée entre la spécification et la preuve de concept) :
 
 | Critère d'acceptation (§6.2) | Démontré par la PoC |
 |---|---|

@@ -42,7 +42,7 @@ Chaque user story renvoie à une source — *v0*, *implicite v0*, *énoncé* ou 
 | US-LOC-04 (réservation) | v0 + ADR-013 |
 | US-LOC-06 / US-LOC-07 (modification, annulation) | v0 + ADR-011 |
 | US-PAY-01 (paiement) | v0 + ADR-011 |
-| US-CHAT-01 / US-CHAT-02 (tchat) | **[HYP] ADR-015** — ajout au périmètre (énoncé étape 4 + autoévaluation C.1.5) |
+| US-CHAT-01 / US-CHAT-02 (tchat) | **[HYP] ADR-015** — ajout au périmètre (énoncé étape 4 + autoévaluation) |
 
 → **Aucune user story hors-sol** (chaque US tracée à une source).
 
@@ -74,7 +74,7 @@ Les trois éléments du périmètre (§1.3) sont couverts :
 | Élément du périmètre | Couvert par |
 |---|---|
 | **Application client** | §3 (authentification, profil), §4 (recherche, réservation, paiement, gestion), §6 côté client (US-CHAT-01), exigences transverses §7 |
-| **API pour applications d'agence tierces** | §5.1 (API CRUD par domaine) ; `NFR-SEC-06` ; intégration détaillée dans la proposition d'architecture (C.1.7) |
+| **API pour applications d'agence tierces** | §5.1 (API CRUD par domaine) ; `NFR-SEC-06` ; intégration détaillée dans la proposition d'architecture |
 | **Tchat de support (Customer + Agent)** | §6 (US-CHAT-01 / US-CHAT-02), §5.2 (agent de support) ; validé par la preuve de concept |
 
 ### 8.5 Clôture du cahier des charges
