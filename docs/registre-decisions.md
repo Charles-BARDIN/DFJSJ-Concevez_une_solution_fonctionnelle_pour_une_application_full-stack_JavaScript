@@ -1,4 +1,4 @@
-# Registre des décisions (ADR) — Your Car Your Way (Option B)
+# Registre des décisions (ADR) — Your Car Your Way
 
 Ce registre rassemble les **décisions structurantes** du projet — fonctionnelles et techniques — au
 format **ADR** (*Architecture Decision Record*). Il est **transverse** au cahier des charges
@@ -11,8 +11,8 @@ Chaque décision suit la même trame : **Contexte / Décision / Alternatives éc
 **Légende — [HYP].** La mention **[HYP]** signale une **hypothèse** : un point laissé ouvert par le
 cahier des charges initial (v0), tranché ici par une décision raisonnable et défendable, faute
 d'interlocuteur métier disponible — **que le client pourrait arbitrer autrement**. Les ADR sans cette
-mention consolident un besoin déjà présent dans les sources : **les décisions d'architecture mandatées
-par l'énoncé** (stack, découpage) **et les obligations légales** (ex. anonymisation RGPD) **ne sont pas
+mention consolident un besoin déjà présent dans les sources : **les décisions d'architecture
+structurantes** (stack, découpage) **et les obligations légales** (ex. anonymisation RGPD) **ne sont pas
 des hypothèses**, même si elles résultent d'un choix d'architecte.
 
 ---
@@ -30,8 +30,8 @@ contexte.
 ## ADR-001 — Périmètre : application client + API pour applications d'agence tierces + tchat
 **Contexte.** Le v0 décrit une **application client** et **exclut explicitement** « les actions que
 les employés font en agence » ; il demande seulement une **API** pour les **applications d'agence
-existantes**. La grille d'autoévaluation ne mentionne aucun back-office et range l'agence dans
-l'**intégration de composants tiers**.
+existantes**. L'agence relève ainsi de l'**intégration de composants tiers** (API), pas d'une surface
+applicative de notre système.
 **Décision.** Le système est composé de **(a)** une **application client** (le produit), **(b)** une
 **API CRUD par domaine** exposée à des **applications d'agence tierces** (composants tiers à
 intégrer, modélisés dans la proposition d'architecture), et **(c)** un **tchat** dont l'un des participants est un **agent de
@@ -39,8 +39,8 @@ support**. L'usage « employé » existe **uniquement** comme **agent du tchat**
 **consommateur de l'API**. **Pas de seconde application**, pas de back-office, pas de user stories de
 gestion.
 **Alternatives écartées.** Concevoir « deux surfaces » (application client + application back-office)
-→ **contredit l'exclusion explicite du v0** et invente une application non demandée ; l'autoévaluation
-range l'agence en **composant tiers**, pas en surface applicative.
+→ **contredit l'exclusion explicite du v0** et invente une application non demandée ; le v0 ne demande
+qu'une **API** pour les applications d'agence — l'agence est un **composant tiers**, pas une surface applicative.
 **Conséquences.** Cadre le périmètre (§1.3), les profils (§2, pas de rôle de gestion), les usages du
 personnel et l'intégration des apps d'agence (§5) et le tchat (§6). L'administration (offres, agences,
 réservations) est réalisée par les applications d'agence via l'API.
@@ -71,9 +71,9 @@ modulaire** → reproduit la dette de cohérence de l'existant.
 charge WebSocket l'exige.
 
 ## ADR-004 — Exigences transverses retenues : accessibilité, i18n, RGPD, écoconception
-**Contexte.** Le v0 ne mentionne aucune exigence transverse, mais l'énoncé et l'autoévaluation les
-exigent (accessibilité des personnes en situation de handicap centrale, international, conformité,
-impact écologique).
+**Contexte.** Le v0 ne mentionne aucune exigence transverse, mais le contexte du produit les impose :
+**déploiement international** (i18n), **accessibilité** (RGAA / PSH, obligation légale et besoin central),
+**conformité RGPD** (légale) et **impact écologique**.
 **Décision.** Intégrer **les quatre comme exigences à part entière, au niveau cadrage** :
 **accessibilité (RGAA / WCAG 2.1 AA)** — la plus pondérée (critères d'accessibilité par user story ;
 livrables eux-mêmes accessibles) ; **internationalisation** (langues, devises, fuseaux horaires) ;
@@ -228,9 +228,9 @@ anticipés.
 à états (architecture).
 
 ## ADR-015 — Tchat de support temps réel : ajout au périmètre v0 **[HYP]**
-**Contexte.** Le tchat est **imposé comme sujet de la preuve de concept** (énoncé étape 4 +
-autoévaluation) mais **absent du cahier des charges v0**. Il faut un ancrage métier pour ne pas
-l'introduire « hors-sol ».
+**Contexte.** Le tchat est **absent du cahier des charges v0**, mais répond à un **besoin métier réel**
+d'assistance client en temps réel ; il faut l'ancrer pour ne pas l'introduire « hors-sol », et il
+**valide la brique temps réel** de l'architecture cible (preuve de concept).
 **Décision.** Le besoin « **support / assistance client en temps réel** » est **ajouté au périmètre
 fonctionnel comme [HYP]** (US-CHAT-01, §6), justifié par un besoin métier réel **et par
 l'accessibilité** : la persona **P4 (cliente sourde)** est exclue du support téléphonique → le **canal
@@ -276,7 +276,7 @@ réserve de latence ci-dessous.
 déploiement ≥ 91 %) : reproduit le meilleur observé sans créditer les corrections structurelles.
 **Option B (retenue)** — meilleur relevé assorti de **planchers sobres**. **Option C** — haute
 disponibilité (≥ 99,95 %, multi-région) : non étayée par la volumétrie.
-**Décision : Option B.** Cibles posées comme **SLO internes** (le périmètre exercice n'a pas de SLA
+**Décision : Option B.** Cibles posées comme **SLO internes** (à ce stade de cadrage, pas de SLA
 contractuel externe ; un SLA s'alignerait sur ces SLO) :
 
 | SLO | Valeur | Ancrage / justification |

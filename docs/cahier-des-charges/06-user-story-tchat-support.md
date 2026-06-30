@@ -1,9 +1,8 @@
 ## 6. Exigences fonctionnelles — Support client en temps réel (tchat)
 
 > **Ajout au périmètre v0 (hypothèse — ADR-015).** Le tchat **n'est pas dans le cahier des charges
-> v0** ; il est **imposé comme sujet de la preuve de concept** (énoncé étape 4 + autoévaluation).
-> Il est introduit ici comme un **besoin métier réel** — « assistance client en temps
-> réel » — et non comme une fonctionnalité hors-sol.
+> v0** ; il est **introduit ici comme un besoin métier réel** — « assistance client en temps
+> réel » — **et validé par la preuve de concept**, et non comme une fonctionnalité hors-sol.
 
 ### 6.1 Besoin métier et justification
 
@@ -50,8 +49,8 @@ exigée entre la spécification et la preuve de concept) :
 | **Isolation de conversation** — par **appartenance** (un participant, client ou agent, n'accède qu'aux conversations dont il est membre ; un non-participant est refusé) | Test d'isolation : non-participant refusé, **côté client et côté agent** |
 
 La PoC valide ainsi la **brique technique à risque** — le temps réel sécurisé : handshake authentifié,
-liaison identité/rôle et **isolation par appartenance** —, l'aspect architectural que l'énoncé demande
-de démontrer. L'**attribution** explicite d'une conversation à un agent (passage « en attente » →
+liaison identité/rôle et **isolation par appartenance** —, l'aspect architectural le plus à risque de la
+cible, qu'une preuve de concept ciblée valide. L'**attribution** explicite d'une conversation à un agent (passage « en attente » →
 « prise en charge », US-CHAT-02) est une **feature applicative** construite **au-dessus** de cette
 brique, hors du périmètre de validation de la PoC (« un seul aspect technique », pas un produit final).
 

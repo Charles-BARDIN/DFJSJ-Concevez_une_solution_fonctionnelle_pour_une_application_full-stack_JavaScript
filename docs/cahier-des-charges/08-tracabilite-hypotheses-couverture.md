@@ -30,7 +30,7 @@ user story :
 
 ### 8.2 Sources des user stories *(aucune user story hors-sol)*
 
-Chaque user story renvoie à une source — *v0*, *implicite v0*, *énoncé* ou *[HYP]* (registre) :
+Chaque user story renvoie à une source — *v0*, *implicite v0*, ou *[HYP]* (registre) :
 
 | User story | Source |
 |---|---|
@@ -42,7 +42,7 @@ Chaque user story renvoie à une source — *v0*, *implicite v0*, *énoncé* ou 
 | US-LOC-04 (réservation) | v0 + ADR-013 |
 | US-LOC-06 / US-LOC-07 (modification, annulation) | v0 + ADR-011 |
 | US-PAY-01 (paiement) | v0 + ADR-011 |
-| US-CHAT-01 / US-CHAT-02 (tchat) | **[HYP] ADR-015** — ajout au périmètre (énoncé étape 4 + autoévaluation) |
+| US-CHAT-01 / US-CHAT-02 (tchat) | **[HYP] ADR-015** — ajout au périmètre (besoin d'assistance client en temps réel ; canal inclusif pour P4) |
 
 → **Aucune user story hors-sol** (chaque US tracée à une source).
 

@@ -1,4 +1,4 @@
-# Cahier des charges fonctionnel — Your Car Your Way (Option B)
+# Cahier des charges fonctionnel — Your Car Your Way
 
 | | |
 |---|---|
@@ -77,8 +77,7 @@ s'appliquent à l'application client et au tchat ; elles sont détaillées en **
 - La **gestion du parc de véhicules à l'unité** (inventaire physique, affectation d'un véhicule
   précis, maintenance) : les offres sont exprimées au **niveau catégorie ACRISS** — voir
   **[HYP] ADR-008**.
-- Les **applications mobiles natives** : le périmètre est une **application web** (responsive — usage multi-appareils, cf. persona **P1**, §2.2),
-  conformément à l'énoncé.
+- Les **applications mobiles natives** : le périmètre est une **application web** (responsive — usage multi-appareils, cf. persona **P1**, §2.2).
 
 > **Périmètre fonctionnel vs périmètre de réalisation.** Le présent **projet** relève du
 > **cadrage** : il produit le cahier des charges, la proposition d'architecture et une **preuve de
@@ -87,8 +86,8 @@ s'appliquent à l'application client et au tchat ; elles sont détaillées en **
 
 ### 1.4 Démarche, conventions et hypothèses
 
-**Démarche.** Les besoins sont consolidés à partir des sources de référence (v0, énoncé de la
-mission, audit de l'existant), puis déclinés en **profils utilisateurs** (§2), en **user stories**
+**Démarche.** Les besoins sont consolidés à partir des sources de référence (cahier des charges initial,
+contexte métier de l'entreprise, audit de l'existant), puis déclinés en **profils utilisateurs** (§2), en **user stories**
 assorties de **critères d'acceptation** (§3 à §6) et en **exigences transverses** (§7). La
 couverture et la traçabilité sont récapitulées en **§8**.
 
@@ -110,7 +109,7 @@ périmètre sont signalés [HYP] ; les exigences transverses (§7) découlent du
   (RGAA / WCAG 2.1 AA) est systématiquement inclus** (voir **ADR-004**).
 - **Priorisation (MoSCoW)** : **Must** (indispensable en v1), **Should** (important), **Could**
   (souhaitable), **Won't** (hors v1, conservé comme évolution).
-- **Traçabilité** : chaque besoin renvoie à sa **source** (v0, énoncé, audit, ou **[HYP]**). La
+- **Traçabilité** : chaque besoin renvoie à sa **source** (v0, audit, ou **[HYP]**). La
   matrice complète figure en **§8**.
 
 **Accessibilité du document.** Conformément à l'exigence d'accessibilité des livrables eux-mêmes, ce
