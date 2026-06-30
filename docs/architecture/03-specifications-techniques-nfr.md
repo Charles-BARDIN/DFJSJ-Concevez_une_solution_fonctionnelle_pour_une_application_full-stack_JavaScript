@@ -23,10 +23,10 @@ un catalogue de NFR transverses — accessibilité (`NFR-A11Y-01..04`), internat
 le défaut `AUD-03` reproché à l'existant). Il procède en trois temps :
 
 1. il pose les **spécifications techniques de cadrage** de la cible (§3.2) ;
-2. il **traduit** les NFR existants du §7 en **implications d'architecture** qui les réalisent (§3.3),
+2. il **traduit** les NFR existants du §7 du cahier des charges en **implications d'architecture** qui les réalisent (§3.3),
    sans les recopier ;
 3. il **ajoute** les seuls **NFR nouveaux** (§3.4 fiabilité / disponibilité, §3.5 authentification
-   machine), en **continuant la numérotation** du §7.
+   machine), en **continuant la numérotation** du §7 du cahier des charges.
 
 La traçabilité **spécification / NFR → moteur** (ADR, constat d'audit `AUD-NN`) est récapitulée en
 §3.6.
@@ -53,13 +53,13 @@ Ils contraignent les choix du chapitre 4 **sans les anticiper**.
 
 Pour chaque axe, le tableau donne l'**implication d'architecture** qui **réalise** les NFR déjà posés
 au §7 du cahier des charges. Il s'agit d'une **traduction en spécifications**, pas d'une recopie : les
-identifiants restent ceux du §7, qui demeure leur catalogue de référence.
+identifiants restent ceux du §7 du cahier des charges, qui demeure leur catalogue de référence.
 
 | Axe (cahier des charges) | Implication d'architecture / spécification technique qui le réalise |
 |---|---|
 | **Accessibilité** (`NFR-A11Y-01..04`) | Conformité **RGAA / WCAG 2.1 AA** visée sur l'**application client** et l'**interface de tchat** ; **point de contrôle d'accessibilité en intégration continue** (revue par critères RGAA + tests automatisables) avant mise en production, réalisant `NFR-A11Y-04`. |
 | **Internationalisation** (`NFR-I18N-01..04`) | **Externalisation des libellés** (catalogues de traduction) pour interface et e-mails ; **devise** portée au niveau présentation et paiement ; **horodatages stockés en référence neutre (UTC)** et **convertis au fuseau** à l'affichage ; **formats locaux** (dates, nombres) côté présentation. |
-| **Sécurité** (`NFR-SEC-01..07`) | **Hachage argon2id** des mots de passe ; **terminaison TLS 1.2+ et wss** (cf. §3.2) ; **gestionnaire de secrets centralisé** ; **SCA en intégration continue** ; **journalisation des actions sensibles** (`NFR-SEC-06`) ; **messages neutres** anti-énumération ; **paiement externalisé** (PCI-DSS délégué, `NFR-SEC-05`, détaillé aux chapitres 7-8). Ces spécifications **réalisent les remédiations déjà posées au §7.3** (argon2id ← `AUD-10`, TLS 1.2+/wss ← `AUD-11`, gestionnaire de secrets ← `AUD-12`, SCA en CI ← `AUD-13`) ; elles ne sont **pas ré-inventées ici**. |
+| **Sécurité** (`NFR-SEC-01..07`) | **Hachage argon2id** des mots de passe ; **terminaison TLS 1.2+ et wss** (cf. §3.2) ; **gestionnaire de secrets centralisé** ; **SCA en intégration continue** ; **journalisation des actions sensibles** (`NFR-SEC-06`) ; **messages neutres** anti-énumération ; **paiement externalisé** (PCI-DSS délégué, `NFR-SEC-05`, détaillé aux chapitres 7-8). Ces spécifications **réalisent les remédiations déjà posées au §7.3 du cahier des charges** (argon2id ← `AUD-10`, TLS 1.2+/wss ← `AUD-11`, gestionnaire de secrets ← `AUD-12`, SCA en CI ← `AUD-13`) ; elles ne sont **pas ré-inventées ici**. |
 | **RGPD** (`NFR-RGPD-01..07`) | **Séparation données personnelles / transactionnelles** dans le modèle (chapitre 6) pour servir l'**effacement / anonymisation** (`NFR-RGPD-02`) ; **export self-service** en format structuré (`NFR-RGPD-07`) ; **traçabilité des accès** aux données personnelles (journalisation, recoupe `NFR-SEC-06` / `NFR-RGPD-06`) ; **transferts UE ↔ Amérique du Nord** encadrés — **implication de déploiement par région** (chapitre 5), **sans choisir l'hébergeur**. |
 | **Écoconception** (`NFR-ECO-01..05`) | **Payloads minimaux + pagination** sur l'API (pas de sur-*fetch*) ; **transport événementiel WebSocket** pour le tchat (**pas de scrutation HTTP**) et **fermeture des connexions inactives** ; **mise en cache** HTTP / référentiels ; **budget de performance** (poids de page, nombre de requêtes) **défini et mesuré en CI**. |
 
@@ -68,7 +68,7 @@ identifiants restent ceux du §7, qui demeure leur catalogue de référence.
 Le §7.3 du cahier des charges **renvoyait explicitement** les cibles de fiabilité / disponibilité à la
 proposition d'architecture. Elles sont posées **ici**, en **opérationnalisant ADR-017** : l'ADR porte
 la **décision et sa justification** ; le NFR ajoute la **cible mesurable et son mode de vérification**.
-Le §7 ne comportait pas d'axe fiabilité / disponibilité ; un **nouvel axe `NFR-SLO`** est donc créé,
+Le §7 du cahier des charges ne comportait pas d'axe fiabilité / disponibilité ; un **nouvel axe `NFR-SLO`** est donc créé,
 sans collision avec les axes existants.
 
 | NFR | Cible mesurable | Mesure / vérification | Ancrage |
@@ -98,7 +98,7 @@ sans collision avec les axes existants.
 
 ### 3.5 NFR nouveau — Sécurité : authentification machine-to-machine de l'API agences (`NFR-SEC-08`)
 
-Le §7.3 s'arrête à `NFR-SEC-07` ; ce nouveau besoin **continue la série SEC** et **opérationnalise
+Le §7.3 du cahier des charges s'arrête à `NFR-SEC-07` ; ce nouveau besoin **continue la série SEC** et **opérationnalise
 ADR-018**.
 
 | NFR | Exigence | Mesure / vérification | Ancrage |
