@@ -1,4 +1,4 @@
-# Proposition d'architecture — Your Car Your Way (Option B)
+# Proposition d'architecture — Your Car Your Way
 
 | | |
 |---|---|
@@ -8,21 +8,15 @@
 | **Date** | Juin 2026 |
 | **Auteur** | Simon Charles Paul Bardin |
 
-> Ce document constitue le **livrable 2** du projet. Il se lit comme **un seul document continu** ;
-> le **livrable officiel est le PDF unique** produit par concaténation de ses chapitres (sommaire
-> navigable : [sommaire du livrable](README.md)).
-
----
-
 ## 1. Introduction
 
-### 1.1 Objet du livrable
+### 1.1 Objet du document
 
 Ce document est la **proposition d'architecture** de la nouvelle application **Your Car Your Way
-(YCYW)**. Il fait suite au **cahier des charges fonctionnel** (livrable 1), qui consolide les besoins,
-et précède la **preuve de concept** (livrable 3), qui valide la brique temps réel.
+(YCYW)**. Il fait suite au **cahier des charges fonctionnel**, qui consolide les besoins,
+et précède la **preuve de concept**, qui valide la brique temps réel.
 
-Le livrable a **deux natures complémentaires**, dont l'**articulation est cadrée ici, au-dessus des
+Le document a **deux natures complémentaires**, dont l'**articulation est cadrée ici, au-dessus des
 deux** :
 
 1. un **audit de l'existant** (chapitre 2) — un **diagnostic** technique des applications actuelles ;
@@ -35,7 +29,7 @@ en remédiation** dans les chapitres de solution.
 
 ### 1.2 Frontière audit / proposition de solution
 
-Conformément à l'énoncé, l'**audit** et la **proposition de solution** sont **deux parties
+L'**audit** et la **proposition de solution** sont **deux parties
 distinctes**. Le **chapitre 2 diagnostique** l'existant — forces, faiblesses, contraintes — et établit
 si les critères de qualité sont **validés ou non** ; il **ne choisit pas** l'architecture cible. Le
 **choix** de l'architecture, sa **justification** et les **alternatives écartées** relèvent des
@@ -44,7 +38,7 @@ des directions** de remédiation, sans préjuger de la solution.
 
 ### 1.3 Démarche et conventions
 
-**Démarche.** Le document part des **besoins** (livrable 1) et de la **description technique de
+**Démarche.** Le document part des **besoins** et de la **description technique de
 l'existant**, en tire un **audit** (chapitre 2), puis en déduit une **architecture cible justifiée**
 (chapitres suivants). Les décisions structurantes — fonctionnelles et techniques — sont consignées
 dans le **[registre des décisions](../registre-decisions.md)**, au format
@@ -59,7 +53,7 @@ ADR.
 - **Constats d'audit** : chaque constat est **identifié `AUD-NN`** afin d'être repris, en aval, par
   les décisions d'architecture — la traçabilité **constat → remédiation** est ainsi préservée.
 
-**Accessibilité du livrable.** Ce document respecte une **hiérarchie de titres régulière**, des
+**Accessibilité du document.** Ce document respecte une **hiérarchie de titres régulière**, des
 **tableaux à en-têtes explicites** et des **intitulés de liens signifiants** ; tout diagramme est
 accompagné d'une **alternative textuelle** (**ADR-004**).
 
@@ -86,5 +80,3 @@ La proposition d'architecture s'organise en chapitres continus :
 9. **Bonnes pratiques** — sécurité (remédiation des constats d'audit), accessibilité (RGAA / WCAG 2.1
    AA), écoconception.
 10. **Synthèse et couverture** — récapitulatif de la cible et carte de couverture des indicateurs.
-
-Le **sommaire navigable** (liens vers les fichiers sources) figure dans le [sommaire du livrable](README.md).

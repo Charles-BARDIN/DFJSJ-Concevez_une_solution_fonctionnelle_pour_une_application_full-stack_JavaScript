@@ -1,6 +1,6 @@
 ## 10. Synthèse et couverture
 
-Chapitre de clôture du livrable 2. Il **récapitule** la proposition d'architecture et fournit la **carte
+Chapitre de clôture du document. Il **récapitule** la proposition d'architecture et fournit la **carte
 de couverture des indicateurs**. Il ne réargumente rien et n'introduit aucune décision : chaque point
 **renvoie** au chapitre et à la décision où il a été traité.
 
@@ -27,8 +27,8 @@ La proposition tient en quelques piliers, chacun justifié à son chapitre :
 Chaque indicateur **C.1.x** est rattaché à son **emplacement de traitement** et à sa **preuve**, en
 plus du **critère transverse** de rédaction des documents (clarté, structure, accessibilité) porté en
 tête de table. Les
-indicateurs portés par la **preuve de concept** (livrable 3) sont marqués « **confirmé par la preuve
-de concept** » : le livrable 2 les **prépare**, la preuve de concept les **a réalisés**.
+indicateurs portés par la **preuve de concept** sont marqués « **confirmé par la preuve
+de concept** » : la présente proposition les **prépare**, la preuve de concept les **a réalisés**.
 
 | Indicateur | Où il est traité | Preuve / artefact |
 |---|---|---|
@@ -47,8 +47,8 @@ Aucun indicateur n'est orphelin.
 ### 10.3 Renvoi au registre des décisions
 
 Les **décisions structurantes** (ADR-000 → ADR-021) — fonctionnelles et techniques — sont tracées dans
-le [registre des décisions](../registre-decisions.md), **transverse** au cahier des charges (livrable 1)
-et à la présente proposition (livrable 2). Les grands arbitrages :
+le [registre des décisions](../registre-decisions.md), **transverse** au cahier des charges
+et à la présente proposition. Les grands arbitrages :
 
 | Arbitrage | Décision |
 |---|---|
@@ -60,5 +60,5 @@ et à la présente proposition (livrable 2). Les grands arbitrages :
 | Résidence régionale des données | ADR-020 |
 | Prestataire de paiement | ADR-021 |
 
-Le livrable 2 est ainsi complet : l'**audit** diagnostique l'existant, la **proposition** en déduit une
-cible **justifiée**, et la **preuve de concept** (livrable 3) **en a validé** la brique temps réel.
+La proposition d'architecture est ainsi complète : l'**audit** diagnostique l'existant, la **proposition** en déduit une
+cible **justifiée**, et la **preuve de concept** **en a validé** la brique temps réel.

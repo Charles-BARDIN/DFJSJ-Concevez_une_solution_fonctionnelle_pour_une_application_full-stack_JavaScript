@@ -2,7 +2,7 @@
 
 Ce chapitre pose le **modèle de la cible** : une **vue de classes** des deux domaines (location et
 tchat), la **machine à états** de la réservation, et un **schéma relationnel de cadrage**. Il est la
-**source** de ce que la preuve de concept (livrable 3) implémentera pour le tchat
+**source** de ce que la preuve de concept implémentera pour le tchat
 (`conversation` / `message` / `participant`). Le niveau reste le **cadrage** : entités, attributs clés,
 relations et contraintes importantes — **pas** un schéma de production exhaustif (index fins,
 partitionnement : hors cadrage).

@@ -16,7 +16,7 @@ séparable** (**ADR-003**), **API CRUD par domaine** (**ADR-001** ; style **REST
 d'authentification** humain / machine (**ADR-002** / **ADR-018**), **base de données unifiée**
 (**ADR-003**, **ADR-012**).
 
-**Non-duplication avec le cahier des charges (livrable 1, §7).** Le cahier des charges définit **déjà**
+**Non-duplication avec le cahier des charges.** Le cahier des charges définit **déjà**
 un catalogue de NFR transverses — accessibilité (`NFR-A11Y-01..04`), internationalisation
 (`NFR-I18N-01..04`), sécurité (`NFR-SEC-01..07`), RGPD (`NFR-RGPD-01..07`), écoconception
 (`NFR-ECO-01..05`). Ce chapitre **ne les ré-énumère pas** (un second catalogue divergent reproduirait
@@ -49,13 +49,13 @@ Ils contraignent les choix du chapitre 4 **sans les anticiper**.
 > maintenabilité, sécurité, fiabilité) sans sur-dimensionner. Toute spécification plus fine
 > (configuration, dimensionnement) relève de l'implémentation, non du cadrage.
 
-### 3.3 NFR existants (livrable 1, §7) — traduction en spécifications techniques
+### 3.3 NFR existants (cahier des charges) — traduction en spécifications techniques
 
 Pour chaque axe, le tableau donne l'**implication d'architecture** qui **réalise** les NFR déjà posés
 au §7 du cahier des charges. Il s'agit d'une **traduction en spécifications**, pas d'une recopie : les
 identifiants restent ceux du §7, qui demeure leur catalogue de référence.
 
-| Axe (renvoi §7, livrable 1) | Implication d'architecture / spécification technique qui le réalise |
+| Axe (cahier des charges) | Implication d'architecture / spécification technique qui le réalise |
 |---|---|
 | **Accessibilité** (`NFR-A11Y-01..04`) | Conformité **RGAA / WCAG 2.1 AA** visée sur l'**application client** et l'**interface de tchat** ; **point de contrôle d'accessibilité en intégration continue** (revue par critères RGAA + tests automatisables) avant mise en production, réalisant `NFR-A11Y-04`. |
 | **Internationalisation** (`NFR-I18N-01..04`) | **Externalisation des libellés** (catalogues de traduction) pour interface et e-mails ; **devise** portée au niveau présentation et paiement ; **horodatages stockés en référence neutre (UTC)** et **convertis au fuseau** à l'affichage ; **formats locaux** (dates, nombres) côté présentation. |
@@ -114,7 +114,7 @@ motivent — la chaîne **constat → remédiation** (§1.3) est ainsi préserv�
 |---|---|---|---|
 | `NFR-SLO-01..07` (fiabilité / disponibilité / capacité) | ADR-017 | `AUD-07`, `AUD-08`, `AUD-09`, `AUD-15` (fiabilité-dispo) ; `AUD-04`, `AUD-05` (capacité-erreur) | nouvel axe `NFR-SLO` |
 | `NFR-SEC-08` (auth machine de l'API) | ADR-018 | `AUD-12` | recoupe `NFR-SEC-06` ; distinct de `NFR-SEC-01` |
-| Spéc. de remédiation sécurité (argon2id, TLS 1.2+/wss, gestionnaire de secrets, SCA) | — (posées au §7.3, livrable 1) | `AUD-10`, `AUD-11`, `AUD-12`, `AUD-13` | `NFR-SEC-01/02/03/07` |
+| Spéc. de remédiation sécurité (argon2id, TLS 1.2+/wss, gestionnaire de secrets, SCA) | — (posées dans le cahier des charges) | `AUD-10`, `AUD-11`, `AUD-12`, `AUD-13` | `NFR-SEC-01/02/03/07` |
 | Style modulithe + couture temps réel ; base unifiée ; API unifiée | ADR-003 ; ADR-001 ; ADR-012 | `AUD-01`, `AUD-02`, `AUD-03`, `AUD-06` | — |
 
 > **Frontière rappelée.** Ce chapitre **mesure** et **principe** ; il ne **choisit pas** la

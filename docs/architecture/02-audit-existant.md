@@ -47,8 +47,8 @@ et ne comportent **aucun jugement non documenté**.
 
 ### 2.2 Critères d'évaluation
 
-L'existant est lu au travers de **six critères**. Trois sont **mis en avant par l'énoncé** comme axes
-d'analyse prioritaires — **maintenabilité**, **performance**, **évolutivité** ; trois correspondent
+L'existant est lu au travers de **six critères**. Trois sont les **axes d'analyse prioritaires** d'un
+audit d'architecture — **maintenabilité**, **performance**, **évolutivité** ; trois correspondent
 aux **axes mesurés** par la description technique — **fiabilité**, **sécurité**, **disponibilité**.
 
 Ces critères se **recoupent partiellement** : une même métrique peut en éclairer plusieurs (par
@@ -256,7 +256,7 @@ principal, puis **rappelés** sans être recomptés.
   décroît du socle historique vers les applications récentes.
 
 > Ces constats de sécurité forment le **socle factuel** des exigences de sécurité exprimées au cahier
-> des charges (livrable 1, §7).
+> des charges.
 
 #### 2.4.6 Disponibilité
 

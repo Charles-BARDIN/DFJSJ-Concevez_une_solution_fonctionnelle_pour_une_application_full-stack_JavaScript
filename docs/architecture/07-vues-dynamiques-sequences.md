@@ -199,7 +199,7 @@ Ordre des échanges et points de décision :
 4. l'Agent **répond** dans C1 ; le **même contrôle d'isolation** s'applique avant **persistance** et
    **livraison** au Customer.
 
-> **Lien preuve de concept.** Ce flux est **exactement** ce que la preuve de concept (livrable 3) **démontre par tests
+> **Lien preuve de concept.** Ce flux est **exactement** ce que la preuve de concept **démontre par tests
 > d'intégration** : **handshake authentifié** (jeton valide accepté ; absent / invalide rejeté),
 > **échange Customer ↔ Agent**, **isolation de conversation** — cohérence C.1.5.
 

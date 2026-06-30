@@ -196,7 +196,7 @@ backplane** déjà identifié comme **couture** (ADR-003) — **pas une refonte*
 que le routage in-process résout, à lui seul, le multi-instance.
 
 **Reconnexion après coupure réseau.** La même **affinité de session** soutient la **reprise de
-connexion** que le cahier des charges renvoie ici (US-CHAT-01, livrable 1) :
+connexion** que le cahier des charges renvoie ici (US-CHAT-01) :
 
 - en cas de **coupure réseau**, le **client** détecte la perte de connexion et **en informe
   l'utilisateur** (**dégradation gracieuse** : l'interface signale un état « reconnexion en cours »
