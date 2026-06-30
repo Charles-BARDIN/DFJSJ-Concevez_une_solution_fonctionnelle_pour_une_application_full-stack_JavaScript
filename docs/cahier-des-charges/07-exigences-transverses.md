@@ -1,13 +1,13 @@
 ## 7. Exigences transverses (non fonctionnelles)
 
-Les exigences ci-dessous s'appliquent à **l'ensemble du système** et **à toutes les user stories**
-(§3 à §6). Conformément à **ADR-004**, elles sont traitées comme des **exigences à part entière**, au
-niveau **cadrage** : NFR + critères **ciblés** (non exhaustifs). Chaque NFR porte un identifiant
-`NFR-⟨AXE⟩-⟨n⟩` (§1.4) et renvoie aux user stories, personas ou référentiels qui le **portent**.
+Les exigences ci-dessous s'appliquent à l'ensemble du système et à toutes les user stories
+(§3 à §6). Conformément à **ADR-004**, elles sont traitées comme des exigences à part entière, au
+niveau cadrage : NFR et critères ciblés (non exhaustifs). Chaque NFR porte un identifiant
+`NFR-⟨AXE⟩-⟨n⟩` (§1.4) et renvoie aux user stories, personas ou référentiels qui le portent.
 
 ### 7.1 Accessibilité — RGAA / WCAG 2.1 AA *(exigence la plus pondérée)*
 
-Cheville opérationnelle : le **référentiel d'étiquettes §2.3**, cité par les critères d'acceptation de
+Cheville opérationnelle : le référentiel d'étiquettes §2.3, cité par les critères d'acceptation de
 chaque user story.
 
 | NFR | Exigence | Porté par |
@@ -28,7 +28,7 @@ chaque user story.
 | `NFR-I18N-03` | **Fuseaux horaires** : dates et heures de prise / retour interprétées et affichées sans ambiguïté. | US-LOC-02 ; P1 |
 | `NFR-I18N-04` | **Formats locaux** (dates, nombres) adaptés à la locale. | US d'affichage |
 
-*Priorité : Must (déploiement international pour tous les clients — v0).*
+*Priorité : Must (déploiement international pour tous les clients, v0).*
 
 ### 7.3 Sécurité
 
@@ -51,8 +51,8 @@ chaque user story.
 | **Secrets en fichiers** de configuration | **Gestionnaire de secrets** (`NFR-SEC-03`) |
 | **35–41 % de dépendances vulnérables** | **SCA en CI** + mises à jour (`NFR-SEC-07`) |
 
-> Les cibles de **fiabilité / disponibilité (SLA / SLO)** sont posées dans la **proposition
-> d'architecture**, à partir des constats de l'**audit de l'existant**.
+> Les cibles de fiabilité / disponibilité (SLA / SLO) sont posées dans la proposition
+> d'architecture, à partir des constats de l'audit de l'existant.
 
 *Priorité : Must.*
 
@@ -72,7 +72,7 @@ chaque user story.
 
 ### 7.5 Écoconception
 
-Set **concis et concret** (pas un catalogue) :
+Set concis et concret (pas un catalogue) :
 
 | NFR | Exigence | Porté par |
 |---|---|---|
@@ -87,7 +87,7 @@ Set **concis et concret** (pas un catalogue) :
 ### 7.6 Liens transverses
 - Décisions sous-jacentes : **ADR-004** (transverses retenues), **ADR-002** (auth / RBAC), **ADR-010**
   (suppression / RGPD), **ADR-013** (permis). Détail dans le registre des décisions (annexe).
-- **Accessibilité** : référentiel et étiquettes en **§2.3** ; application par user story aux §3-§6.
-- **Audit → remédiations** : développé dans l'**audit de l'existant** ; les remédiations cibles
-  (sécurité) sont posées ici et reprises dans la **proposition d'architecture**.
-- La **matrice de traçabilité** (§8) reliera *besoins → user stories → NFR*.
+- **Accessibilité** : référentiel et étiquettes en §2.3 ; application par user story aux §3-§6.
+- **Audit → remédiations** : développé dans l'audit de l'existant ; les remédiations cibles
+  (sécurité) sont posées ici et reprises dans la proposition d'architecture.
+- La matrice de traçabilité (§8) reliera *besoins → user stories → NFR*.

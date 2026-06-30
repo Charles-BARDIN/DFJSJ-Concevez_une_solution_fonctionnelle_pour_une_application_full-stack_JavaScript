@@ -1,6 +1,6 @@
 ## 8. Traçabilité, hypothèses et couverture
 
-Cette dernière section rend le cahier des charges **vérifiable** : aucun besoin n'est orphelin,
+Cette dernière section rend le cahier des charges vérifiable : aucun besoin n'est orphelin,
 aucune user story n'est hors-sol, les hypothèses sont tracées (détail dans le registre des décisions,
 en annexe), et le périmètre fonctionnel est couvert.
 
@@ -26,11 +26,11 @@ user story :
 | Catégories de véhicule (norme ACRISS) | US-LOC-02 / US-LOC-03 (ADR-008) |
 | API CRUD pour les applications d'agence | §5.1 ; ADR-001 |
 
-→ **Aucun besoin du v0 orphelin.**
+→ Aucun besoin du v0 orphelin.
 
 ### 8.2 Sources des user stories *(aucune user story hors-sol)*
 
-Chaque user story renvoie à une source — *v0*, *implicite v0*, ou *[HYP]* (registre) :
+Chaque user story renvoie à une source, *v0*, *implicite v0*, ou *[HYP]* (registre) :
 
 | User story | Source |
 |---|---|
@@ -44,18 +44,18 @@ Chaque user story renvoie à une source — *v0*, *implicite v0*, ou *[HYP]* (re
 | US-PAY-01 (paiement) | v0 + ADR-011 |
 | US-CHAT-01 / US-CHAT-02 (tchat) | **[HYP] ADR-015** — ajout au périmètre (besoin d'assistance client en temps réel ; canal inclusif pour P4) |
 
-→ **Aucune user story hors-sol** (chaque US tracée à une source).
+→ Aucune user story hors-sol (chaque US tracée à une source).
 
 ### 8.3 Hypothèses retenues
 
-Les points laissés ouverts par la spécification initiale sont comblés par des hypothèses **tracées et
-argumentées dans le registre des décisions (annexe)** — contexte, décision, alternatives écartées et
+Les points laissés ouverts par la spécification initiale sont comblés par des hypothèses tracées et
+argumentées dans le registre des décisions (annexe), contexte, décision, alternatives écartées et
 conséquences pour chacune —, signalées dans le texte par la mention **[HYP]**. Elles correspondent aux
-décisions **ADR-008, ADR-009, ADR-011, ADR-012, ADR-013, ADR-014, ADR-015 et ADR-016** ; le détail
+décisions **ADR-008, ADR-009, ADR-011, ADR-012, ADR-013, ADR-014, ADR-015 et ADR-016**. Le détail
 n'est pas recopié ici.
 
-Deux points relèvent de la **proposition d'architecture**, qui en arrête les valeurs : le
-**prestataire de paiement** (**ADR-021**) et les **cibles de fiabilité / disponibilité** (**SLO,
+Deux points relèvent de la proposition d'architecture, qui en arrête les valeurs : le
+prestataire de paiement (**ADR-021**) et les cibles de fiabilité / disponibilité (**SLO,
 ADR-017**). Le cahier des charges en pose le besoin.
 
 ### 8.4 Couverture du périmètre fonctionnel
@@ -70,6 +70,6 @@ Les trois éléments du périmètre (§1.3) sont couverts :
 
 ### 8.5 Clôture du cahier des charges
 
-Le périmètre fonctionnel est **entièrement couvert et tracé** ; les exigences transverses (§7)
+Le périmètre fonctionnel est entièrement couvert et tracé. Les exigences transverses (§7)
 s'appliquent à l'ensemble. Le détail des décisions figure dans le registre des décisions (annexe). La
-**proposition d'architecture** prend le relais pour la conception technique.
+proposition d'architecture prend le relais pour la conception technique.
