@@ -54,7 +54,7 @@ conséquences pour chacune —, signalées dans le texte par la mention **[HYP]*
 décisions **ADR-008, ADR-009, ADR-011, ADR-012, ADR-013, ADR-014, ADR-015 et ADR-016** ; le détail
 n'est pas recopié ici.
 
-Deux points relèvent de la **proposition d'architecture** (livrable 2), qui en arrête les valeurs : le
+Deux points relèvent de la **proposition d'architecture**, qui en arrête les valeurs : le
 **prestataire de paiement** (**ADR-021**) et les **cibles de fiabilité / disponibilité** (**SLO,
 ADR-017**). Le cahier des charges en pose le besoin.
 
@@ -72,4 +72,4 @@ Les trois éléments du périmètre (§1.3) sont couverts :
 
 Le périmètre fonctionnel est **entièrement couvert et tracé** ; les exigences transverses (§7)
 s'appliquent à l'ensemble. Le détail des décisions figure dans le registre des décisions (annexe). La
-**proposition d'architecture** (livrable 2) prend le relais pour la conception technique.
+**proposition d'architecture** prend le relais pour la conception technique.

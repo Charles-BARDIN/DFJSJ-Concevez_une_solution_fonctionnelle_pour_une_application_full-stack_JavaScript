@@ -2,7 +2,7 @@
 
 Ce registre rassemble les **décisions structurantes** du projet — fonctionnelles et techniques — au
 format **ADR** (*Architecture Decision Record*). Il est **transverse** au cahier des charges
-(livrable 1) et à la proposition d'architecture (livrable 2) : les deux documents y renvoient par le
+et à la proposition d'architecture : les deux documents y renvoient par le
 **numéro d'ADR**.
 
 Chaque décision suit la même trame : **Contexte / Décision / Alternatives écartées / Conséquences**

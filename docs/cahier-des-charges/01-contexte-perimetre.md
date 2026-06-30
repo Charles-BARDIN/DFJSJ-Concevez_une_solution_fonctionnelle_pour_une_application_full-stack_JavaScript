@@ -18,10 +18,10 @@ sous forme de *user stories* assorties de **critères d'acceptation** — ainsi 
 transverses** (non fonctionnelles).
 
 Il reste au niveau **cadrage** : il décrit *ce que* le système doit permettre, sans préjuger du
-*comment*, qui relève de la proposition d'architecture (livrable 2). Il s'adresse autant aux parties
+*comment*, qui relève de la proposition d'architecture. Il s'adresse autant aux parties
 prenantes **non techniques** (validation des besoins) qu'aux parties prenantes **techniques**
-(entrée de la conception), et sert de référence aux deux livrables suivants : la proposition
-d'architecture et la preuve de concept.
+(entrée de la conception), et sert de référence à la proposition d'architecture et à la preuve de
+concept, qui en découlent.
 
 La **spécification initiale fournie** constitue une **source** que ce document **intègre et étend** :
 ses besoins sont repris et structurés, et les points qu'elle laissait ouverts sont **arbitrés et
