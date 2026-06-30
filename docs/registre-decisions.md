@@ -80,7 +80,7 @@ conformité RGPD (légale) et impact écologique.
 **Décision.** Intégrer les quatre comme exigences à part entière, au niveau cadrage :
 **accessibilité (RGAA / WCAG 2.1 AA)**, la plus pondérée (critères d'accessibilité par user story ;
 livrables eux-mêmes accessibles) ; internationalisation (langues, devises, fuseaux horaires) ;
-RGPD. Écoconception.
+RGPD ; écoconception.
 **Alternatives écartées.** Les traiter en annexe « best effort » → sous-pondère l'accessibilité,
 attendue comme exigence première.
 **Conséquences.** Exigences non fonctionnelles et critères d'acceptation ciblés (non exhaustifs)
@@ -280,7 +280,7 @@ déploiement ≥ 91 %) : reproduit le meilleur observé sans créditer les corre
 **Option B (retenue)** — on retient le meilleur niveau observé dans le parc, complété de seuils minimaux raisonnables. Option C — haute
 disponibilité (≥ 99,95 %, multi-région) : non étayée par la volumétrie.
 **Décision : Option B.** Cibles posées comme SLO internes (à ce stade de cadrage, pas de SLA
-contractuel externe. Un SLA s'alignerait sur ces SLO) :
+contractuel externe ; un SLA s'alignerait sur ces SLO) :
 
 | SLO | Valeur | Ancrage / justification |
 |---|---|---|
