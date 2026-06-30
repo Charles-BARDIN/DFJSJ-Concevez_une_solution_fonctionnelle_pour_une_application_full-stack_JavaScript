@@ -109,24 +109,6 @@ preuve. Ne rien sécuriser → ne prouve pas la viabilité du tchat (handshake e
 de l'architecture temps réel).
 **Conséquences.** Frontière nette preuve de concept ↔ architecture ; preuve reproductible.
 
-## ADR-007 — Nommage des livrables : auteur, fichiers PDF, date de démarrage
-**Contexte.** Le nommage impose `Nom_Prenom_Option_B_N_nom_livrable_MMYYYY` avec la « date de
-démarrage du projet ». Projet démarré en **juin 2026**. Deux formes coexistent : l'identité **dans le
-contenu** des documents et l'identité **dans les noms de fichiers**.
-**Décision.** **Date** = **062026** ; **noms de fichiers PDF** = `Bardin_Charles_Option_B_N_nom_livrable_062026` ;
-**auteur dans le contenu** (bloc auteur, page de garde) = **Simon Charles Paul Bardin** (état civil
-complet). Les **trois noms de fichiers exacts à l'export** — leurs jetons de libellé sont **prescrits
-par la grille** (« Cela donnera » : `cahier_charges` / `proposition_architecture` / `repo_poc`),
-**distincts des noms de dossiers sources** (`cahier-des-charges`, `architecture`) afin d'éviter
-`..._cahier_des_charges_...` ou `..._architecture_...` à la génération — sont :
-- `Bardin_Charles_Option_B_1_cahier_charges_062026`
-- `Bardin_Charles_Option_B_2_proposition_architecture_062026`
-- `Bardin_Charles_Option_B_3_repo_poc_062026`
-
-**Alternatives écartées.** `012026` (exemple générique de l'énoncé) → ne correspond pas au démarrage
-réel. `Bardin_SimonCharles` dans les noms de fichiers → remplacé par `Bardin_Charles`.
-**Conséquences.** Appliqué à l'export PDF et à tout bloc auteur des livrables.
-
 ## ADR-008 — Granularité des offres : niveau catégorie ACRISS ; pas de gestion du parc à l'unité **[HYP]**
 **Contexte.** Le v0 définit une offre par ville de départ / retour, dates, **catégorie de véhicule
 (norme ACRISS)** et tarif — jamais par véhicule précis. La gestion physique du parc (inventaire,
