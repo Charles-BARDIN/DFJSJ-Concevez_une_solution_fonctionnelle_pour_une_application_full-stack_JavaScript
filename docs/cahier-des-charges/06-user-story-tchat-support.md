@@ -47,7 +47,13 @@ exigée entre la spécification et la preuve de concept) :
 | Handshake authentifié : jeton valide accepté ; absent/invalide **rejeté** | Test d'intégration du handshake |
 | **Liaison identité/rôle** : Customer vs Agent dérivés du jeton | Helper « stub du service d'identité » + test |
 | **Échange Customer ↔ Agent** en temps réel | Test à deux clients WebSocket |
-| **Isolation de conversation** | Test d'isolation |
+| **Isolation de conversation** — par **appartenance** (un participant, client ou agent, n'accède qu'aux conversations dont il est membre ; un non-participant est refusé) | Test d'isolation : non-participant refusé, **côté client et côté agent** |
+
+La PoC valide ainsi la **brique technique à risque** — le temps réel sécurisé : handshake authentifié,
+liaison identité/rôle et **isolation par appartenance** —, l'aspect architectural que l'énoncé demande
+de démontrer. L'**attribution** explicite d'une conversation à un agent (passage « en attente » →
+« prise en charge », US-CHAT-02) est une **feature applicative** construite **au-dessus** de cette
+brique, hors du périmètre de validation de la PoC (« un seul aspect technique », pas un produit final).
 
 > La **stack d'identité** (hachage argon2id, émission/refresh des jetons, vérification e-mail,
 > gestion des secrets, **wss/TLS**) est **spécifiée à l'architecture (§7)** et **stubée** dans la PoC
