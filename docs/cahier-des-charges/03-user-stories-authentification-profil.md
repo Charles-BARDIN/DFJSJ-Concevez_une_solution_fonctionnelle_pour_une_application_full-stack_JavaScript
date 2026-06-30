@@ -6,8 +6,8 @@ pour le profil **Client** défini en §2. Le **contrôle d'accès par rôle (RBA
 est authentifié séparément (dans la proposition d'architecture). Conformément à **ADR-002**, l'authentification repose sur
 **e-mail + mot de passe** (sans 2FA/SSO — évolution possible).
 
-Les mécanismes techniques sous-jacents — **hachage des mots de passe (argon2id), émission et
-validation des jetons, envoi des e-mails, transport sécurisé (TLS)** — relèvent de l'architecture et
+Les mécanismes techniques sous-jacents — **hachage des mots de passe, émission et
+validation des jetons, envoi des e-mails, transport sécurisé** — relèvent de l'architecture et
 des **exigences de sécurité (§7)** ; ils ne sont pas spécifiés au niveau fonctionnel ici.
 
 *Convention (rappel §1.4) : chaque user story précise sa priorité (MoSCoW), ses critères
@@ -83,5 +83,5 @@ d'acceptation et ses **étiquettes d'accessibilité** (§2.3). Source : « v0 »
 - **Accessibilité** : `A11Y-FORMULAIRES`, `A11Y-CLAVIER`, `A11Y-NOM-ROLE` (statut de génération annoncé), `A11Y-LANGUE`.
 
 ### 3.3 Liens transverses
-- **Sécurité** (hachage, jetons, anti-énumération, TLS) et **RGPD** (droit à l'effacement, minimisation) : exigences détaillées en **§7** ; sémantique de la suppression de compte en **ADR-010**.
+- **Sécurité** (hachage, jetons, anti-énumération, transport chiffré) et **RGPD** (droit à l'effacement, minimisation) : exigences détaillées en **§7** ; sémantique de la suppression de compte en **ADR-010**.
 - Les **informations personnelles** réutilisées lors d'une réservation (§4) sont récupérées depuis le profil quand elles existent (v0).

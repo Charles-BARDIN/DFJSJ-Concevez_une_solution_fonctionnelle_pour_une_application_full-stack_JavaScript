@@ -4,8 +4,8 @@ Cette section couvre le **parcours de location** : consultation et recherche (ou
 **Visiteur**), puis réservation, paiement et gestion (réservées au **Client**). Elle s'appuie sur
 les décisions tracées : **catégories ACRISS** (ADR-008), **relation agence/ville/offre** (ADR-012),
 **politique modification/annulation/remboursement** (ADR-011) et **champs de réservation** (ADR-013).
-Le **paiement est externalisé** (v0) ; le choix du prestataire et l'intégration (webhooks, PCI-DSS,
-TLS) relèvent de la proposition d'architecture et du §7.
+Le **paiement est externalisé** (v0) ; le choix du prestataire et l'intégration technique relèvent de
+la proposition d'architecture et des exigences de sécurité.
 
 *Convention (rappel §1.4) : priorité MoSCoW, critères « Étant donné / Quand / Alors », **étiquettes
 d'accessibilité** (§2.3), source.*
@@ -49,7 +49,7 @@ d'accessibilité** (§2.3), source.*
 > En tant que **client**, je veux **payer ma réservation via un service sécurisé**, afin de **confirmer définitivement ma location**.
 
 - Étant donné une réservation en attente de paiement, quand je procède au paiement, alors celui-ci est **traité par un prestataire externe** (v0) et **aucune donnée de carte n'est stockée** par l'application.
-- Étant donné une **confirmation de paiement** reçue du prestataire (**webhook**), quand elle est validée, alors la réservation passe à l'état **confirmée** et un **récapitulatif** est fourni.
+- Étant donné une **confirmation de paiement** reçue du prestataire, quand elle est validée, alors la réservation passe à l'état **confirmée** et un **récapitulatif** est fourni.
 - Étant donné un **échec ou un abandon** de paiement, quand il survient, alors la réservation **n'est pas confirmée**, reste reprenable, et un message clair est affiché.
 - **Accessibilité** : `A11Y-FORMULAIRES`, `A11Y-CLAVIER`, `A11Y-DELAIS`, `A11Y-LANGUE`.
 
@@ -66,14 +66,14 @@ d'accessibilité** (§2.3), source.*
 
 - Étant donné une réservation à **plus de 48 h** du début, quand je modifie ses paramètres (dates, catégorie, agences…), alors la modification est **autorisée** (ADR-011).
 - Étant donné une réservation à **48 h ou moins** du début, quand je tente de modifier, alors la modification est **refusée** avec un message clair (ADR-011).
-- Étant donné une modification **changeant le tarif**, quand je la confirme, alors l'écart est réglé via le **prestataire de paiement externe** — **complément** (hausse) ou **remboursement partiel** (baisse) — confirmé par **webhook** ; la réservation n'est mise à jour qu'**après confirmation**.
+- Étant donné une modification **changeant le tarif**, quand je la confirme, alors l'écart est réglé via le **prestataire de paiement externe** — **complément** (hausse) ou **remboursement partiel** (baisse) — confirmé par le **prestataire** ; la réservation n'est mise à jour qu'**après confirmation**.
 - **Accessibilité** : `A11Y-FORMULAIRES`, `A11Y-CLAVIER`, `A11Y-LANGUE`, `A11Y-DELAIS`.
 
 **US-LOC-07 — Annuler une réservation** · *Must* · *v0 + ADR-011*
 > En tant que **client**, je veux **annuler une réservation**, afin d'**être remboursé selon les conditions**.
 
 - Étant donné le **créneau avant le début**, quand j'annule, alors le **remboursement** applique la matrice ADR-011 : **> 1 semaine → 100 %** ; **≤ 1 semaine et > 48 h → 25 %** ; **≤ 48 h → 0 % (annulation tardive)**.
-- Le **remboursement** éventuel est exécuté via le **prestataire de paiement externe**, confirmé par **webhook** ; l'état passe à **annulée** après confirmation.
+- Le **remboursement** éventuel est exécuté via le **prestataire de paiement externe**, confirmé par le **prestataire** ; l'état passe à **annulée** après confirmation.
 - Avant validation, un **récapitulatif** indique le **montant remboursé** en **langage clair** (action irréversible).
 - **Accessibilité** : `A11Y-FORMULAIRES`, `A11Y-LANGUE`, `A11Y-CLAVIER`, `A11Y-DELAIS`.
 
@@ -90,5 +90,5 @@ d'accessibilité** (§2.3), source.*
 - **Catégories de véhicule** : norme **ACRISS** (ADR-008) ; les offres et réservations sont au **niveau catégorie** (pas de gestion du parc à l'unité).
 - **Modèle agence / ville / offre** : ADR-012 — la recherche par ville se résout vers les **agences** de ces villes, qui portent les offres (retrait/retour en agence ; aller simple possible).
 - **Informations de réservation** : ADR-013 ; le **numéro de permis** relève de la **minimisation et de la conservation RGPD** (ADR-010, §7).
-- **Paiement et remboursements** : **externalisés** (v0) ; intégration prestataire (webhooks de confirmation, PCI-DSS, TLS, **aucune donnée de carte stockée**) précisée dans la **proposition d'architecture** et en **§7**.
+- **Paiement et remboursements** : **externalisés** (v0) ; intégration prestataire (confirmation du paiement, **aucune donnée de carte stockée**) précisée dans la **proposition d'architecture** et en **§7**.
 - **États de réservation** (en attente de paiement → confirmée → modifiée / annulée / terminée / no-show) : la **machine à états** est formalisée dans la **proposition d'architecture** (modèle de données et diagrammes).

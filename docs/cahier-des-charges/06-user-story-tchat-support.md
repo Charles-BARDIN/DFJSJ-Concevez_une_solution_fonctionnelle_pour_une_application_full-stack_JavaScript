@@ -22,8 +22,8 @@ L'agent **accède aux conversations en attente et en prend une en charge** dans 
 **US-CHAT-01 — Obtenir de l'aide en temps réel (Customer)** · *Must* · *[HYP] ADR-015 (ajout périmètre) — justif. accessibilité P4*
 > En tant que **client**, je veux **échanger en temps réel avec un agent de support**, afin d'**obtenir de l'aide immédiate, y compris si je ne peux pas utiliser le téléphone**.
 
-- Étant donné un client **authentifié**, quand il ouvre le support, alors une **connexion temps réel (WebSocket)** est établie après un **handshake authentifié** (jeton valide **accepté**).
-- Étant donné un **jeton absent ou invalide**, quand la connexion est tentée, alors elle est **rejetée**.
+- Étant donné un client **authentifié**, quand il ouvre le support, alors une **connexion temps réel** est établie après une **authentification** (authentification valide **acceptée**).
+- Étant donné une **authentification absente ou invalide**, quand la connexion est tentée, alors elle est **rejetée**.
 - Étant donné une conversation ouverte, quand le client envoie un message, alors l'agent le reçoit **en temps réel**, et réciproquement (**échange Customer ↔ Agent**).
 - Étant donné un participant, quand il accède au support, alors il **n'accède qu'à sa propre conversation** (**isolation de conversation**).
 - Étant donné une **coupure réseau**, quand la connexion est perdue, alors le client en est informé et la session **se reconnecte** (**dégradation gracieuse + reconnexion**) ; l'**historique** de la conversation est préservé.
@@ -34,7 +34,7 @@ L'agent **accède aux conversations en attente et en prend une en charge** dans 
 
 - Étant donné des conversations en attente, quand l'agent en prend une, alors elle lui est **attribuée** et il n'accède qu'**aux conversations qui lui sont attribuées** (isolation).
 - Étant donné une conversation **prise en charge**, quand l'agent envoie un message, alors le client le reçoit **en temps réel**.
-- Le **rôle Agent** est **dérivé du jeton** (liaison identité/rôle).
+- Le **rôle Agent** est **dérivé de son authentification** (liaison identité/rôle).
 - **Accessibilité** : `A11Y-STRUCTURE`, `A11Y-CLAVIER`, `A11Y-NOM-ROLE`, `A11Y-ALTERNATIVES`.
 
 ### 6.3 Critères validés par la preuve de concept
@@ -54,12 +54,12 @@ cible, qu'une preuve de concept ciblée valide. L'**attribution** explicite d'un
 « prise en charge », US-CHAT-02) est une **feature applicative** construite **au-dessus** de cette
 brique, hors du périmètre de validation de la PoC (« un seul aspect technique », pas un produit final).
 
-> La **stack d'identité** (hachage argon2id, émission/refresh des jetons, vérification e-mail,
-> gestion des secrets, **wss/TLS**) est **spécifiée à l'architecture (§7)** et **stubée** dans la PoC
-> (jeton de test forgé par un helper étiqueté). Le **transport WebSocket sur client web**, la
+> La **stack d'identité** (hachage des mots de passe, émission/refresh des jetons, vérification e-mail,
+> gestion des secrets, **transport chiffré**) est **spécifiée à l'architecture (§7)** et **stubée** dans la PoC
+> (jeton de test forgé par un helper étiqueté). Le **transport temps réel sur client web**, la
 > **dégradation gracieuse** et la **reconnexion** sont assumés et précisés dans la **proposition d'architecture**.
 
 ### 6.4 Liens transverses
-- **Architecture** : module temps réel **séparable** (gateway extractible, ADR-003) ; transport WebSocket, **reconnexion / dégradation gracieuse**, **persistance des messages** (historique), sécurité du handshake (§7).
-- **Preuve de concept** : périmètre strict — **Customer + Agent**, handshake authentifié, échange, isolation ; **harness HTML nu** pour la démonstration ; **aucune** stack d'identité réimplémentée.
+- **Architecture** : module temps réel **séparable** (gateway extractible, ADR-003) ; transport temps réel, **reconnexion / dégradation gracieuse**, **persistance des messages** (historique), sécurité de la connexion authentifiée.
+- **Preuve de concept** : périmètre strict — **Customer + Agent**, connexion authentifiée, échange, isolation ; **harness HTML nu** pour la démonstration ; **aucune** stack d'identité réimplémentée.
 - **Accessibilité** : le canal **texte** sert P4 ; l'interface de tchat respecte les étiquettes a11y (messages **annoncés**, **opérable au clavier**).
