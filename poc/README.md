@@ -44,7 +44,8 @@ node --env-file=.env dist/server.js
 Le serveur écoute sur le port **`POC_PORT`** (défaut **8080**). **Si le port est déjà utilisé**, il
 l'indique clairement et s'arrête proprement — définir `POC_PORT` sur un port libre. Le raccourci
 `npm start` lance `node dist/server.js` (la clé doit déjà être présente dans l'environnement) ; en
-développement, `npm run dev` exécute la source via `tsx`, sans build.
+développement, `npm run dev` exécute la source via `tsx`, sans build ; `npm run demo` démarre le
+serveur en **mode démo** (seed + `--env-file=.env`), détaillé à la section « Lancer le harness ».
 
 ## Lancer le harness
 
