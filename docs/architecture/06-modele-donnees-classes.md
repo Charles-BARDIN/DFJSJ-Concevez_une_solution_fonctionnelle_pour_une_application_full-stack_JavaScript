@@ -187,17 +187,18 @@ La figure 5 formalise le cycle de vie de la réservation (ADR-011 / ADR-014). Le
 
 ```mermaid
 stateDiagram-v2
+  direction LR
   [*] --> EnAttentePaiement : création de la réservation
   EnAttentePaiement --> Confirmee : paiement confirmé (webhook)
   EnAttentePaiement --> Annulee : abandon avant paiement
-  Confirmee --> Modifiee : modification autorisée (> 48 h ; ajustement tarifaire via prestataire)
+  Confirmee --> Modifiee : modification autorisée (> 48 h, ADR-011)
   Modifiee --> Modifiee : nouvelle modification (> 48 h)
-  Confirmee --> Terminee : clôture au retour du véhicule (API agence, ADR-014)
-  Modifiee --> Terminee : clôture au retour du véhicule (API agence, ADR-014)
-  Confirmee --> Annulee : annulation (matrice de remboursement, ADR-011)
-  Modifiee --> Annulee : annulation (matrice de remboursement, ADR-011)
-  Confirmee --> NoShow : non-présentation au retrait — bascule système à l'expiration du créneau (0 %)
-  Modifiee --> NoShow : non-présentation au retrait — bascule système à l'expiration du créneau (0 %)
+  Confirmee --> Terminee : clôture au retour (ADR-014)
+  Modifiee --> Terminee : clôture au retour (ADR-014)
+  Confirmee --> Annulee : annulation (ADR-011)
+  Modifiee --> Annulee : annulation (ADR-011)
+  Confirmee --> NoShow : non-présentation (0 %)
+  Modifiee --> NoShow : non-présentation (0 %)
   Terminee --> [*]
   Annulee --> [*]
   NoShow --> [*]

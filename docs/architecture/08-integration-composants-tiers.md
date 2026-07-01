@@ -41,19 +41,19 @@ explicitement ici).
 
 ```mermaid
 sequenceDiagram
-    participant Agence as Application d'agence (tierce)
-    participant Authz as Serveur d'autorisation (module interne)
-    participant API as API REST (modulithe)
+    participant Agence as Application d'agence<br/>(tierce)
+    participant Authz as Serveur d'autorisation<br/>(module interne)
+    participant API as API REST<br/>(modulithe)
     participant DB as Base
 
     Agence->>Authz: client_id + secret (client-credentials)
-    Note over Authz: vérifier le client + délivrer un access token court (scopes)
+    Note over Authz: vérifier le client + délivrer<br/>un access token court (scopes)
     Authz-->>Agence: access token (scopé, courte durée)
     Agence->>API: appel REST + access token (scope du domaine)
-    Note over API: valider le token et le scope du domaine
+    Note over API: valider le token et<br/>le scope du domaine
     alt token et scope valides
         API->>DB: opération CRUD du domaine
-        Note over API: journaliser l'accès par client_id (NFR-SEC-06)
+        Note over API: journaliser l'accès<br/>par client_id (NFR-SEC-06)
         API-->>Agence: réponse
     else token absent / expiré / scope insuffisant
         API-->>Agence: rejet (401 / 403)
